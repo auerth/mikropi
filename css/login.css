@@ -1,0 +1,45 @@
+@import url("mobile.css") screen;
+.login-form-2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 2%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    background: #0062cc;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-2 h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.login-container form {
+    padding: 0%;
+}
+
+.bg-2nd {
+    background-color: #3281D6;
+}
+
+.btnSubmit {
+    width: 30%;
+    border-radius: 1rem;
+    padding: 1.0%;
+    border: none;
+    cursor: pointer;
+}
+
+.login-form-2 .btnSubmit {
+    font-weight: 600;
+    color: #0062cc;
+    background-color: #fff;
+}
+
+.login-form-2 .ForgetPwd {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}

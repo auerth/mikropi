@@ -1,0 +1,13 @@
+User-Agent: *
+Allow: /html
+Disallow: /etc
+Disallow: /classes
+Disallow: /images
+Disallow: /logs
+Disallow: /js
+Disallow: /files
+Disallow: /css
+Disallow: /.git
+
+Sitemap: https://www.mikropi.de/sitemap.xml
+

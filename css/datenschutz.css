@@ -1,0 +1,77 @@
+@page {
+    size: 8.27in 11.69in;
+    margin-left: 0.98in;
+    margin-right: 0.98in;
+    margin-top: 0.98in;
+    margin-bottom: 0.79in
+}
+
+p {
+    margin-bottom: 0.1in;
+    direction: ltr;
+    line-height: 120%;
+    text-align: left;
+    orphans: 2;
+    widows: 2
+}
+
+h2 {
+    margin-bottom: 0in;
+    direction: ltr;
+    color: #4f81bd;
+    line-height: 115%;
+    text-align: left !important;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2
+}
+
+h2.western {
+    font-family: "Cambria", serif;
+    font-size: 13pt
+}
+
+h2.cjk {
+    font-family: ;
+    font-size: 13pt
+}
+
+h2.ctl {
+    font-family: ;
+    font-size: 13pt
+}
+
+h3 {
+    margin-top: 0.14in;
+    margin-bottom: 0in;
+    direction: ltr;
+    color: #4f81bd;
+    line-height: 115%;
+    text-align: left;
+    page-break-inside: avoid;
+    orphans: 2;
+    widows: 2
+}
+
+h3.western {
+    font-family: "Cambria", serif;
+    font-size: 11pt
+}
+
+h3.cjk {
+    font-family: ;
+    font-size: 11pt
+}
+
+h3.ctl {
+    font-family: ;
+    font-size: 11pt
+}
+
+a:link {
+    color: #0000ff
+}
+
+footer a:link {
+    color: #ffffff
+}

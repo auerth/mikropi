@@ -1,0 +1,178 @@
+    @media only screen and (max-width: 1000px) {
+        .dot {
+            height: 80px !important;
+            width: 80px !important;
+        }
+        .cutcontainer .card {
+            width: 100px !important;
+            height: 150px !important;
+        }
+        .card img {
+            width: 100px !important;
+            height: auto;
+        }
+        .mobilebar {
+            display: block !important;
+            width: 95%;
+            margin-left: auto;
+            margin-right: 20px;
+            align-self: center;
+            padding-bottom: 50px !important;
+        }
+        .mobilebar i {
+            padding: 4px;
+            width: 40px;
+            margin-left: 0 !important;
+            margin-right: 2px !important;
+            height: 40px;
+            color: white;
+        }
+        h2 {
+            font-size: 15px !important;
+        }
+        h1 {
+            font-size: 20px !important;
+        }
+        h5 {
+            font-size: 15px !important;
+        }
+        .portfolio h2 {
+            font-size: 15px !important;
+        }
+        .bgimg h1 {
+            font-size: 30px !important;
+        }
+        .bg-light {
+            height: 230px !important;
+        }
+        footer {
+            height: 0.5rem !important;
+        }
+        .fa-4x {
+            font-size: 40px;
+        }
+        .footer_right {
+            margin: 0px !important;
+            padding: 3px !important;
+        }
+        .footer_left {
+            margin: 0px !important;
+            padding: 3px !important;
+        }
+        .portfolio p {
+            font-size: 13px;
+            text-align: justify !important;
+        }
+        .list .media img {
+            width: 100px !important;
+            height: auto;
+        }
+        .media h5 {
+            font-size: 15px !important;
+        }
+        .media p {
+            font-size: 10px;
+        }
+        .media p {
+            font-size: 10px;
+        }
+        .cut_categorys .row p span {
+            font-size: 11px !important;
+        }
+        .list {
+            width: 99% !important;
+            padding: 0;
+        }
+        .list .media {
+            width: 99%;
+        }
+        #description {
+            display: none;
+        }
+        .moduls .item {
+            width: 80% !important;
+            font-size: 20px !important;
+        }
+        .descriptionM {
+            display: block;
+            font-size: 13px;
+            padding: 10px !important;
+            text-align: justify !important;
+            -webkit-box-shadow: -4px 6px 5px 4px #5191f7 !important;
+            -moz-box-shadow: -4px 6px 5px 4px #5191f7 !important;
+            box-shadow: -4px 6px 5px 4px #5191f7 !important;
+        }
+        .overlaysM {
+            font-size: 13px;
+            padding: 10px !important;
+            text-align: justify !important;
+            -webkit-box-shadow: -4px 6px 5px 4px #5191f7 !important;
+            -moz-box-shadow: -4px 6px 5px 4px #5191f7 !important;
+            box-shadow: -4px 6px 5px 4px #5191f7 !important;
+        }
+        .gridbox .box {
+            width: 40% !important;
+        }
+        .gridbox .box p {
+            font-size: 12px !important;
+            word-wrap: break-word !important;
+        }
+        .cutcontainer .card {
+            transition: none !important;
+            height: auto;
+        }
+        .cutcontainer .card img {
+            height: auto;
+        }
+        .cutcontainer .card h3 {
+            font-size: 10px !important;
+        }
+        .media-body p {
+            display: none;
+        }
+        .cut_categorys p {
+            display: block;
+        }
+        .overlays {
+            width: 90% !important;
+        }
+        .footer_right {
+            background: #0062cc;
+            text-align: right;
+        }
+        .footer_right a {
+            text-align: end;
+            margin-top: auto;
+            margin-bottom: 0;
+            margin-left: auto;
+            margin-right: 0;
+        }
+        footer .row img {
+            height: 5%;
+            width: auto;
+        }
+        footer .row {
+            background: #0062cc;
+            padding: 10px;
+        }
+        .cutbar {
+            display: none;
+        }
+        .toolbar span a img {
+            height: 40px !important;
+        }
+        .toolbar span img {
+            height: 40px !important;
+        }
+        #editFilter {
+            display: none;
+        }
+        footer p {
+            font-size: 10px;
+            margin: 3px;
+        }
+        footer a {
+            font-size: 10px;
+            margin: 3px;
+        }
+    }

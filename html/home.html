@@ -1,0 +1,129 @@
+<div class="card bgimg">
+    <div class="card-body" stylle="margin-bottom: 0px; padding-bottom: 0px;">
+        <div class="bg-light text-center" style="height: 380px; margin-top: 20px; margin-bottom: 20px; padding-top: 0px;">
+            <div style="padding: 70px 0;">
+                <img height="200" src="../images/logo_white.png">
+                <h2 class="card-text">Das online Mikroskop</h2>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-text text-black" style="text-align: center; color: black;">Mikropi ist eine E-Learning Software Lösung die die Studierenden der Universität Freiburg beim Vor- und Nachbereiten von Vorlesungen und zur Prüfungsvorbereitung unterstüzt. Die Software beinhaltet Mikroskopschnitte vom Institut für Klinische
+            Pathologie Freiburg. Studenten können somit ganz einfach von Zuhause aus Schnitte, die eine Auflösung von bis zu 80.000 x 70.000 Pixel habe, detailliert untersuchen, sowie mit Vorlesungsskripten arbeiten.</h5>
+    </div>
+</div>
+
+<div class="card bg-main">
+    <div class="card-body flexbox" style="justify-content: center;">
+        <div class="portfolio">
+            <a class="dot" href="register.php">
+                <i class="fas fa-registered fa-4x" style="padding: 25% 0;"></i>
+            </a>
+            <h2>Registrieren</h2>
+            <p class="card-text" style="text-align: center;">Registriere dich mit deiner Email und Immatrikulationsnummer. Wenn alle Angaben korrekt sind und deine Immatrikulationsnummer in unserem System vorgemerkt ist kannst du direkt, nachdem du deine Email bestätigt hast, loslegen.</p>
+        </div>
+        <div class="portfolio">
+            <a class="dot" href="login.php">
+                <i class="fas fa-sign-in-alt fa-4x" style="padding: 25% 0;"></i>
+            </a>
+            <h2>Einloggen</h2>
+            <p class="card-text" style="text-align: center;">Logge dich mit deiner Email-Adresse und deinem Passwort ein.</p>
+
+        </div>
+        <div class="portfolio">
+            <a class="dot" href="login.php?redirect=index.php?cuts">
+                <i class="fas fa-graduation-cap fa-4x" style="padding: 25% 0;"></i></a>
+            <h2>Lernen</h2>
+            <p class="card-text" style="text-align: center;">Du hast nun vollen Zugriff auf sämtliche Mikroskopschnitte und Module. Diese können nach Semester, Dozent, Organ, Organgruppe, Diagnosegruppe, Schnittquelle und ICD_ Code gefiltert werden.</p>
+        </div>
+
+
+    </div>
+
+    <div class="card-body flexbox" style="justify-content: center; margin-top:0px;">
+        <div class="portfolio">
+            <a class="dot" href="login.php?redirect=index.php?cuts">
+                <i class="fas fa-microscope fa-4x" style="padding: 25% 0;"></i>
+            </a>
+            <h2>Schnitte</h2>
+            <p class="card-text" style="text-align: center;">Mikropi hilft dir dabei Schnitte, mit hilfe von hinterlegten Makierungen und Beschreibungen, zu untersuchen.</p>
+        </div>
+        <div class="portfolio">
+            <a class="dot" href="login.php?redirect=moduls.php">
+                <i class="fas fa-book fa-4x" style="padding: 25% 0;"></i>
+            </a>
+            <h2>Module</h2>
+            <p class="card-text" style="text-align: center;">Das Skript der Dozenten der Pathologie kann hier in Form von Modulen eingesehen werden. Jedem Modul sind die Schnitte zur jeweiligen Thematik hinterlegt.</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="card text-black">
+    <div class="card-body">
+
+        <h2 class="card-text text-black text-center" style="text-align: center; color: black;">Kontaktiere uns</h2>
+        <p class="text-center text-black" style="color: black;">Hast du Fragen oder brauchst du Hilfe? Bitte kontaktiere uns!</p>
+
+        <div class="col-md-12 mb-md-0 mb-5 text" style="color: black;">
+
+            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                <!--Grid row-->
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+
+                            <input type="text" id="name" name="name" class="form-control">
+                            <label for="name" class="">Dein Name*</label>
+                        </div>
+                    </div>
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-form mb-0">
+                            <input type="text" id="email" name="email" class="form-control">
+                            <label for="email" class="">Deine Email*</label>
+                        </div>
+                    </div>
+                </div>
+                <!--Grid row-->
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-12">
+
+                        <div class="md-form">
+                            <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
+                            <label for="message">Deine Nachricht*</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <center>
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6LcTf70UAAAAAGGOlOjgmHts4Sr0LbAsdnsnk1wZ"></div>
+                    </div>
+                </center>
+                <!--Grid row-->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-dark text-yellow" style="font-size: 20px; height: 50px; width: 200px;">Abschicken</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+<script src='https://www.google.com/recaptcha/api.js'></script>

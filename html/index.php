@@ -385,9 +385,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
         </form>
     </div>
 </div>');
-                    $listOverlayWithId = "<ul>";
+                    $listOverlayWithId = "<ul class='overlayAdder'>";
                     foreach ($cutInfo["info"]["overlays"] as $overlay) {
-                        $listOverlayWithId = $listOverlayWithId . "<li>" . $overlay["name"] . " - ID:  " . $overlay["id"] . "</li>";
+                        $listOverlayWithId = $listOverlayWithId . "<li id='".$overlay["id"]."'>" . $overlay["name"] ."</li>";
                         $deleteOverlay = "";
                     }
                     echo ('<div id="modalDescription" class="modal">

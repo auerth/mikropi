@@ -619,6 +619,31 @@ body {
     display: none;
 }
 
+.overlayAdder {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px;
+    text-align: left;
+}
+
+.overlayAdder li {
+    list-style-type: none;
+    padding: 5px;
+    width: 32%;
+    margin-left: 0px;
+    margin-top: 5px;
+    margin-right: 5px;
+    border: 1px solid #5191f7;
+    box-shadow: #999 5px 5px;
+    font-size: 12px;
+}
+
+.overlayAdder li:hover {
+    cursor: pointer;
+}
+
 .overlays ul li {
     list-style-type: none;
     padding: 5px;

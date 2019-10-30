@@ -1,150 +1,159 @@
 <?php
-include("../classes/cut.php");
-include("../classes/category.php");
-include("../classes/dashboard.php");
-include("../classes/overlay.php");
-include("../classes/pagebuilder.php");
-$loggedIn = false;
-$isAdmin = false;
-$serverUrl = "https://mikropi.de/";
-$cuts = null;
-$categorys = null;
-$cutId = null;
-$cutMessage = null;
-$dashboardMessage = null;
-$overlayMessage = null;
-$name = "";
-$dashboard = new Dashboard();
-$overlay = new Overlay();
-$pageBuilder = new PageBuilder();
-$overlaysVisible = false;
-$cutCategorys = null;
-$categorysByCut = null;
-
-if (isset($_POST["filterid"]) && isset($_POST["cutid"]) && isset($_POST["hash"])) {
-    $hash = $_POST["hash"];
-    $filterId = $_POST["filterid"];
-    $cutId = $_POST["cutid"];
-    $category = new Category();
-    $result = $category->putCategory($hash, $cutId, $filterId);
-    die(json_encode($result));
-}
-if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
-    $loggedIn = true;
-    if (isset($_COOKIE["isAdmin"])) {
-        $isAdmin = $_COOKIE["isAdmin"];
-    }
-    if (isset($_COOKIE["name"])) {
-        $name = $_COOKIE["name"];
-    }
-    $cut = new Cut();
+$file_cut = "../classes/cut.php";
+$file_category = "../classes/category.php";
+$file_overlay = "../classes/overlay.php";
+$file_dashboard = "../classes/dashboard.php";
+$file_pagebuilder = "../classes/pagebuilder.php";
 
 
+if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_overlay) && file_exists($file_dashboard) && file_exists($file_pagebuilder)) {
+    include($file_cut);
+    include($file_category);
+    include($file_overlay);
+    include($file_dashboard);
+    include($file_pagebuilder);
+    $loggedIn = false;
+    $isAdmin = false;
+    $serverUrl = "https://mikropi.de/";
+    $cuts = null;
+    $categorys = null;
+    $cutId = null;
+    $cutMessage = null;
+    $dashboardMessage = null;
+    $overlayMessage = null;
+    $name = "";
+    $dashboard = new Dashboard();
+    $overlay = new Overlay();
+    $pageBuilder = new PageBuilder();
+    $overlaysVisible = false;
+    $cutCategorys = null;
+    $categorysByCut = null;
 
-    if (isset($_GET["cuts"])) {
+    if (isset($_POST["filterid"]) && isset($_POST["cutid"]) && isset($_POST["hash"])) {
+        $hash = $_POST["hash"];
+        $filterId = $_POST["filterid"];
+        $cutId = $_POST["cutid"];
         $category = new Category();
-        $result = $category->getCategorys();
-        if ($result["errorCode"] == null) {
-            $categorys = $result["info"];
+        $result = $category->putCategory($hash, $cutId, $filterId);
+        die(json_encode($result));
+    }
+    if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
+        $loggedIn = true;
+        if (isset($_COOKIE["isAdmin"])) {
+            $isAdmin = $_COOKIE["isAdmin"];
+        }
+        if (isset($_COOKIE["name"])) {
+            $name = $_COOKIE["name"];
+        }
+        $cut = new Cut();
 
-            $result = $cut->getCutsFiltered(-1, -1, -1, -1, -1, -1, -1, -1);
-            $result = json_decode($result, true);
+
+
+        if (isset($_GET["cuts"])) {
+            $category = new Category();
+            $result = $category->getCategorys();
             if ($result["errorCode"] == null) {
-                $cuts = $result["info"];
+                $categorys = $result["info"];
+
+                $result = $cut->getCutsFiltered(-1, -1, -1, -1, -1, -1, -1, -1);
+                $result = json_decode($result, true);
+                if ($result["errorCode"] == null) {
+                    $cuts = $result["info"];
+                } else {
+                    $error = $result["error"];
+                }
             } else {
                 $error = $result["error"];
             }
-        } else {
-            $error = $result["error"];
         }
-    }
-    if (isset($_GET["cuts"]) && $_GET["cuts"] != null) {
-        $category = new Category();
-        $result = $category->getCategoryOfCut($_COOKIE["sessionHash"], $_GET["cuts"]);
-        if ($result["success"]) {
-            $cutCategorys = $result["info"];
-        } else {
-            $error = $result["error"];
+        if (isset($_GET["cuts"]) && $_GET["cuts"] != null) {
+            $category = new Category();
+            $result = $category->getCategoryOfCut($_COOKIE["sessionHash"], $_GET["cuts"]);
+            if ($result["success"]) {
+                $cutCategorys = $result["info"];
+            } else {
+                $error = $result["error"];
+            }
+
+            $result = $category->getAllCategorysFromCut($_GET["cuts"]);
+            if ($result["success"]) {
+                $categorysByCut = $result["info"];
+            } else {
+                $error = $result["error"];
+            }
         }
 
-        $result = $category->getAllCategorysFromCut($_GET["cuts"]);
-        if ($result["success"]) {
-            $categorysByCut = $result["info"];
-        } else {
-            $error = $result["error"];
+        if (isset($_POST["cutId"]) && isset($_POST["newTitle"]) && $isAdmin) {
+            $result = $cut->updateCutName($_COOKIE["sessionHash"], $_POST["cutId"], $_POST["newTitle"]);
+            if (!$result["success"]) {
+                $cutMessage = $result["error"];
+                $alertType = "alert-danger";
+            }
+        } else if (isset($_POST["cutId"]) && isset($_POST["newDescription"]) && $isAdmin) {
+            $result = $cut->updateCutDescription($_COOKIE["sessionHash"], $_POST["cutId"], $_POST["newDescription"]);
+            if (!$result["success"]) {
+                $cutMessage = $result["error"];
+                $alertType = "alert-danger";
+            }
+        } else if (isset($_POST["cutId"]) && isset($_POST["deleteCut"]) && $isAdmin) {
+            $result = $cut->deleteCut($_COOKIE["sessionHash"], $_POST["cutId"]);
+            if (!$result["success"]) {
+                $cutMessage = $result["error"];
+                $alertType = "alert-danger";
+            } else {
+                $cutMessage = $result["info"];
+                $alertType = "alert-success";
+                header("Location: index.php?cuts");
+            }
+        } else if (isset($_POST["overlayId"]) && isset($_POST["newOverlay"]) && $isAdmin) {
+            $result = $overlay->editOverlay($_COOKIE["sessionHash"], $_POST["overlayId"], $_POST["newOverlay"]);
+            if (!$result["success"]) {
+                $overlayMessage = $result["error"];
+                $alertType = "alert-danger";
+            }
+            $overlaysVisible = true;
         }
-    }
 
-    if (isset($_POST["cutId"]) && isset($_POST["newTitle"]) && $isAdmin) {
-        $result = $cut->updateCutName($_COOKIE["sessionHash"], $_POST["cutId"], $_POST["newTitle"]);
-        if (!$result["success"]) {
-            $cutMessage = $result["error"];
-            $alertType = "alert-danger";
+        if (isset($_POST["title"]) && isset($_POST["text"]) && $isAdmin) {
+            $result = $dashboard->addDashboardEntrie($_COOKIE["sessionHash"], $_POST["title"], $_POST["text"]);
+            if (!$result["success"]) {
+                $dashboardMessage = $result["error"];
+                $alertType = "alert-danger";
+            }
         }
-    } else if (isset($_POST["cutId"]) && isset($_POST["newDescription"]) && $isAdmin) {
-        $result = $cut->updateCutDescription($_COOKIE["sessionHash"], $_POST["cutId"], $_POST["newDescription"]);
-        if (!$result["success"]) {
-            $cutMessage = $result["error"];
-            $alertType = "alert-danger";
+        if (isset($_POST["title"]) && isset($_GET["cuts"]) && isset($_POST["location"]) && isset($_POST["size"]) && $isAdmin) {
+
+            $result = $overlay->addOverlay($_COOKIE["sessionHash"], $_GET["cuts"], $_POST["title"], $_POST["location"], $_POST["size"]);
+            if (!$result["success"]) {
+                $overlayMessage = $result["error"];
+                $alertType = "alert-danger";
+            }
+            $overlaysVisible = true;
         }
-    } else if (isset($_POST["cutId"]) && isset($_POST["deleteCut"]) && $isAdmin) {
-        $result = $cut->deleteCut($_COOKIE["sessionHash"], $_POST["cutId"]);
-        if (!$result["success"]) {
-            $cutMessage = $result["error"];
-            $alertType = "alert-danger";
-        }else{
-            $cutMessage = $result["info"];
-            $alertType = "alert-success";
-            header("Location: index.php?cuts");
+        if (isset($_POST["overlayId"]) && isset($_GET["cuts"]) && $isAdmin && !isset($_POST["newOverlay"])) {
+            $overlay = new Overlay();
+
+            $result = $overlay->deleteOverlay($_COOKIE["sessionHash"], $_POST["overlayId"]);
+            if (!$result["success"]) {
+                $overlayMessage = $result["error"];
+                $alertType = "alert-danger";
+            }
+            $overlaysVisible = true;
         }
 
-    } else if (isset($_POST["overlayId"]) && isset($_POST["newOverlay"]) && $isAdmin) {
-        $result = $overlay->editOverlay($_COOKIE["sessionHash"], $_POST["overlayId"], $_POST["newOverlay"]);
-        if (!$result["success"]) {
-            $overlayMessage = $result["error"];
-            $alertType = "alert-danger";
+        if (isset($_POST["dashId"]) && $isAdmin) {
+            $result = $dashboard->deleteDashboardEntrie($_COOKIE["sessionHash"], $_POST["dashId"]);
+            if (!$result["success"]) {
+                $dashboardMessage = $result["error"];
+                $alertType = "alert-danger";
+            }
         }
-        $overlaysVisible = true;
+    } else {
+        $loggedIn = false;
     }
-
-    if (isset($_POST["title"]) && isset($_POST["text"]) && $isAdmin) {
-        $result = $dashboard->addDashboardEntrie($_COOKIE["sessionHash"], $_POST["title"], $_POST["text"]);
-        if (!$result["success"]) {
-            $dashboardMessage = $result["error"];
-            $alertType = "alert-danger";
-        }
-    }
-    if (isset($_POST["title"]) && isset($_GET["cuts"]) && isset($_POST["location"]) && isset($_POST["size"]) && $isAdmin) {
-
-        $result = $overlay->addOverlay($_COOKIE["sessionHash"], $_GET["cuts"], $_POST["title"], $_POST["location"], $_POST["size"]);
-        if (!$result["success"]) {
-            $overlayMessage = $result["error"];
-            $alertType = "alert-danger";
-        }
-        $overlaysVisible = true;
-    }
-    if (isset($_POST["overlayId"]) && isset($_GET["cuts"]) && $isAdmin && !isset($_POST["newOverlay"])) {
-        $overlay = new Overlay();
-
-        $result = $overlay->deleteOverlay($_COOKIE["sessionHash"], $_POST["overlayId"]);
-        if (!$result["success"]) {
-            $overlayMessage = $result["error"];
-            $alertType = "alert-danger";
-        }
-        $overlaysVisible = true;
-    }
-
-    if (isset($_POST["dashId"]) && $isAdmin) {
-        $result = $dashboard->deleteDashboardEntrie($_COOKIE["sessionHash"], $_POST["dashId"]);
-        if (!$result["success"]) {
-            $dashboardMessage = $result["error"];
-            $alertType = "alert-danger";
-        }
-    }
-} else {
-    $loggedIn = false;
+}else {
+	die("System Error! Support: admin@mikropi.de");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -162,12 +171,12 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
     <!-- Page Content -->
     <main>
         <?php
-       
+
         // Loop the list results
         if ($cuts != null || isset($_GET["cuts"]) || $categorys != null) {
             if ($_GET["cuts"] == null) {
                 if (!$loggedIn) {
-                    header('Location: https://mikropi.de/login.php');
+                    header('Location: login.php');
                 }
 
                 if ($categorys != null) {
@@ -257,12 +266,12 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 $editTitle = "";
                 if (isset($_GET['noOverlay'])) {
                     $editOverlays = '
-                <input type="checkbox"><label  onclick="annos('.$_GET["cuts"].')" >
+                <input type="checkbox"><label  onclick="annos(' . $_GET["cuts"] . ')" >
                 <span></span>Annotationen zeigen
               </label>';
                 } else {
                     $editOverlays = '
-                <input type="checkbox"  checked><label onclick="noAnnos('.$_GET["cuts"].')">
+                <input type="checkbox"  checked><label onclick="noAnnos(' . $_GET["cuts"] . ')">
                 <span></span>Annotationen zeigen
               </label>';
                 }
@@ -271,7 +280,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 $editDescription = "";
                 if ($isAdmin) {
                     $editTitle = "<i class='fas fa-pencil-alt fa-1x' id='editTitle'></i>";
-                    $deleteCut = "<i class='fas fa-trash-alt fa-1x right' onclick='deleteCut(".$_GET["cuts"].")'></i>";
+                    $deleteCut = "<i class='fas fa-trash-alt fa-1x right' onclick='deleteCut(" . $_GET["cuts"] . ")'></i>";
 
                     $editDescription = "<i class='fas fa-pencil-alt fa-1x' id='editDescription'></i>";
                     $editOverlays .= "
@@ -308,7 +317,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								</div>');
                 }
 
-                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle . $deleteCut."</div>");
+                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle . $deleteCut . "</div>");
                 echo ('<div class="flexbox" style="flex-wrap: nowrap; background-color: white;">');
                 $overlayDiv = "<div class='overlays' style='display: none;' id='overlay'>";
                 $overlayDivM = "<div class='overlaysM' style='display: none;' id='overlayM'>";
@@ -340,9 +349,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                       <a id="zoom100" href="#zoom100" style="display: inline-block; position: relative;"/></a>
 	    			</div>
                         <div class="openseadragon" id="openseadragon1" style="width:100%; height:90%;"> </div></div></div>');
-                       
-                echo("<div class='mobilebar'>");
-                echo("<div class='row'>
+
+                echo ("<div class='mobilebar'>");
+                echo ("<div class='row'>
                 <i class='fas fa-align-left fa-2x bg-main' id='itemDescriptionM'></i>
                 <i id='itemOverlayM' class='fas fa-flag fa-2x bg-main'></i>
                 </div>");
@@ -350,8 +359,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 echo ("<div id='description-text'>" . $cutInfo["info"]["description"] . "</div>" . $editDescription . "</li></div>
                 " . $overlayDivM . "<div class='row'>" . $editOverlays . "</div>" . $overlays . "
                 </div>");
-                echo("</div>");
-                echo("</div>");
+                echo ("</div>");
+                echo ("</div>");
 
                 if ($isAdmin) {
                     echo ('<div id="modalTitle" class="modal">
@@ -387,7 +396,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 </div>');
                     $listOverlayWithId = "<ul class='overlayAdder'>";
                     foreach ($cutInfo["info"]["overlays"] as $overlay) {
-                        $listOverlayWithId = $listOverlayWithId . "<li id='".$overlay["id"]."'>" . $overlay["name"] ."</li>";
+                        $listOverlayWithId = $listOverlayWithId . "<li id='" . $overlay["id"] . "'>" . $overlay["name"] . "</li>";
                         $deleteOverlay = "";
                     }
                     echo ('<div id="modalDescription" class="modal">
@@ -494,7 +503,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 </div>');
                 }
             } else {
-                header('Location: https://mikropi.de/login.php');
+                header('Location: login.php');
             }
         } else {
             if (!isset($_GET["cuts"]) && $loggedIn) {
@@ -563,7 +572,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
         ?>
                     <?php
                     echo ($pageBuilder->getFooter());
-                    if($loggedIn){
+                    if ($loggedIn) {
                         if (!isset($_COOKIE["bugreport"])) {
                             echo (' <div class="toast__container" id="reportBug">
                         <div class="toast__cell">

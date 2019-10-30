@@ -2,27 +2,33 @@
 
 
 <?php
-include("../classes/user.php");
-include("../classes/pagebuilder.php");
+
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
 $error = null;
 $info = null;
-$pageBuilder = new PageBuilder();
-if (isset($_POST["email"]) && isset($_POST["password"])) {
-	$user = new User();
-
-	include("../etc/recaptcha.php");
-	$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secretkey . '&response=' . $_POST['g-recaptcha-response']);
-	$data = json_decode($json, true);
-	if ($data["success"]) {
-		$result = $user->register($_POST["email"], hash('sha256', $_POST["password"]), $_POST["matrikelnummer"], $_POST["name"], $_POST["forename"]);
-		if ($result["errorCode"] == null) {
-			$info = $result["info"];
+if (file_exists($file_pagebuilder) && file_exists($file_user) && file_exists($file_captcha)) {
+	include($file_user);
+	include($file_pagebuilder);
+	include($file_captcha);
+	$pageBuilder = new PageBuilder();
+	if (isset($_POST["email"]) && isset($_POST["password"])) {
+		$user = new User();
+		$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secretkey . '&response=' . $_POST['g-recaptcha-response']);
+		$data = json_decode($json, true);
+		if ($data["success"]) {
+			$result = $user->register($_POST["email"], hash('sha256', $_POST["password"]), $_POST["matrikelnummer"], $_POST["name"], $_POST["forename"]);
+			if ($result["errorCode"] == null) {
+				$info = $result["info"];
+			} else {
+				$error = $result["error"];
+			}
 		} else {
-			$error = $result["error"];
+			$error = "Captcha nicht richtig.";
 		}
-	} else {
-		$error = "Captcha nicht richtig.";
 	}
+}else{
+	die("System Error! Support: admin@mikropi.de");
 }
 
 

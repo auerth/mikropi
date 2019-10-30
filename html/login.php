@@ -3,51 +3,59 @@
 
 <?php
 $error = null;
-include("../classes/user.php");
-include("../classes/pagebuilder.php");
-$redirect = null;
-$pageBuilder = new PageBuilder();
-$msg = null;
-if (isset($_GET["redirect"])) {
-	$redirect = $_GET["redirect"];
-}
-if (isset($_POST["email"]) && isset($_POST["password"])) {
-	$user = new User();
-	$result = $user->login($_POST["email"], hash('sha256', $_POST["password"]));
-	if ($result["errorCode"] == null && $result["success"]) {
-		$expireTime = 3600*2;
-		setcookie("name", $result["info"]["forename"] . " " . $result["info"]["name"], time() + $expireTime); 
-		setcookie("isAdmin", $result["info"]["isAdmin"], time() + $expireTime);
-		setcookie("sessionHash", $result["info"]["sessionHash"], time() + $expireTime); 
-		setcookie("matrikelnummer", $result["info"]["matrikelnummer"], time() + $expireTime); 
-		setcookie("email", $result["info"]["email"], time() + $expireTime); 
-		setcookie("creationDate", $result["info"]["creationDate"], time() + $expireTime); 
-		if (isset($_POST["redirect"])) {
-			$redirect = $_POST["redirect"];
-		}
-		if ($redirect != null) {
-			header('Location: ' . $redirect);
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
+
+if (file_exists($file_pagebuilder) && file_exists($file_user)) {
+	include($file_user);
+	include($file_pagebuilder);
+	$redirect = null;
+	$pageBuilder = new PageBuilder();
+	$msg = null;
+	if (isset($_GET["redirect"])) {
+		$redirect = $_GET["redirect"];
+	}
+	if (isset($_POST["email"]) && isset($_POST["password"])) {
+		$user = new User();
+		$result = $user->login($_POST["email"], hash('sha256', $_POST["password"]));
+		if ($result["errorCode"] == null && $result["success"]) {
+			$expireTime = 3600 * 2;
+			setcookie("name", $result["info"]["forename"] . " " . $result["info"]["name"], time() + $expireTime);
+			setcookie("isAdmin", $result["info"]["isAdmin"], time() + $expireTime);
+			setcookie("sessionHash", $result["info"]["sessionHash"], time() + $expireTime);
+			setcookie("matrikelnummer", $result["info"]["matrikelnummer"], time() + $expireTime);
+			setcookie("email", $result["info"]["email"], time() + $expireTime);
+			setcookie("creationDate", $result["info"]["creationDate"], time() + $expireTime);
+			if (isset($_POST["redirect"])) {
+				$redirect = $_POST["redirect"];
+			}
+			if ($redirect != null) {
+				header('Location: ' . $redirect);
+			} else {
+				header('Location: index.php?dash');
+			}
 		} else {
-			header('Location: index.php?dash');
+			$error = $result["error"];
 		}
-	} else {
-		$error = $result["error"];
 	}
+	if (isset($_GET["msg"])) {
+		if ($_GET["msg"] == "email") {
+			$msg = "Email wurde verifiziert.";
+		}
+		if ($_GET["msg"] == "forgot") {
+			$msg = "Du findest dein neues Passwort in deinen Emails.";
+		}
+	}
+} else {
+	die("System Error! Support: admin@mikropi.de");
 }
-if(isset($_GET["msg"])){
-	if($_GET["msg"] == "email"){
-		$msg = "Email wurde verifiziert.";
-	}
-	if($_GET["msg"] == "forgot"){
-		$msg = "Du findest dein neues Passwort in deinen Emails.";
-	}
-}
+
 
 
 ?>
 <html lang="de">
 <?php
-echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen.",array("../css/login.css")));
+echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen.", array("../css/login.css")));
 ?>
 
 
@@ -95,9 +103,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 		<?php
 
-echo ($pageBuilder->getFooter());
+		echo ($pageBuilder->getFooter());
 
-?>
+		?>
 	</main>
 
 

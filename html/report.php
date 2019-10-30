@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-include("../classes/user.php");
-include("../classes/pagebuilder.php");
+
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
+
+include($file_pagebuilder);
 
 
 $loggedIn = false;
 $isAdmin = false;
-$emailChangeInfo = null;
-$newPasswordInfo = null;
 $serverUrl = "https://mikropi.de/webapp/";
-$user = new User();
 $name = "";
 $email = "";
 $matrikelnummer = "";
@@ -28,9 +28,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
     $email = $_COOKIE["email"];
     $matrikelnummer = $_COOKIE["matrikelnummer"];
     $erstelltAm = $_COOKIE["creationDate"];
-    setcookie("bugreport", "clicked", time() + 86400); 
-
-
+    setcookie("bugreport", "clicked", time() + 43200); 
     if (isset($_GET["sent"])) {
         $msg = "Nachricht wurde erfolgreicht versendet.";
     }

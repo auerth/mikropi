@@ -1,60 +1,66 @@
+<?php
+
+$classFiles = "../etc/classfiles.php";
+if (file_exists($classFiles)) {
+	include($classFiles);
+	include($file_cut);
+	include($file_category);
+	include($file_overlay);
+	include($file_script);
+	include($file_modul);
+	include($file_pagebuilder);
+
+	$loggedIn = false;
+	$isAdmin = false;
+	$serverUrl = "https://mikropi.de/";
+	$name = "";
+	$modul = new Modul();
+	$script = new Script();
+	$pageBuilder = new PageBuilder();
+
+	if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != "-1") {
+		$loggedIn = true;
+		$sessionHash = $_COOKIE["sessionHash"];
+		if (isset($_GET["id"]))
+			$modulId = $_GET["id"];
+		if (isset($_COOKIE["isAdmin"])) {
+			$isAdmin = $_COOKIE["isAdmin"];
+		}
+		if (isset($_COOKIE["name"])) {
+			$name = $_COOKIE["name"];
+		}
+		$cut = new Cut();
+
+		if (isset($_FILES["pdf"])) {
+			$pdf = $_FILES["pdf"];
+			$result = $script->editModulPDF($sessionHash, $modulId, $pdf);
+			if ($result["success"]) {
+				$msg = $result["info"];
+			} else {
+				$msg = $result["error"];
+			}
+		}
+		if (isset($_POST["cutList"])) {
+			$cutList = $_POST["cutList"];
+			$result = $script->addCutToModul($sessionHash, $cutList, $modulId);
+			if ($result["success"]) {
+				$msg = $result["info"];
+			} else {
+				$msg = $result["error"];
+			}
+		}
+	} else { }
+	if (!$loggedIn) {
+		$actual_link = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		header("Location: login.php?redirect=" . $actual_link);
+	}
+} else {
+	die("System Error! Support: admin@mikropi.de");
+}
+?>
 <!DOCTYPE html>
 <html lang="de">
 <?php
-include("../classes/cut.php");
-include("../classes/category.php");
-include("../classes/dashboard.php");
-include("../classes/overlay.php");
-include("../classes/script.php");
-include("../classes/moduls.php");
-include("../classes/pagebuilder.php");
-
-$loggedIn = false;
-$isAdmin = false;
-$serverUrl = "https://mikropi.de/";
-$name = "";
-$modul = new Modul();
-$script = new Script();
-$pageBuilder = new PageBuilder();
-
-if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != "-1") {
-	$loggedIn = true;
-	$sessionHash = $_COOKIE["sessionHash"];
-	if (isset($_GET["id"]))
-		$modulId = $_GET["id"];
-	if (isset($_COOKIE["isAdmin"])) {
-		$isAdmin = $_COOKIE["isAdmin"];
-	}
-	if (isset($_COOKIE["name"])) {
-		$name = $_COOKIE["name"];
-	}
-	$cut = new Cut();
-
-	if (isset($_FILES["pdf"])) {
-		$pdf = $_FILES["pdf"];
-		$result = $script->editModulPDF($sessionHash, $modulId, $pdf);
-		if ($result["success"]) {
-			$msg = $result["info"];
-		} else {
-			$msg = $result["error"];
-		}
-	}
-	if (isset($_POST["cutList"])) {
-		$cutList = $_POST["cutList"];
-		$result = $script->addCutToModul($sessionHash, $cutList, $modulId);
-		if ($result["success"]) {
-			$msg = $result["info"];
-		} else {
-			$msg = $result["error"];
-		}
-	}
-} else {
-	
-}
-if(!$loggedIn){
-	$actual_link = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	header("Location: login.php?redirect=" . $actual_link);
-}
 
 echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen."));
 ?>
@@ -105,11 +111,11 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 	</form>');
 			}
 			if ($modulPath != "") {
-				
-			 
+
+
 				echo ('<embed src= "' . $modulPath . '" width= "100%" >');
 			}
-	
+
 			$result = $cut->getCutsFiltered(-1, -1, -1, -1, -1, -1, -1, -1);
 			$result = json_decode($result, true);
 			$cuts = "";
@@ -150,7 +156,6 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					}
 				}
 				echo ("</div>");
-				
 			}
 		}
 		?>

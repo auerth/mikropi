@@ -4,8 +4,13 @@
 <?php
 $error = null;
 $info = null;
-include("../classes/user.php");
-include("../classes/pagebuilder.php");
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
+
+
+include($file_user);
+include($file_pagebuilder);
+
 $pageBuilder = new PageBuilder();
 
 if (isset($_POST["email"]) && isset($_POST["matrikelnummer"])) {

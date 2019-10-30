@@ -3,8 +3,12 @@
 
 <?php
 $error = null;
-include("../classes/user.php");
-include("../classes/pagebuilder.php");
+
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
+
+include($file_user);
+include($file_pagebuilder);
 $redirect = null;
 $pageBuilder = new PageBuilder();
 

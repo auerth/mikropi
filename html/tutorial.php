@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-include_once("../classes/user.php");
-include("../classes/pagebuilder.php");
+
+
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
+
+include($file_pagebuilder);
 $loggedIn = false;
 $isAdmin = false;
-$serverUrl = "https://mikropi.de/";
 $pageBuilder = new PageBuilder();
 
 if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
@@ -13,7 +16,6 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
     if (isset($_COOKIE["isAdmin"])) {
         $isAdmin = $_COOKIE["isAdmin"];
     }
-   
     $userId = $_COOKIE["sessionHash"];
     $name = $_COOKIE["name"];
     $email = $_COOKIE["email"];

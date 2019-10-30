@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-include("../classes/user.php");
-include("../classes/pagebuilder.php");
+
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
+
+
+include($file_user);
+include($file_pagebuilder);
 
 
 $loggedIn = false;

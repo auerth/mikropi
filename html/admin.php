@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-include_once("../classes/user.php");
-include("../classes/cut.php");
-include("../classes/category.php");
-include("../classes/moduls.php");
-include("../classes/pagebuilder.php");
+
+
+$classFiles = "../etc/classfiles.php";
+include($classFiles);
+
+include_once($file_user);
+include($file_cut);
+include($file_category);
+include($file_modul);
+include($file_pagebuilder);
 $loggedIn = false;
 $isAdmin = false;
 $serverUrl = "https://mikropi.de/";

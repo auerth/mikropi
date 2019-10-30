@@ -8,6 +8,8 @@ Disallow: /js
 Disallow: /files
 Disallow: /css
 Disallow: /.git
+Disallow: /html/impressum.php
+Disallow: /html/nutzerbedingung.php
 
 Sitemap: https://www.mikropi.de/sitemap.xml
 

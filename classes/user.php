@@ -387,6 +387,7 @@ Mit freundlichen Grüßen<br><br>
         );
         include("../etc/db.php");
         $email = $db->real_escape_string($email);
+        $email = strtolower(trim($email));
         $sql = "SELECT id FROM user WHERE email like '" . $email . "';";
         if ($result = $db->query($sql)) {
             $num = $result->num_rows;
@@ -406,7 +407,15 @@ Mit freundlichen Grüßen<br><br>
                         $header .= "From: support@mikropi.de\r\n";
                         $header .= "Reply-To: support@mikropi.de\r\n";
                         $header .= "X-Mailer: PHP " . phpversion();
-                        mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header);
+                        if(mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header)){
+                            $logFile = "../logs/user.log";
+                            $log = file_get_contents($logFile);
+                            file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Reverify Email  " . $email . " sent \n");
+                        }else{
+                            $logFile = "../logs/user.log";
+                            $log = file_get_contents($logFile);
+                            file_put_contents($logFile, $log . "Error-" . date('d/m/Y H:i:s', time()) . ": Reverify Email not sent to " . $email . "\n");
+                        }
                         $jsonResult["success"] = true;
                         $jsonResult["info"] = "Verifizierungsemail gesendet";
                     }
@@ -582,7 +591,15 @@ Mit freundlichen Grüßen<br><br>
                                 $headers[] = "Reply-To: admin@mikropi.de";
                                 $headers[] = "Subject: {$subject}";
                                 $headers[] = "X-Mailer: PHP/" . phpversion();
-                                mail($to_email, $subject, $body, implode("\r\n", $headers));
+                                if(mail($to_email, $subject, $body, implode("\r\n", $headers))){
+                                    $logFile = "../logs/user.log";
+                                    $log = file_get_contents($logFile);
+                                    file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Verify Email  " . $email . " sent\n");
+                                }else{
+                                    $logFile = "../logs/user.log";
+                                    $log = file_get_contents($logFile);
+                                    file_put_contents($logFile, $log . "Error-" . date('d/m/Y H:i:s', time()) . ": Verify Email not sent " . $email . "\n");
+                                }
                             }
                             $msg = $msg . $signatur;
                             mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header);

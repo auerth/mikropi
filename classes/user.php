@@ -581,6 +581,7 @@ Mit freundlichen Grüßen<br><br>
                                 $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
                             } else {
                                 $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt er muss aber noch von einem Mitarbeiter manuell aktiviert werden. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
+                               
                                 $to_email = "support@mikropi.de";
                                 $subject = "Neue Registrierung mit unbekannter Matrikelnummer";
                                 $body = "Guten Tag,\n So eben hat sich ein neuer Benutzer registriert dessen Immatrikulationsnummer nicht im System steht.\n\nVor- und Zuname: " .$forename . " " . $name."\n Email: ".$email . "\nImmatrikulationsnummer: ". $matrikelnummer."\n\nDie Aktivierung des Accounts muss manuell innherhalb des Adminpanels in Mikropi vorgenommen werden. (https://mikropi.de/admin.php)\n\n Mit freundlichen Grüßen \n\n Mikropi";
@@ -591,18 +592,18 @@ Mit freundlichen Grüßen<br><br>
                                 $headers[] = "Reply-To: admin@mikropi.de";
                                 $headers[] = "Subject: {$subject}";
                                 $headers[] = "X-Mailer: PHP/" . phpversion();
-                                if(mail($to_email, $subject, $body, implode("\r\n", $headers))){
-                                    $logFile = "../logs/user.log";
-                                    $log = file_get_contents($logFile);
-                                    file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Verify Email  " . $email . " sent\n");
-                                }else{
-                                    $logFile = "../logs/user.log";
-                                    $log = file_get_contents($logFile);
-                                    file_put_contents($logFile, $log . "Error-" . date('d/m/Y H:i:s', time()) . ": Verify Email not sent " . $email . "\n");
-                                }
+                                mail($to_email, $subject, $body, implode("\r\n", $headers));
                             }
                             $msg = $msg . $signatur;
-                            mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header);
+                            if(mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header)){
+                                $logFile = "../logs/user.log";
+                                $log = file_get_contents($logFile);
+                                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Verify Email  " . $email . " sent\n");
+                            }else{
+                                $logFile = "../logs/user.log";
+                                $log = file_get_contents($logFile);
+                                file_put_contents($logFile, $log . "Error-" . date('d/m/Y H:i:s', time()) . ": Verify Email not sent " . $email . "\n");
+                            }
                             $jsonResult["success"] = true;
                             $jsonResult["info"] = "Account erstellt. Bitte bestätige deine Email. Wir haben dir eine Email geschickt.";
                             if (!$active) {

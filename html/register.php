@@ -57,6 +57,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			<div class="row">
 				<div class="col-md-6 login-form-2">
 					<h3>Registrieren</h3>
+					<p style="color: white;  font-weight: bold;">Achtung! Der Email Anbieter T-Online blockiert verifizierungs Emails von Mikropi. Falls du dir einen Account mit einer @t-online.de Email erstellt hast, kontaktiere bitte den Administrator.</p>
+
 					<?php
 					if ($error != null) {
 						echo ('<div class="alert alert-danger">' . $error . '

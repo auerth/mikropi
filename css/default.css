@@ -13,6 +13,10 @@
     margin-right: 10px;
 }
 
+.ignoreCursor {
+    cursor: default !important;
+}
+
 .navbar {
     position: fixed;
     top: 0;

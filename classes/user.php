@@ -584,7 +584,7 @@ Mit freundlichen Grüßen<br><br>
                                
                                 $to_email = "support@mikropi.de";
                                 $subject = "Neue Registrierung mit unbekannter Matrikelnummer";
-                                $body = "Guten Tag,\n So eben hat sich ein neuer Benutzer registriert dessen Immatrikulationsnummer nicht im System steht.\n\nVor- und Zuname: " .$forename . " " . $name."\n Email: ".$email . "\nImmatrikulationsnummer: ". $matrikelnummer."\n\nDie Aktivierung des Accounts muss manuell innherhalb des Adminpanels in Mikropi vorgenommen werden. (https://mikropi.de/admin.php)\n\n Mit freundlichen Grüßen \n\n Mikropi";
+                                $body = "Guten Tag,\nSo eben hat sich ein neuer Benutzer registriert dessen Immatrikulationsnummer nicht im System steht.\n\nVor- und Zuname: " .$forename . " " . $name."\nEmail: ".$email . "\nImmatrikulationsnummer: ". $matrikelnummer."\n\n Die Aktivierung des Accounts muss manuell innherhalb des Adminpanels in Mikropi vorgenommen werden. (https://mikropi.de/admin.php)\n\n Mit freundlichen Grüßen \n\n Mikropi";
                                 $headers   = array();
                                 $headers[] = "MIME-Version: 1.0";
                                 $headers[] = "Content-type: text/plain; charset=utf-8";
@@ -707,6 +707,16 @@ Mit freundlichen Grüßen<br><br>
                             $admin = true;
                         }
                     }
+                    $sql = "SELECT activated FROM verified_email WHERE userId = '" . $row["id"] . "';";
+                    $verifyed = false;
+                    if ($verifyResult = $db->query($sql)) {
+                        $count = $verifyResult->num_rows;
+                        if ($count == 1) {
+                            if($verifyResult->fetch_array()["activated"] == "1"){
+                                $verifyed = true;
+                            }
+                        }
+                    }
 
                     $sql = "SELECT MAX( UNIX_TIMESTAMP(timestamp)) FROM hash WHERE userId = '" . $row["id"] . "';";
                     $lastLogin = 0;
@@ -729,7 +739,8 @@ Mit freundlichen Grüßen<br><br>
                                 "created" => strtotime($row["created"]),
                                 "matrikelnummer" => $row["matrikelnummer"],
                                 "email" => $row["email"],
-                                "last_login" => $lastLogin
+                                "last_login" => $lastLogin,
+                                "verifyed" => $verifyed
                             ));
                         }
                     } else {
@@ -742,7 +753,8 @@ Mit freundlichen Grüßen<br><br>
                             "created" => strtotime($row["created"]),
                             "matrikelnummer" => $row["matrikelnummer"],
                             "email" => $row["email"],
-                            "last_login" => $lastLogin
+                            "last_login" => $lastLogin,
+                            "verifyed" => $verifyed
                         ));
                     }
                 }

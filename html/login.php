@@ -96,7 +96,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<a href="forgotPassword.php" class="ForgetPwd" value="Login">Password
 								vergessen?</a>
 						</div>
+						
 					</form>
+					<p style="color: white;">Bei technischen Fragen wende dich bitte an den Administrator: <a href="mailto: admin@mikropi.de">admin@mikropi.de</a></p>
+
 				</div>
 			</div>
 		</div>

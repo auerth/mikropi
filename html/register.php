@@ -100,6 +100,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<input type="button" class="btnSubmit" onclick="postForm()" value="Registrieren" />
 						</div>
 					</form>
+					
+					<p style="color: white;">Bei technischen Fragen wende dich bitte an den Administrator: <a href="mailto: admin@mikropi.de">admin@mikropi.de</a></p>
 				</div>
 			</div>
 		</div>

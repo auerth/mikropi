@@ -66,11 +66,14 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<div class="g-recaptcha" data-sitekey="6LcTf70UAAAAAGGOlOjgmHts4Sr0LbAsdnsnk1wZ"></div>
 							
 						</center>
+						<br>
 						<div class="form-group">
 							<input type="submit" class="btnSubmit" value="Verifizieren" />
 						</div>
 						
 					</form>
+					<p style="color: white;">Bei technischen Fragen wende dich bitte an den Administrator: <a href="mailto: admin@mikropi.de">admin@mikropi.de</a></p>
+
 				</div>
 			</div>
 		</div>

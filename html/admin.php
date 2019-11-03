@@ -228,6 +228,10 @@ if (!$isAdmin || !$loggedIn) {
                             foreach ($userList as $user) {
                                 $activatedChecked = "";
                                 $adminChecked = "";
+                                $emailVerifyed = '<i class="fas fa-times ignoreCursor"></i>';
+                                if($user["verifyed"]){
+                                    $emailVerifyed = '<i class="fas fa-check ignoreCursor"></i>';
+                                }
                                 if ($user["activated"]) {
                                     $activatedChecked = "checked";
                                 }
@@ -247,13 +251,16 @@ if (!$isAdmin || !$loggedIn) {
                                             <div class="col-2">
                                                 <p>Matrikelnummer: ' . $user["matrikelnummer"] . '</p>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-3">
                                                 <p>Email: ' . $user["email"] . '</p>
                                             </div>
                                             <div class="col-3">
                                                 <p>Letzter Login: ' . date('d.m.Y H:i', $user["last_login"]) . ' Uhr</p>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-2">
+                                                <p>Email verifiziert: ' .  $emailVerifyed . '</p>
+                                            </div>
+                                            <div class="col-2">
                                                 <p>Erstellt am: ' .  date('d.m.Y', $user["created"]) . '</p>
                                             </div>
                                         </div>

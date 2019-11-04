@@ -57,7 +57,6 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			<div class="row">
 				<div class="col-md-6 login-form-2">
 					<h3>Registrieren</h3>
-					<p style="color: white;  font-weight: bold;">Achtung! Der Email Anbieter T-Online blockiert verifizierungs Emails von Mikropi. Falls du dir einen Account mit einer @t-online.de Email erstellt hast, kontaktiere bitte den Administrator.</p>
 
 					<?php
 					if ($error != null) {
@@ -80,10 +79,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<input type="text" name="email" id="email" class="form-control" placeholder="Email" value="" required="true" />
 						</div>
 						<div class="form-group">
-							<input type="password" id="password" name="password" class="form-control" placeholder="Password" value="" required="true" autocomplete="off" />
+							<input type="password" id="password" name="password" class="form-control" placeholder="Passwort" value="" required="true" autocomplete="off" />
 						</div>
 						<div class="form-group">
-							<input type="password" id="password_repeat" name="" class="form-control" placeholder="Password wiederholen" value="" required="true" />
+							<input type="password" id="password_repeat" name="" class="form-control" placeholder="Passwort wiederholen" value="" required="true" />
 						</div>
 						<div class="form-group">
 							<input type="text" name="matrikelnummer" id="matrikelnummer" class="form-control" placeholder="Immatrikulationsnummer" value="" />

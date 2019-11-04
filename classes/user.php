@@ -569,6 +569,7 @@ Mit freundlichen Grüßen<br><br>
                             $header  = "MIME-Version: 1.0\r\n";
                             $header .= "Content-type: text/html; charset=utf-8\r\n";
                             $header .= "From: support@mikropi.de\r\n";
+                            $header .= "Return-Path: support@mikropi.de\r\n"; // Return path for errors
                             $header .= "Reply-To: support@mikropi.de\r\n";
                             $header .= "X-Mailer: PHP " . phpversion();
                             $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";

@@ -311,7 +311,7 @@ if (!$isAdmin || !$loggedIn) {
                 <h5 class="card-header bg-2nd text-white">Immatrikulationsnummern</h5>
                 <div class="card-body">
 
-                    <form enctype="multipart/form-data" action="" method="POST">
+                    <form enctype="multipart/form-data" action="admin.php" method="POST">
                         <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
                         <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
                         <!-- Der Name des Input Felds bestimmt den Namen im $_FILES Array -->
@@ -352,7 +352,7 @@ if (!$isAdmin || !$loggedIn) {
 																		');
                             foreach ($categorys[key($categorys)] as $item) {
                                 if ($item["name"] != "Alle")
-                                    echo ('<li><a id="' . $item["id"] . '" class="dropdown-item"><i style="color: #0062cc;" id="' . $item["id"] . '" class="fas fa-trash-alt" style="margin-right:5px;"></i>' . $item["name"] . '</a></li>');
+                                    echo ('<li><a id="' . $item["id"] . '" class="dropdown-item"><i style="color: #0062cc; margin-right:5px;" id="' . $item["id"] . '" class="fas fa-trash-alt" ></i>' . $item["name"] . '</a></li>');
                             }
                             echo ('<li><a id="-2" class="dropdown-item">[Hinzufügen]</a></li>');
 
@@ -370,7 +370,7 @@ if (!$isAdmin || !$loggedIn) {
             <div class="card">
                 <h5 class="card-header bg-2nd text-white">Module</h5>
                 <div class="card-body">
-                    <form action="" method="POST" style="width: 100%">
+                    <form action="admin.php" method="POST" style="width: 100%">
 
                         <div class="row" style="margin-bottom: 10px;">
 

@@ -152,7 +152,7 @@ class PageBuilder
         }
         $nav = $nav . '</ul>
                              </div>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">';
         if (!$loggedIn) {
             $activeLogin = "";

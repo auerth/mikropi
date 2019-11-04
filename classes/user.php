@@ -548,15 +548,9 @@ Mit freundlichen Grüßen<br><br>
         $sql = "SELECT * FROM user WHERE email like '" . $email . "' OR matrikelnummer like '" . $tmpMatrikel . "';";
         if ($result = $db->query($sql)) {
             $row_cnt = $result->num_rows;
-            $active = 0;
+            $active = 1;
             if ($row_cnt == 0) {
 
-                $sql = "SELECT * FROM matrikelnumber WHERE number = '" . $tmpMatrikel . "'";
-                if ($result = $db->query($sql)) {
-                    if ($result->num_rows == 1) {
-                        $active = 1;
-                    }
-                }
                 $sql = "INSERT INTO user (email, password, matrikelnummer, name, forename,activated)
                         VALUES ('" . $email . "', '" . $password . "', '" . $matrikelnummer . "', '" . $name . "', '" . $forename . "','" . $active . "'); ";
                 $logFile = "../logs/user.log";
@@ -577,23 +571,7 @@ Mit freundlichen Grüßen<br><br>
                             $header .= "From: support@mikropi.de\r\n";
                             $header .= "Reply-To: support@mikropi.de\r\n";
                             $header .= "X-Mailer: PHP " . phpversion();
-                            if ($active == 1) {
-                                $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
-                            } else {
-                                $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt er muss aber noch von einem Mitarbeiter manuell aktiviert werden. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
-                               
-                                $to_email = "support@mikropi.de";
-                                $subject = "Neue Registrierung mit unbekannter Matrikelnummer";
-                                $body = "Guten Tag,\nSo eben hat sich ein neuer Benutzer registriert dessen Immatrikulationsnummer nicht im System steht.\n\nVor- und Zuname: " .$forename . " " . $name."\nEmail: ".$email . "\nImmatrikulationsnummer: ". $matrikelnummer."\n\n Die Aktivierung des Accounts muss manuell innherhalb des Adminpanels in Mikropi vorgenommen werden. (https://mikropi.de/admin.php)\n\n Mit freundlichen Grüßen \n\n Mikropi";
-                                $headers   = array();
-                                $headers[] = "MIME-Version: 1.0";
-                                $headers[] = "Content-type: text/plain; charset=utf-8";
-                                $headers[] = "From: admin@mikropi.de";
-                                $headers[] = "Reply-To: admin@mikropi.de";
-                                $headers[] = "Subject: {$subject}";
-                                $headers[] = "X-Mailer: PHP/" . phpversion();
-                                mail($to_email, $subject, $body, implode("\r\n", $headers));
-                            }
+                            $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
                             $msg = $msg . $signatur;
                             if(mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header)){
                                 $logFile = "../logs/user.log";

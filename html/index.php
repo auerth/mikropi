@@ -151,8 +151,8 @@ if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_o
     } else {
         $loggedIn = false;
     }
-}else {
-	die("System Error! Support: admin@mikropi.de");
+} else {
+    die("System Error! Support: admin@mikropi.de");
 }
 ?>
 <!DOCTYPE html>
@@ -408,7 +408,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 <input id="cutId" name="cutId" type="text" style="display: none;" value="' . $cutId . '">
 
 <div class="form-group">
-<textarea name="newDescription" rows="8" id="newDescription" type="text" class="form-control" placeholder="Beschreibung eingeben"></textarea>
+<textarea name="newDescription" rows="8" id="newDescription" class="form-control" placeholder="Beschreibung eingeben"></textarea>
 </div>
 <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
 
@@ -514,10 +514,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     $info = $dashList["info"];
 
                     echo ('<div class="card bgimg">
-                    <div class="card-body" stylle="margin-bottom: 0px; padding-bottom: 0px;">
+                    <div class="card-body" style="margin-bottom: 0px; padding-bottom: 0px;">
                         <div class="bg-light text-center" style="height: 300px; margin-top: 20px; margin-bottom: 20px; padding-top: 0px;">
                             <div style="padding: 30px 0;">
-                                <img height="200" src="../images/logo_white.png">
+                                <img height="200" src="../images/logo_white.png" alt="Mikropi Logo">
                                 <h2 class="card-text">Willkommen ' . $name . '</h2>
                             </div>
                         </div>
@@ -547,13 +547,11 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                             $row = "<div class='row bg-second'><div class='col-10'>";
                             $row2 = "</div><div class='col-2 '><i style='float: right; margin-left: auto;' onclick='deleteDashItem(" . $item["id"] . ")' class='fas fa-trash-alt'></i></div></div>";
                         }
-                        echo ("	<div class='card item '>
-
-															" . $row . "<h4 class='card-header'>" . $item["title"] . "</h4>" . $row2 . "
-															<p class='card-body'>" . $item["text"] . "</p>
-				  <ul class='list-group list-group-flush'>
-						    <li class='list-group-item author'>" . $item["uploader"] . " - " . date("d.m.Y H:i:s", $item["timestamp"]) . "</li>
-					</ul></div>
+                        echo ("	<div class='card item '>" . $row . "<h4 class='card-header'>" . $item["title"] . "</h4>" . $row2 . "<p class='card-body'>" . $item["text"] . "</p>
+                                    <ul class='list-group list-group-flush'>
+                                        <li class='list-group-item author'>" . $item["uploader"] . " - " . date("d.m.Y H:i:s", $item["timestamp"]) . "</li>
+                                    </ul>
+                                </div>
 						");
                     }
                 } else {
@@ -562,9 +560,6 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 }
                 echo ("</div>");
 
-                echo ("
-
-						</div>");
             } else if (!$loggedIn) {
                 echo (file_get_contents("home.html"));
             }
@@ -590,6 +585,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                     </svg>
                                 </div>
                             </div>
+                        </div>
                         </div>');
                         }
                     }

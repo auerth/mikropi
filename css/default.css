@@ -774,6 +774,11 @@ input[type="checkbox"]+label span:hover {
     margin-bottom: 5px;
 }
 
+.list .userMedia a {
+    color: black;
+    text-decoration: underline;
+}
+
 .userMedia:hover {
     transform: scale(1.005);
 }

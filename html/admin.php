@@ -252,7 +252,7 @@ if (!$isAdmin || !$loggedIn) {
                                                 <p>Matrikelnummer: ' . $user["matrikelnummer"] . '</p>
                                             </div>
                                             <div class="col-3">
-                                                <p>Email: ' . $user["email"] . '</p>
+                                                <p>Email: <a href="mailto: '.$user["email"].'">' . $user["email"] . '</a></p>
                                             </div>
                                             <div class="col-3">
                                                 <p>Letzter Login: ' . date('d.m.Y H:i', $user["last_login"]) . ' Uhr</p>

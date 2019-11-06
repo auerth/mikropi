@@ -16,22 +16,12 @@ class PageBuilder
     public function  getHead($title, $description, $stylesheets = array(), $author = "Thorben Auer")
     {
         $headStart = "<head>";
-        $google = "<!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src='https://www.googletagmanager.com/gtag/js?id=UA-150508341-1'></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'UA-150508341-1');
-        </script>";
+       
         $head = '
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="' . $description . '">
-        <meta name="author" content="$author">
-        ' . $google . '
-        
+        <meta name="author" content="'.$author.'">        
         <title>' . $title . '</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">

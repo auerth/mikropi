@@ -66,7 +66,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 						<center>
 							<div class="form-group">
 								<p><br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'></p>
-								<input type="text" name="captcha" />
+								<input type="text" style=" width: 25% !important;" class="form-control" name="captcha" />
 							</div>
 							<p style="color: white;">Sie können das Captcha nicht erkenne? <a href='javascript: refreshCaptcha();'>Dann hier drücken</a></p>
 						</center>

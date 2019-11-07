@@ -3,9 +3,9 @@ session_start();
 //You can customize your captcha settings here
 
 $captcha_code = '';
-$captcha_image_height = 50;
-$captcha_image_width = 130;
-$total_characters_on_image = 6;
+$captcha_image_height = 80;
+$captcha_image_width = 230;
+$total_characters_on_image = 8;
 
 //The characters that can be used in the CAPTCHA code.
 //avoid all confusing characters and numbers (For example: l, 1 and i)

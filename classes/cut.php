@@ -26,7 +26,7 @@ class Cut
 
         $icd_10_ = $db->real_escape_string($icd_10_);
         $diagnosegruppe = $db->real_escape_string($diagnosegruppe);
-        $sql = "SELECT DISTINCT c.*, ttc.categoryId FROM cut c, ttCutCategory ttc WHERE ttc.cutId = c.id AND c.toDelete = 0";
+        $sql = "SELECT DISTINCT c.*, ttc.categoryId FROM cut c, ttCutCategory ttc WHERE ttc.cutId = c.id AND c.toDelete = '0'";
         if ($result = $db->query($sql)) {
             $info = array();
             $rows = array();

@@ -2,6 +2,7 @@
 
 
 <?php
+session_start();
 $error = null;
 $info = null;
 $classFiles = "../etc/classfiles.php";

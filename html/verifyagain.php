@@ -2,8 +2,8 @@
 
 
 <?php
+session_start();
 $error = null;
-
 $classFiles = "../etc/classfiles.php";
 include($classFiles);
 
@@ -13,7 +13,7 @@ $redirect = null;
 $pageBuilder = new PageBuilder();
 
 if (isset($_POST["email"])) {
-	include("../etc/recaptcha.php");
+	echo($_POST["captcha"] . "-".$_SESSION["captcha"]);
 	if (isset($_POST['captcha']) && ($_POST['captcha'] != "")) {
 		if (strcasecmp($_SESSION['captcha'], $_POST['captcha']) == 0) {
 			$user = new User();

@@ -388,18 +388,19 @@ Mit freundlichen Grüßen<br><br>
         include("../etc/db.php");
         $email = $db->real_escape_string($email);
         $email = strtolower(trim($email));
-        $sql = "SELECT id FROM user WHERE email like '" . $email . "';";
+        $sql = "SELECT id ,forename FROM user WHERE email like '" . $email . "';";
         if ($result = $db->query($sql)) {
             $num = $result->num_rows;
             if ($num == 1) {
-                $userId = $result->fetch_array();
-                $userId = $userId["id"];
+                $row = $result->fetch_array();
+                $userId = $row["id"];
+                $name = $userId["forename"];
                 $sql = "DELETE FROM verified_email WHERE userId = '" . $userId . "'";
                 if ($result = $db->query($sql)) {
                     $hash = $this->createHashForEmail($userId);
                     if ($hash != "") {
                         include('../etc/signatur.php');
-                        $msg = "Hallo,<br><br>
+                        $msg = "Hallo ".$name.",<br><br>
                         Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
                         $msg = $msg . $signatur;
                         $header  = "MIME-Version: 1.0\r\n";
@@ -452,9 +453,20 @@ Mit freundlichen Grüßen<br><br>
             $num = $result->num_rows;
             if ($num == 1) {
                 $row = $result->fetch_array();
+                $email = "";
+                $sql = "SELECT email FROM user WHERE id = '".$row["userId"]."'";
+                if($result = $db->query($sql)){
+                    $num = $result->num_rows;
+                    if ($num == 1) {
+                        $email = $result->fetch_array()["email"];
+                    }
+                }
                 $sql = "UPDATE verified_email SET activated = '1' WHERE id = '" . $row["id"] . "';";
                 if ($result = $db->query($sql)) {
                     $jsonResult["success"] = true;
+                    $logFile = "../logs/user.log";
+                    $log = file_get_contents($logFile);
+                    file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Email verified: " . $email . "\n");
                 } else {
                     $jsonResult["success"] = false;
                     $jsonResult["error"] = "Error by data selecting (Multiple data selected).";

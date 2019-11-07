@@ -2,6 +2,7 @@
 
 
 <?php
+session_start();
 
 $classFiles = "../etc/classfiles.php";
 include($classFiles);
@@ -14,20 +15,23 @@ if (file_exists($file_pagebuilder) && file_exists($file_user) && file_exists($fi
 	$pageBuilder = new PageBuilder();
 	if (isset($_POST["email"]) && isset($_POST["password"])) {
 		$user = new User();
-		$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secretkey . '&response=' . $_POST['g-recaptcha-response']);
-		$data = json_decode($json, true);
-		if ($data["success"]) {
-			$result = $user->register($_POST["email"], hash('sha256', $_POST["password"]), $_POST["matrikelnummer"], $_POST["name"], $_POST["forename"]);
-			if ($result["errorCode"] == null) {
-				$info = $result["info"];
+		if (isset($_POST['captcha']) && ($_POST['captcha'] != "")) {
+			if (strcasecmp($_SESSION['captcha'], $_POST['captcha']) == 0) {
+				$result = $user->register($_POST["email"], hash('sha256', $_POST["password"]), $_POST["matrikelnummer"], $_POST["name"], $_POST["forename"]);
+				if ($result["errorCode"] == null) {
+					$info = $result["info"];
+				} else {
+					$error = $result["error"];
+				}
 			} else {
-				$error = $result["error"];
-			}
+				$error = "Captcha nicht richtig.";
+
+			 }
 		} else {
 			$error = "Captcha nicht richtig.";
 		}
 	}
-}else{
+} else {
 	die("System Error! Support: admin@mikropi.de");
 }
 
@@ -94,14 +98,16 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 						</div>
 						<center>
 							<div class="form-group">
-								<div class="g-recaptcha" data-sitekey="6LcTf70UAAAAAGGOlOjgmHts4Sr0LbAsdnsnk1wZ"></div>
+								<p><br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'></p>
+								<input type="text" name="captcha" />
 							</div>
+							<p style="color: white;">Sie können das Captcha nicht erkenne? <a href='javascript: refreshCaptcha();'>Dann hier drücken</a></p>
 						</center>
 						<div class="form-group center">
 							<input type="button" class="btnSubmit" onclick="postForm()" value="Registrieren" />
 						</div>
 					</form>
-					
+
 					<p style="color: white;">Bei technischen Fragen wende dich bitte an den Administrator: <a href="mailto: admin@mikropi.de">admin@mikropi.de</a></p>
 				</div>
 			</div>
@@ -115,8 +121,13 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 
 </body>
-
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script>
+	//Refresh Captcha
+	function refreshCaptcha() {
+		var img = document.images['captcha_image'];
+		img.src = img.src.substring(0, img.src.lastIndexOf("?")) + "?rand=" + Math.random() * 1000;
+	}
+</script>
 <?php
 $array = array("../js/register.js");
 echo ($pageBuilder->getJsTags($array));

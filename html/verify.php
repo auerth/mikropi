@@ -11,11 +11,11 @@
                 echo($result["error"]."<br> Bitte wenden Sie sich an den Support");
             }
         }else{
-            
+            header("Location: login.php");
         }
+    }else{
+        header("Location: login.php");
     }
-    header("Location: login.php");
-
 
 
 ?>

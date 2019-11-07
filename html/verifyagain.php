@@ -14,27 +14,28 @@ $pageBuilder = new PageBuilder();
 
 if (isset($_POST["email"])) {
 	include("../etc/recaptcha.php");
-    $json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secretkey.'&response=' . $_POST['g-recaptcha-response']);
-	$data = json_decode($json, true);
-	if ($data["success"]) {
-	$user = new User();
-	$result = $user->reVerifyEmail($_POST["email"]);
-	if ($result["errorCode"] == null && $result["success"]) {
-		$msg = $result["info"];
+	if (isset($_POST['captcha']) && ($_POST['captcha'] != "")) {
+		if (strcasecmp($_SESSION['captcha'], $_POST['captcha']) == 0) {
+			$user = new User();
+			$result = $user->reVerifyEmail($_POST["email"]);
+			if ($result["errorCode"] == null && $result["success"]) {
+				$msg = $result["info"];
+			} else {
+				$error = $result["error"];
+			}
+		} else {
+			$error = "Captcha Falsch";
+		}
 	} else {
-		$error = $result["error"];
-    }
-}else{
-    $error ="Captcha Falsch";
-
-}
+		$error = "Captcha Falsch";
+	}
 }
 
 
 ?>
 <html lang="de">
 <?php
-echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen.",array("../css/login.css")));
+echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen.", array("../css/login.css")));
 ?>
 
 
@@ -53,24 +54,27 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					<?php
 					if ($error != null) {
 						echo ('<div class="alert alert-danger">' . $error . '</div>');
-                    }
-                    if ($msg != null) {
+					}
+					if ($msg != null) {
 						echo ('<div class="alert alert-success">' . $msg . '</div>');
 					}
 					?>
 					<form method="post" action="verifyagain.php">
 						<div class="form-group">
 							<input type="text" name="email" class="form-control" placeholder="Email" value="" required="true" />
-                        </div>
-                        <center>
-								<div class="g-recaptcha" data-sitekey="6LcTf70UAAAAAGGOlOjgmHts4Sr0LbAsdnsnk1wZ"></div>
-							
+						</div>
+						<center>
+							<div class="form-group">
+								<p><br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'></p>
+								<input type="text" name="captcha" />
+							</div>
+							<p style="color: white;">Sie können das Captcha nicht erkenne? <a href='javascript: refreshCaptcha();'>Dann hier drücken</a></p>
 						</center>
 						<br>
 						<div class="form-group">
 							<input type="submit" class="btnSubmit" value="Verifizieren" />
 						</div>
-						
+
 					</form>
 					<p style="color: white;">Bei technischen Fragen wende dich bitte an den Administrator: <a href="mailto: admin@mikropi.de">admin@mikropi.de</a></p>
 
@@ -80,15 +84,20 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 		<?php
 
-echo ($pageBuilder->getFooter());
+		echo ($pageBuilder->getFooter());
 
-?>
+		?>
 	</main>
 
 
 </body>
-<!-- Bootstrap core JavaScript -->
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script>
+	//Refresh Captcha
+	function refreshCaptcha() {
+		var img = document.images['captcha_image'];
+		img.src = img.src.substring(0, img.src.lastIndexOf("?")) + "?rand=" + Math.random() * 1000;
+	}
+</script>
 <?php
 
 echo ($pageBuilder->getJsTags());

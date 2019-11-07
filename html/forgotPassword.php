@@ -15,18 +15,19 @@ $pageBuilder = new PageBuilder();
 
 if (isset($_POST["email"]) && isset($_POST["matrikelnummer"])) {
 	$user = new User();
-	include("../etc/recaptcha.php");
-	$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secretkey.'&response=' . $_POST['g-recaptcha-response']);
-	$data = json_decode($json, true);
-	if ($data["success"]) {
-		$result = $user->forgotPassword($_POST["email"], $_POST["matrikelnummer"]);
-		if ($result["errorCode"] == null && $result["success"]) {
-			$info = $result["info"];
-			header("Location: login.php?msg=forgot");
+	if (isset($_POST['captcha']) && ($_POST['captcha'] != "")) {
+		if (strcasecmp($_SESSION['captcha'], $_POST['captcha']) == 0) {
+			$result = $user->forgotPassword($_POST["email"], $_POST["matrikelnummer"]);
+			if ($result["errorCode"] == null && $result["success"]) {
+				$info = $result["info"];
+				header("Location: login.php?msg=forgot");
+			} else {
+				$error = $result["error"];
+			}
 		} else {
-			$error = $result["error"];
+			$error = "Captcha nicht richtig.";
 		}
-	}else{
+	} else {
 		$error = "Captcha nicht richtig.";
 	}
 }
@@ -67,8 +68,11 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<input type="text" name="matrikelnummer" class="form-control" placeholder="Immatrikulationsnummer" value="" required="true" />
 						</div>
 						<center>
-								<div class="g-recaptcha" data-sitekey="6LcTf70UAAAAAGGOlOjgmHts4Sr0LbAsdnsnk1wZ"></div>
-							
+							<div class="form-group">
+								<p><br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'></p>
+								<input type="text" name="captcha" />
+							</div>
+							<p style="color: white;">Sie können das Captcha nicht erkenne? <a href='javascript: refreshCaptcha();'>Dann hier drücken</a></p>
 						</center><br>
 						<div class="form-group">
 							<input type="submit" class="btnSubmit" value="Neues Passwort generieren" />
@@ -90,9 +94,13 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 	?>
 
 </body>
-
-<script src='https://www.google.com/recaptcha/api.js'></script>
-<!-- Bootstrap core JavaScript -->
+<script>
+	//Refresh Captcha
+	function refreshCaptcha() {
+		var img = document.images['captcha_image'];
+		img.src = img.src.substring(0, img.src.lastIndexOf("?")) + "?rand=" + Math.random() * 1000;
+	}
+</script>
 <?php
 
 echo ($pageBuilder->getJsTags());

@@ -502,7 +502,7 @@ if (!$isAdmin || !$loggedIn) {
 
 
     <?php
-    $array = array("../js/filter.js", "../js/upload.js", "../js/log.js");
+    $array = array("../js/admin.js", "../js/filter.js", "../js/log.js");
     echo ($pageBuilder->getJsTags($array));
 
     ?>

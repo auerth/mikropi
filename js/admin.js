@@ -19,6 +19,30 @@ async function prepare() {
     upload(uploader.files, 0, data);
 }
 
+$('#searchUser').on('input', function(e) {
+    searchUser();
+});
+
+
+
+function searchUser() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("searchUser");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("userListe");
+    li = ul.getElementsByClassName("userMedia");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("summary")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+
+    }
+}
+
 async function upload(files, i, data) {
     var xhr = new XMLHttpRequest();
     var startTime = new Date().getTime();

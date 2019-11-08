@@ -26,19 +26,25 @@ $('#searchUser').on('input', function(e) {
 
 
 function searchUser() {
-    var input, filter, ul, li, a, i, txtValue;
+    var input, filter, ul, li, a, i, matrikel, name, email;
     input = document.getElementById("searchUser");
     filter = input.value.toUpperCase();
     ul = document.getElementById("userListe");
     li = ul.getElementsByClassName("userMedia");
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("summary")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        name = a.textContent || a.innerText;
+        a = li[i].getElementsByTagName("a")[0];
+        email = a.textContent || a.innerText;
+        a = li[i].getElementsByClassName("filterMatrikel")[0];
+        matrikel = a.textContent || a.innerText;
+        if (name.toUpperCase().indexOf(filter) > -1 || email.toUpperCase().indexOf(filter) > -1 || matrikel.toUpperCase().indexOf(filter) > -1) {
             li[i].style.display = "";
+
         } else {
             li[i].style.display = "none";
         }
+
 
     }
 }

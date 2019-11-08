@@ -220,7 +220,7 @@ if (!$isAdmin || !$loggedIn) {
                             <label for="immatrikulationsnummer"> Immatrikulationsnummer</label>
                         </fieldset>
                     </form>
-                    <input type="text" id="searchUser" name="name" class="form-control" placeholder="Name suchen">
+                    <input type="text" id="searchUser" name="name" class="form-control" placeholder="Suche (Email, Immatrikulationsnummer oder Name)">
                     <div class="list" style="height: 600px; margin-top: 5px;" id="userListe">
                         <?php
                         if ($userList["success"]) {
@@ -254,9 +254,9 @@ if (!$isAdmin || !$loggedIn) {
                                            
                                         <div class="row col-12">
                                             <div class="col-2">
-                                                <p>Matrikelnummer: ' . $user["matrikelnummer"] . '</p>
+                                                <p class="filterMatrikel">Matrikelnummer: ' . $user["matrikelnummer"] . '</p>
                                             </div>
-                                            <div class="col-3" id="searchEmail">
+                                            <div class="col-3" >
                                                 <p>Email: <a href="mailto: '.$user["email"].'">' . $user["email"] . '</a></p>
                                             </div>
                                             <div class="col-3">

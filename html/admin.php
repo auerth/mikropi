@@ -281,10 +281,12 @@ if (!$isAdmin || !$loggedIn) {
                                                         <label class="form-check-label" onclick="check(`checkbox-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Admin</label>
                                                     </div>
                                                     
-                                            <i style="float: right; margin-left: auto; margin-top: 4px;" onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
-                                                    <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
+                                                    <i style="margin-left: 15px; margin-top: 4px; margin-right: 2px !important;" onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
+
 
                                                 </div>
+                                                <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
+
                                             </form>
                                             </div>
                                         </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <?php
-
+session_start();
 $classFiles = "../etc/classfiles.php";
 include($classFiles);
 
@@ -89,7 +89,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                             </div>
                         </div>
                         <!--Grid row-->
-                        <input type="hidden" id="email" name="email" value="<?php echo ($email) ?>">
+                        <input type="hidden" id="email" name="email" value="<?php echo ($_COOKIE["email"]) ?>">
                         <input type="hidden" id="name" name="name" value="<?php echo ($name) ?>">
 
 
@@ -109,11 +109,12 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                         </div>
 
                         <center>
-                            <br>
-                            <div class="form-group">
-                                <div class="g-recaptcha" data-sitekey="6LcTf70UAAAAAGGOlOjgmHts4Sr0LbAsdnsnk1wZ"></div>
-                            </div>
-                        </center>
+							<div class="form-group">
+								<p><br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'></p>
+								<input type="text" style=" width: 25% !important;" class="form-control" name="captcha" />
+							</div>
+							<p style="color: white;">Sie können das Captcha nicht erkenne? <a href='javascript: refreshCaptcha();'>Dann hier drücken</a></p>
+						</center>
                         <!--Grid row-->
                         <div class="text-center">
                             <button type="submit" class="btnSubmit" style="font-size: 15px; height: 50px; width: 200px;">Abschicken</button>

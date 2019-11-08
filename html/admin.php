@@ -285,7 +285,7 @@ if (!$isAdmin || !$loggedIn) {
 
 
                                                 </div>
-                                                <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
+                                                <button type="submit" style="margin-left:10px; margin-top: 5px;" class="btn btn-primary" >Speichern</button>
 
                                             </form>
                                             </div>

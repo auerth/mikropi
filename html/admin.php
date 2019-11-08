@@ -228,9 +228,9 @@ if (!$isAdmin || !$loggedIn) {
                             foreach ($userList as $user) {
                                 $activatedChecked = "";
                                 $adminChecked = "";
-                                $emailVerifyed = '<i class="fas fa-times ignoreCursor"></i>';
+                                $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px;"></i>';
                                 if($user["verifyed"]){
-                                    $emailVerifyed = '<i class="fas fa-check ignoreCursor"></i>';
+                                    $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px;"></i>';
                                 }
                                 if ($user["activated"]) {
                                     $activatedChecked = "checked";
@@ -240,13 +240,17 @@ if (!$isAdmin || !$loggedIn) {
                                 }
                                 echo ('
                                     <div class="userMedia">
+                                    
+                                    <details>
+                                             
+                                    <summary>' . $user["name"] . ", " . $user["forename"] . '
+                                                </summary>
                                     <div class="row">
                                     <div class="row col-10">
-                                        <div class="row col-12">
-                                            <div class=" col-12">
-                                                <h4>' . $user["name"] . ", " . $user["forename"] . '</h4>
-                                            </div>
-                                        </div>
+                                    
+                                        
+                                   
+                                           
                                         <div class="row col-12">
                                             <div class="col-2">
                                                 <p>Matrikelnummer: ' . $user["matrikelnummer"] . '</p>
@@ -280,17 +284,18 @@ if (!$isAdmin || !$loggedIn) {
                                                         <input type="checkbox" id="checkbox-' . $checkBoxId . '" class="form-check-input" name="admin" ' . $adminChecked . '>
                                                         <label class="form-check-label" onclick="check(`checkbox-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Admin</label>
                                                     </div>
-                                                    
+                                                    <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
+
                                                     <i style="margin-left: 15px; margin-top: 4px; margin-right: 2px !important;" onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
 
 
                                                 </div>
-                                                <button type="submit" style="margin-left:10px; margin-top: 5px;" class="btn btn-primary" >Speichern</button>
 
                                             </form>
                                             </div>
                                         </div>
-                                    </div>');
+                                    </div>
+                                    </details>');
                                 $checkBoxId++;
                             }
                         }

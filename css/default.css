@@ -777,6 +777,7 @@ input[type="checkbox"]+label span:hover {
     border: 1px solid #000;
     box-shadow: #999 5px 5px;
     margin-left: 10px;
+    font-size: 15px;
     transition: transform .2s;
     /* Animation */
     margin-right: 5px;

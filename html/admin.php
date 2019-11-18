@@ -49,7 +49,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
         if (isset($_POST["admin"])) {
             $admin = true;
         }
-        $result = $user->updateUser($userId, $active, $_POST["userId"], $admin);
+        $result = $user->updateUser($sessionHash, $active, $_POST["userId"], $admin);
         if (!$result["success"]) {
             $msg = $result["error"];
             $alertType = "alert-danger";
@@ -90,7 +90,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
     }
     if (isset($_POST["category"]) && isset($_POST["newCategory"])) {
 
-        $result = $category->addCategory($userId, $_POST["category"], $_POST["newCategory"]);
+        $result = $category->addCategory($sessionHash, $_POST["category"], $_POST["newCategory"]);
         if (!$result["success"]) {
             $msg = $result["error"];
             $alertType = "alert-danger";
@@ -100,7 +100,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
         }
     }
     if (isset($_POST["categoryName"]) && isset($_POST["categoryId"])) {
-        $result = $category->deleteCategory($userId, $_POST["categoryName"], $_POST["categoryId"]);
+        $result = $category->deleteCategory($sessionHash, $_POST["categoryName"], $_POST["categoryId"]);
         if (!$result["success"]) {
             $msg = $result["error"];
             $alertType = "alert-danger";
@@ -110,7 +110,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
         }
     }
     if (isset($_POST["modulId"])) {
-        $result = $modul->deleteModul($userId, $_POST["modulId"]);
+        $result = $modul->deleteModul($sessionHash, $_POST["modulId"]);
         if (!$result["success"]) {
             $msg = $result["error"];
             $alertType = "alert-danger";
@@ -285,10 +285,11 @@ if (!$isAdmin || !$loggedIn) {
                                                         <input type="checkbox" id="checkbox-' . $checkBoxId . '" class="form-check-input" name="admin" ' . $adminChecked . '>
                                                         <label class="form-check-label" onclick="check(`checkbox-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Admin</label>
                                                     </div>
-                                                    <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
+                                                    <div class="form-check" style="float: right; margin-left: auto; margin-top: 5px;">
+                                                        <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
 
-                                                    <i style="margin-left: 15px; margin-top: 4px; margin-right: 2px !important;" onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
-
+                                                        <i style="margin-left: 15px; margin-top: 4px; margin-right: 2px !important;" onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
+                                                    </div>
 
                                                 </div>
 
@@ -328,10 +329,7 @@ if (!$isAdmin || !$loggedIn) {
                             Hinzufügen</button>
 
                     </form>
-                    <form action="admin.php" method="POST">
-                        <input name="checkCuts" value="<?php echo ($userId) ?>" style="display: none;">
-
-                    </form>
+                   
                 </div>
             </div>
 

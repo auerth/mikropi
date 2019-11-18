@@ -180,7 +180,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 }
 
                 if ($categorys != null) {
-                    echo ('<i class="fas fa-filter fa-2x bg-main" style="padding: 4px; border-radius: 4px; margin: 5px;"id="disFilter"></i>');
+                    echo ('<i class="fas fa-filter fa-2x bg-main" style="color: #0062cc; background-color: white; padding: 4px; border-radius: 4px; margin: 5px;"id="disFilter"></i>');
                     echo ('<div class="filter" >');
                     while ($fruit_name = current($categorys)) {
                         $catName = key($categorys);

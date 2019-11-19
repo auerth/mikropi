@@ -277,7 +277,7 @@ if (!$isAdmin || !$loggedIn) {
                                     echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
                                 }
                                 echo ('<div class="row" style="margin-left: auto;margin-right: 15px;">
-                                                    <div class="form-check" >
+                                                    <div class="form-check" style="margin-left: 10px;" >
                                                         <input type="checkbox" id="checkboxi-' . $checkBoxId . '" class="form-check-input" name="active" ' . $activatedChecked . ' >
                                                         <label class="form-check-label" onclick="check(`checkboxi-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Aktiv</label>
                                                     </div>
@@ -301,7 +301,6 @@ if (!$isAdmin || !$loggedIn) {
                                 $checkBoxId++;
                             }
                         }
-
                         ?>
 
                     </div>

@@ -379,12 +379,12 @@ if (!$isAdmin || !$loggedIn) {
 
                         <div class="row" style="margin-bottom: 10px;">
 
-                            <div class="col-10">
-                                <input type="text" id="addModul" name="modulName" class="form-control" placeholder="Neues Modul" value="" />
+                            <div class="col-8">
+                                <input type="text" id="addModul" name="modulName" class="form-control" style="margin: 0px;" placeholder="Neues Modul" value="" />
 
                             </div>
-                            <div class="col-1">
-                                <button type="submit" class="btn btn-primary">Hinzufügen</button>
+                            <div class="col-3">
+                                <button type="submit"  class="btn btn-primary" style="margin: 0px;">+</button>
                             </div>
 
                         </div>

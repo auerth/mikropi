@@ -363,7 +363,15 @@ class Cut
                         id: "' . $row["id"] . '",
                         location: new OpenSeadragon.Rect(' . $row["fromX"] . ', ' . $row["fromY"] . ', ' . $row["sizeX"] . ',' . $row["sizeY"] . '),
                         rotationMode: OpenSeadragon.OverlayRotationMode.BOUNDING_BOX
-                    });';
+                    });
+                    var tracker = new OpenSeadragon.MouseTracker({
+                        element: elt,
+                        clickHandler: function(event) {
+                            var overlay = viewer.getOverlayById(event.originalEvent.target.id);
+                            viewer.viewport.fitBounds(overlay.getBounds(viewer.viewport));
+                                              }
+                     });';
+                    
                             }
                         } else { }
                     }

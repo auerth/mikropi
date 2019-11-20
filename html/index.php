@@ -339,15 +339,22 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     $editFilter = '<button type="submit" id="editFilter" style="margin-left:auto; float: right;" class="btn btn-primary" >Filter bearbeiten</button>';
                 }
                 echo ($editFilter . '<div id="toolbarDiv" class="toolbar" style="width: 100%; height: 2%;">
-		              <a id="zoom-in" href="#zoom-in"/>
-		              <a id="zoom-out" href="#zoom-out"/>
-		              <a id="home" href="#home"/>
-                      <a id="fullpage" href="#fullpage"/>
-                      <a id="zoom25" href="#zoom25" style="display: inline-block; position: relative;"/>
-                      <a id="zoom50" href="#zoom50" style="display: inline-block; position: relative;"/>
-                      <a id="zoom75" href="#zoom75" style="display: inline-block; position: relative;"/>
-                      <a id="zoom100" href="#zoom100" style="display: inline-block; position: relative;"/></a>
-	    			</div>
+		                <a id="zoom-in" href="#zoom-in"/>
+		                <a id="zoom-out" href="#zoom-out"/>
+		                <a id="home" href="#home"/>
+                        <a id="fullpage" href="#fullpage"/>
+                        <a id="zoom25" href="#zoom25" style="display: inline-block; position: relative;"/>
+                        <a id="zoom50" href="#zoom50" style="display: inline-block; position: relative;"/>
+                        <a id="zoom75" href="#zoom75" style="display: inline-block; position: relative;"/>
+                        <a id="zoom100" href="#zoom100" style="display: inline-block; position: relative;"/></a>
+                        <div class="viewerdetails">
+                            <p>Zoom Level: <span id="zoomlevel"></span></p>
+                            <p>X-Position: <span id="coordinateX"></span></p>
+                            <p>Y-Position: <span id="coordinateY"></span></p>
+                            
+                        </div>
+                    </div>
+                  
                         <div class="openseadragon" id="openseadragon1" style="width:100%; height:90%;"> </div></div></div>');
 
                 echo ("<div class='mobilebar'>");
@@ -577,7 +584,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                 </div>
                                 <div class="toast__content">
                                     <p class="toast__type">Bug entdeckt?</p>
-                                    <p class="toast__message">Melden uns den Fehler, den du gefunden hast gleich <a href="report.php">hier</a>!</p>
+                                    <p class="toast__message">Melde uns den Fehler, den du gefunden hast gleich <a href="report.php">hier</a>!</p>
                                 </div>
                                 <div class="toast__close">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.642 15.642" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15.642 15.642">

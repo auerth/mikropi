@@ -272,17 +272,19 @@ if (!$isAdmin || !$loggedIn) {
                                     echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
                                 }
                                 echo ('
-                                
-                                                    <div class="row form-check" style="float: right;">
-                                                        <i onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
-                                                    </div>
-                                                    <div class="row col-12 form-check">
+                                                    <div class="row">
+                                                    
+                                                    <div class="form-check">
                                                         <input type="checkbox" id="checkboxi-' . $checkBoxId . '" class="form-check-input" name="active" ' . $activatedChecked . ' >
                                                         <label class="form-check-label" onclick="check(`checkboxi-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Aktiv</label>
                                                         <input type="checkbox" id="checkbox-' . $checkBoxId . '" class="form-check-input" name="admin" ' . $adminChecked . '>
                                                         <label class="form-check-label" onclick="check(`checkbox-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Admin</label>
                                                     </div>
-                                                    <div class="row form-check">
+                                                    <div class="form-check"  style="float: right;">
+                                                        <i onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
+                                                    </div>
+                                                    </div>
+                                                    <div class="form-check">
                                                         <button type="submit"  class="btn btn-primary" >Speichern</button>
                                                     </div>
 

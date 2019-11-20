@@ -164,6 +164,11 @@
         .toolbar span img {
             height: 40px !important;
         }
+        .viewerdetails {
+            top: 45px;
+            font-size: 11px;
+            width: 150px !important;
+        }
         #editFilter {
             display: none;
         }

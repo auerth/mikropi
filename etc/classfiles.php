@@ -7,5 +7,5 @@ $file_modul = "../classes/moduls.php";
 $file_dashboard = "../classes/dashboard.php";
 $file_user = "../classes/user.php";
 $file_pagebuilder = "../classes/pagebuilder.php";
-$file_captcha = "../etc/recaptcha.php";
+$file_captcha = "../classes/captcha.php";
 ?>

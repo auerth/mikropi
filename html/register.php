@@ -11,7 +11,6 @@ $info = null;
 if (file_exists($file_pagebuilder) && file_exists($file_user) && file_exists($file_captcha)) {
 	include($file_user);
 	include($file_pagebuilder);
-	include($file_captcha);
 	$pageBuilder = new PageBuilder();
 	if (isset($_POST["email"]) && isset($_POST["password"])) {
 		$user = new User();
@@ -25,8 +24,7 @@ if (file_exists($file_pagebuilder) && file_exists($file_user) && file_exists($fi
 				}
 			} else {
 				$error = "Captcha nicht richtig.";
-
-			 }
+			}
 		} else {
 			$error = "Captcha nicht richtig.";
 		}
@@ -121,13 +119,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 
 </body>
-<script>
-	//Refresh Captcha
-	function refreshCaptcha() {
-		var img = document.images['captcha_image'];
-		img.src = img.src.substring(0, img.src.lastIndexOf("?")) + "?rand=" + Math.random() * 1000;
-	}
-</script>
+
 <?php
 $array = array("../js/register.js");
 echo ($pageBuilder->getJsTags($array));
@@ -135,7 +127,17 @@ echo ($pageBuilder->getJsTags($array));
 ?>
 <!-- Bootstrap core JavaScript -->
 
+<script>
+	//Refresh Captcha
+	$('input[type="text"]').blur(function() {
+		$(window).scrollTop(0, 0);
+	});
 
+	function refreshCaptcha() {
+		var img = document.images['captcha_image'];
+		img.src = img.src.substring(0, img.src.lastIndexOf("?")) + "?rand=" + Math.random() * 1000;
+	}
+</script>
 
 
 

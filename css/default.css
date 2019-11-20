@@ -784,6 +784,33 @@ input[type="checkbox"]+label span:hover {
     margin-bottom: 5px;
 }
 
+.information {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+.form-check {
+    margin-bottom: 5px;
+}
+
+.element {
+    margin-left: 20px !important;
+    width: auto;
+}
+
+.adminstration {
+    width: 20%;
+    float: right;
+    margin-right: 0;
+    padding-right: 30px;
+    margin-left: auto;
+    padding-bottom: 30px;
+    align-content: center;
+}
+
 .list .userMedia a {
     color: black;
     text-decoration: underline;

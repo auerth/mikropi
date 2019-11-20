@@ -230,7 +230,7 @@ if (!$isAdmin || !$loggedIn) {
                                 $activatedChecked = "";
                                 $adminChecked = "";
                                 $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px;"></i>';
-                                if($user["verifyed"]){
+                                if ($user["verifyed"]) {
                                     $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px;"></i>';
                                 }
                                 if ($user["activated"]) {
@@ -247,51 +247,44 @@ if (!$isAdmin || !$loggedIn) {
                                     <summary>' . $user["name"] . ", " . $user["forename"] . '
                                                 </summary>
                                     <div class="row">
-                                    <div class="row col-10">
-                                    
-                                        
-                                   
-                                           
-                                        <div class="row col-12">
-                                            <div class="col-2">
+                                    <div class="information">
+                                        <div class="element">
                                                 <p class="filterMatrikel">Matrikelnummer: ' . $user["matrikelnummer"] . '</p>
-                                            </div>
-                                            <div class="col-3" >
-                                                <p>Email: <a href="mailto: '.$user["email"].'">' . $user["email"] . '</a></p>
-                                            </div>
-                                            <div class="col-3">
-                                                <p>Letzter Login: ' . date('d.m.Y H:i', $user["last_login"]) . ' Uhr</p>
-                                            </div>
-                                            <div class="col-2">
-                                                <p>Email verifiziert: ' .  $emailVerifyed . '</p>
-                                            </div>
-                                            <div class="col-2">
-                                                <p>Erstellt am: ' .  date('d.m.Y', $user["created"]) . '</p>
-                                            </div>
+                                        </div>
+                                        <div class="element" >
+                                                <p>Email: <a href="mailto: ' . $user["email"] . '">' . $user["email"] . '</a></p>
+                                        </div>
+                                        <div class="element">
+                                            <p>Letzter Login: ' . date('d.m.Y H:i', $user["last_login"]) . ' Uhr</p>
+                                        </div>
+                                        <div class="element">
+                                            <p>Email verifiziert: ' .  $emailVerifyed . '</p>
+                                        </div>
+                                        <div class="element">
+                                            <p>Erstellt am: ' .  date('d.m.Y', $user["created"]) . '</p>
                                         </div>
                                     </div>
-                                    <div class="row col-2">
-                                            <form style="height: 100%;" method="POST" action="admin.php">
+
+                                    <div class="adminstration">
+                                            <form method="POST" style="float: right;"action="admin.php">
                                                 <input name="userId" value="' . $user["id"] . '" style="display: none;">');
                                 if (isset($_POST["sortBy"])) {
                                     echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
                                 }
-                                echo ('<div class="row" style="margin-left: auto;margin-right: 15px;">
-                                                    <div class="form-check" style="margin-left: 10px;" >
+                                echo ('
+                                
+                                                    <div class="row form-check" style="float: right;">
+                                                        <i onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
+                                                    </div>
+                                                    <div class="row col-12 form-check">
                                                         <input type="checkbox" id="checkboxi-' . $checkBoxId . '" class="form-check-input" name="active" ' . $activatedChecked . ' >
                                                         <label class="form-check-label" onclick="check(`checkboxi-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Aktiv</label>
-                                                    </div>
-                                                    <div class="form-check" style="margin-left: 10px;">
                                                         <input type="checkbox" id="checkbox-' . $checkBoxId . '" class="form-check-input" name="admin" ' . $adminChecked . '>
                                                         <label class="form-check-label" onclick="check(`checkbox-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Admin</label>
                                                     </div>
-                                                    <div class="form-check" style="float: right; margin-left: auto; margin-top: 5px;">
-                                                        <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
-
-                                                        <i style="margin-left: 15px; margin-top: 4px; margin-right: 2px !important;" onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
+                                                    <div class="row form-check">
+                                                        <button type="submit"  class="btn btn-primary" >Speichern</button>
                                                     </div>
-
-                                                </div>
 
                                             </form>
                                             </div>
@@ -328,7 +321,7 @@ if (!$isAdmin || !$loggedIn) {
                             Hinzufügen</button>
 
                     </form>
-                   
+
                 </div>
             </div>
 
@@ -384,7 +377,7 @@ if (!$isAdmin || !$loggedIn) {
 
                             </div>
                             <div class="col-3">
-                                <button type="submit"  class="btn btn-primary" style="margin: 0px;">+</button>
+                                <button type="submit" class="btn btn-primary" style="margin: 0px;">+</button>
                             </div>
 
                         </div>

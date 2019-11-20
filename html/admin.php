@@ -229,9 +229,9 @@ if (!$isAdmin || !$loggedIn) {
                             foreach ($userList as $user) {
                                 $activatedChecked = "";
                                 $adminChecked = "";
-                                $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px;"></i>';
+                                $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px; color: red;"></i>';
                                 if ($user["verifyed"]) {
-                                    $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px;"></i>';
+                                    $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px; color: green;"></i>';
                                 }
                                 if ($user["activated"]) {
                                     $activatedChecked = "checked";

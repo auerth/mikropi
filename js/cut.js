@@ -1,3 +1,19 @@
+var trackMouse = false;
+var eltViewer = document.getElementById("openseadragon1");
+var coordinateX = document.getElementById("coordinateX");
+var coordinateY = document.getElementById("coordinateY");
+var zoomlevel = document.getElementById("zoomlevel");
+var valueX = 0;
+var valueY = 0;
+var valueZoom;
+var toZoom;
+var toX;
+var toY;
+
+var viewportPoint;
+
+
+
 $("#editTitle").click(function(event) {
     var modal = document.getElementById('modalTitle');
     var titleInput = document.getElementById('newTitle');
@@ -65,13 +81,199 @@ function insertAtCursor(myField, myValue) {
     }
 }
 
-
-
-
 $("#disFilter").click(function(event) {
     $(".filter").toggle();
 
 });
+
+
+viewer.addHandler('canvas-nonprimary-press', function(event) {
+    if (trackMouse) {
+        if (event.button === 2) { // Right mouse
+            var dummy = document.createElement("textarea");
+            // to avoid breaking orgain page when copying more words
+            // cant copy when adding below this code
+            // dummy.style.display = 'none'
+            document.body.appendChild(dummy);
+            //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+            var xString = "" + valueX;
+            var yString = "" + valueY;
+            dummy.value = "Zoom Level: " + valueZoom + "\nX-Position: " + xString.replace(".", ",") + "\nY-Position: " + yString.replace(".", ",");
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
+        }
+    }
+});
+
+$(viewer.element).on('contextmenu', function(event) {
+    event.preventDefault();
+});
+
+
+
+zoomlevel.innerHTML = viewer.viewport.getZoom().toFixed(2);
+
+var tracker = new OpenSeadragon.MouseTracker({
+    element: eltViewer,
+    moveHandler: function(event) {
+        if (trackMouse) {
+            var webPoint = event.position;
+            var wp = viewer.viewport.pointFromPixel(webPoint);
+            if (wp.x > 0) {
+                valueX = wp.x;
+            }
+            if (wp.y > 0) {
+                valueY = wp.y;
+            }
+
+            coordinateX.innerHTML = valueX;
+            coordinateY.innerHTML = valueY;
+        }
+    }
+});
+viewer.addHandler("zoom", function(event) {
+    valueZoom = viewer.viewport.getZoom().toFixed(2);
+    zoomlevel.innerHTML = valueZoom;
+});
+
+
+$("#zoomlevel").click(kClick);
+$("#coordinateX").click(kClick);
+$("#coordinateY").click(kClick);
+
+
+
+function zClick(event) {
+    // var input = $('<input />', {
+    //     'type': 'number',
+    //     'name': 'unique',
+    //     'id': 'zoomlevelInput',
+    //     'value': $(this).html()
+    // });
+    // $(this).parent().append(input);
+    // $(this).remove();
+    // $('#zoomlevelInput').keypress(function(e) {
+    //     if (e.which == 13) {
+    //         toZoom = $('#zoomlevelInput').val();
+    //         toggleZ(e);
+
+    //     }
+    // });
+}
+
+function kClick(event) {
+    var input = $('<input />', {
+        'type': 'number',
+        'name': 'unique',
+        'id': 'coordinateXInput',
+        'value': $("#coordinateX").html()
+    });
+    $("#coordinateX").parent().append(input);
+    $("#coordinateX").remove();
+    $("#coordinateX").focus();
+    $('#coordinateXInput').keypress(function(e) {
+        if (e.which == 13) {
+            toX = $('#coordinateXInput').val();
+            toggleY(e);
+            toY = document.getElementById("coordinateY").innerHTML;
+            goToPosition(toX, toY);
+            toggleX(e);
+
+
+        }
+    });
+    input = $('<input />', {
+        'type': 'number',
+        'name': 'unique',
+        'id': 'coordinateYInput',
+        'value': $("#coordinateY").html()
+    });
+    $("#coordinateY").parent().append(input);
+    $("#coordinateY").remove();
+    $("#coordinateY").focus();
+    $('#coordinateYInput').keypress(function(e) {
+        if (e.which == 13) {
+            toY = $('#coordinateYInput').val();
+            toggleX(e);
+            toX = document.getElementById("coordinateX").innerHTML;
+            goToPosition(toX, toY);
+            toggleY(e);
+        }
+    });
+
+}
+
+function toggleX(e) {
+    if ($("#coordinateXInput").length) {
+        var span = $('<span />', {
+            'id': 'coordinateX'
+        });
+        $("#coordinateXInput").parent().append($(span).html($("#coordinateXInput").val()));
+        $("#coordinateXInput").remove();
+        coordinateX = document.getElementById("coordinateX");
+        $("#coordinateX").click(kClick);
+    }
+}
+
+function toggleY(e) {
+    if ($("#coordinateYInput").length) {
+
+        var span = $('<span />', {
+            'id': 'coordinateY'
+        });
+        $("#coordinateYInput").parent().append($(span).html($("#coordinateYInput").val()));
+        $("#coordinateYInput").remove();
+        coordinateY = document.getElementById("coordinateY");
+        $("#coordinateY").click(kClick);
+    }
+
+}
+
+
+function toggleZ(e) {
+    // if ($("#coordinateXInput").length) {
+    // var span = $('<span />', {
+    //     'id': 'zoomlevel'
+    // });
+    // $("#zoomlevelInput").parent().append($(span).html($("#zoomlevelInput").val()));
+    // $("#zoomlevelInput").remove();
+    // zoomlevel = document.getElementById("zoomlevel");
+    // $("#zoomlevel").click(zClick);
+    // }
+
+}
+
+
+
+function goToPosition(x, y) {
+    if (x > 0 && y > 0) {
+        var overlay = viewer.getOverlayById("zoomOverlay");
+        viewer.removeOverlay(overlay);
+        var elt = document.createElement("div");
+        elt.className = "runtime-overlay";
+        elt.style.outline = "3px solid #3281D6";
+        elt.style.opacity = "0.9";
+        elt.id = "zoomOverlay";
+        var rect = new OpenSeadragon.Rect(parseFloat(x) - 0.015, parseFloat(y) - 0.015, 0.03, 0.03);
+        viewer.viewport.fitBounds(rect);
+    }
+}
+
+
+
+
+
+
+
+
 
 function putFilter(filterId, cutId, hash, checkBoxId) {
     var checkBox = document.getElementById('checkBox-' + checkBoxId);
@@ -102,7 +304,7 @@ $("#zoom75").click(function(event) {
     viewer.viewport.zoomTo(8);
 });
 $("#zoom100").click(function(event) {
-    viewer.viewport.zoomTo(20);
+    viewer.viewport.zoomTo(10);
 });
 
 
@@ -240,7 +442,6 @@ $('#itemOverlayM').click(function() {
     $('.descriptionM').hide();
     $('#overlayM').show();
 });
-var viewportPoint;
 
 var tracker = new OpenSeadragon.MouseTracker({
     element: viewer.container,
@@ -326,6 +527,7 @@ function noAnnos(id) {
 $("#openseadragon1")
     .click(
         function(event) {
+
             if (!viewer.gestureSettingsMouse.clickToZoom) {
                 if (point1 == 0) {
                     point1 = viewportPoint;
@@ -358,6 +560,18 @@ $("#openseadragon1")
 
                 }
 
+            }
+
+        });
+$("#location")
+    .click(
+        function(event) {
+            if (trackMouse) {
+                trackMouse = false;
+                $(".viewerdetails").hide('slow');
+            } else {
+                trackMouse = true;
+                $(".viewerdetails").show('slow');
             }
 
         });

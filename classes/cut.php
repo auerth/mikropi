@@ -353,7 +353,6 @@ class Cut
                         if ($result = $db->query($sql)) {
                             while ($row = $result->fetch_array()) {
                                 $overlays = $overlays . ' var elt = document.createElement("div");
-                                var eltViewer = document.getElementById("openseadragon1");
                     elt.className = "runtime-overlay";
                     elt.style.outline = "3px solid #3281D6";
                     elt.style.opacity = "0.9";
@@ -372,27 +371,9 @@ class Cut
                             viewer.viewport.fitBounds(overlay.getBounds(viewer.viewport));
                         }
                      });
-                     var coordinateX = document.getElementById("coordinateX");
-                     var coordinateY = document.getElementById("coordinateY");
-
-                     var zoomlevel = document.getElementById("zoomlevel");
-                     zoomlevel.innerHTML = viewer.viewport.getZoom().toFixed(2);
-
-                     var tracker = new OpenSeadragon.MouseTracker({
-                        element: eltViewer,
-                        moveHandler: function(event) {
-                            var webPoint = event.position;
-                            var viewportPoint = viewer.viewport.pointFromPixel(webPoint);
-                            var imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
-                            coordinateX.innerHTML = imagePoint.x.toFixed(2);
-                            coordinateY.innerHTML = imagePoint.y.toFixed(2);
-
-                        }
-                     });
-                     viewer.addHandler("zoom", function(event) {
-                        zoomlevel.innerHTML = viewer.viewport.getZoom().toFixed(2);
-                    });
-
+                    
+                    
+                    
 
                    
                      ';

@@ -316,8 +316,12 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     echo ('<div class="alert ' . $alertType . '">' . $overlayMessage . '
 								</div>');
                 }
-
-                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle . $deleteCut . "</div>");
+                $editFilter = "";
+                if ($isAdmin) {
+                    // Neues Modal Hinzuf�gen mit Filterauswahl
+                    $editFilter = '<button type="submit" id="editFilter" style="margin-left:20px;" class="btn btn-primary" >Filter bearbeiten</button>';
+                }
+                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle .$editFilter. $deleteCut . "</div>");
                 echo ('<div class="flexbox" style="flex-wrap: nowrap; background-color: white;">');
                 $overlayDiv = "<div class='overlays' style='display: none;' id='overlay'>";
                 $overlayDivM = "<div class='overlaysM' style='display: none;' id='overlayM'>";
@@ -333,30 +337,27 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
         </div><ul class='cutbar'><li><img src='../images/left.png'  id='hide'></li><li><i class='fas fa-align-left fa-2x bg-main' id='itemDescription'></i></li><li><i id='itemOverlay' class='fas fa-flag fa-2x bg-main'></i></li></ul>");
                 echo ("<div class='cutfile'>");
                 // Schnittdatei
-                $editFilter = "";
-                if ($isAdmin) {
-                    // Neues Modal Hinzuf�gen mit Filterauswahl
-                    $editFilter = '<button type="submit" id="editFilter" style="margin-left:auto; float: right;" class="btn btn-primary" >Filter bearbeiten</button>';
-                }
-                echo ($editFilter . '<div id="toolbarDiv" class="toolbar" style="width: 100%; height: 2%;">
-		                <a id="zoom-in" href="#zoom-in"/>
-		                <a id="zoom-out" href="#zoom-out"/>
-		                <a id="home" href="#home"/>
-                        <a id="fullpage" href="#fullpage"/>
-                        <a id="zoom25" href="#zoom25" style="display: inline-block; position: relative;"/>
-                        <a id="zoom50" href="#zoom50" style="display: inline-block; position: relative;"/>
-                        <a id="zoom75" href="#zoom75" style="display: inline-block; position: relative;"/>
-                        <a id="zoom100" href="#zoom100" style="display: inline-block; position: relative;"/></a>
-                        <div class="viewerdetails">
-                            <p>Zoom Level: <span id="zoomlevel"></span></p>
-                            <p>X-Position: <span id="coordinateX"></span></p>
-                            <p>Y-Position: <span id="coordinateY"></span></p>
-                            
-                        </div>
+                
+                echo ('<div id="toolbarDiv" class="toolbar" style="width: 100%; height: 2%;">
+                <div class="row">
+		                <a id="zoom-in" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/plus.png"/></a>
+		                <a id="zoom-out" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/minus.png"/></a>
+		                <a id="home" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/home.png"/></a>
+                        <a id="fullpage" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/fullpage.png"/></a>
+                        <a id="location" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/location.png"/></a>
+                        <a id="zoom25" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/10x.png"/></a>
+                        <a id="zoom50" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/40x.png"/></a>
+                        <a id="zoom75" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/80x.png"/></a>
+                        <a id="zoom100" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/100x.png"/></a></div>
                     </div>
                   
-                        <div class="openseadragon" id="openseadragon1" style="width:100%; height:90%;"> </div></div></div>');
-
+                        <div class="openseadragon" id="openseadragon1"><div class="viewerdetails">
+                        <p>Zoom Level: <span id="zoomlevel"></span></p>
+                        <p>X-Position: <span id="coordinateX"></span></p>
+                        <p>Y-Position: <span id="coordinateY"></span></p>
+                        <p style="font-size: 11px;">Mit einem Rechtsklick auf den Objektträger wird die Koordinate in die Zwischenablage kopiert</p>
+                        
+                    </div> </div></div></div>');
                 echo ("<div class='mobilebar'>");
                 echo ("<div class='row'>
                 <i class='fas fa-align-left fa-2x bg-main' id='itemDescriptionM'></i>
@@ -370,7 +371,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 echo ("</div>");
 
                 if ($isAdmin) {
-                    echo ('<div id="modalTitle" class="modal">
+                    echo ('<div id="snackbar">Koordinate wurden in die Zwischenablage kopiert</div> <div id="modalTitle" class="modal">
 
   <!-- Modal content -->
   <div class="modal-content">

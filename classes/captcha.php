@@ -5,15 +5,15 @@ session_start();
 $captcha_code = '';
 $captcha_image_height = 80;
 $captcha_image_width = 230;
-$total_characters_on_image = 8;
+$total_characters_on_image = 6;
 
 //The characters that can be used in the CAPTCHA code.
 //avoid all confusing characters and numbers (For example: l, 1 and i)
-$possible_captcha_letters = 'bcdfghjkmnpqrstvwxyz23456789';
+$possible_captcha_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdfghjkmnpqrstvwxyz23456789';
 $captcha_font = '../etc/monofont.ttf';
 
-$random_captcha_dots = 50;
-$random_captcha_lines = 25;
+$random_captcha_dots = 55;
+$random_captcha_lines = 40;
 $captcha_text_color = "0x142864";
 $captcha_noise_color = "0x142864";
 
@@ -27,7 +27,7 @@ $captcha_code .= substr(
 $count++;
 }
 
-$captcha_font_size = $captcha_image_height * 0.65;
+$captcha_font_size = $captcha_image_height * 0.5;
 $captcha_image = @imagecreate(
 	$captcha_image_width,
 	$captcha_image_height

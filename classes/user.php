@@ -400,7 +400,7 @@ Mit freundlichen Grüßen<br><br>
                     $hash = $this->createHashForEmail($userId);
                     if ($hash != "") {
                         include('../etc/signatur.php');
-                        $msg = "Hallo ".$name.",<br><br>
+                        $msg = "Hallo " . $name . ",<br><br>
                         Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
                         $msg = $msg . $signatur;
                         $header  = "MIME-Version: 1.0\r\n";
@@ -408,11 +408,11 @@ Mit freundlichen Grüßen<br><br>
                         $header .= "From: support@mikropi.de\r\n";
                         $header .= "Reply-To: support@mikropi.de\r\n";
                         $header .= "X-Mailer: PHP " . phpversion();
-                        if(mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header)){
+                        if (mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header)) {
                             $logFile = "../logs/user.log";
                             $log = file_get_contents($logFile);
                             file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Reverify Email  " . $email . " sent \n");
-                        }else{
+                        } else {
                             $logFile = "../logs/user.log";
                             $log = file_get_contents($logFile);
                             file_put_contents($logFile, $log . "Error-" . date('d/m/Y H:i:s', time()) . ": Reverify Email not sent to " . $email . "\n");
@@ -454,8 +454,8 @@ Mit freundlichen Grüßen<br><br>
             if ($num == 1) {
                 $row = $result->fetch_array();
                 $email = "";
-                $sql = "SELECT email FROM user WHERE id = '".$row["userId"]."'";
-                if($result = $db->query($sql)){
+                $sql = "SELECT email FROM user WHERE id = '" . $row["userId"] . "'";
+                if ($result = $db->query($sql)) {
                     $num = $result->num_rows;
                     if ($num == 1) {
                         $email = $result->fetch_array()["email"];
@@ -557,60 +557,68 @@ Mit freundlichen Grüßen<br><br>
         if ($matrikelnummer != 'n/a') {
             $tmpMatrikel = $matrikelnummer;
         }
-        $sql = "SELECT * FROM user WHERE email like '" . $email . "' OR matrikelnummer like '" . $tmpMatrikel . "';";
-        if ($result = $db->query($sql)) {
-            $row_cnt = $result->num_rows;
-            $active = 1;
-            if ($row_cnt == 0) {
+        if (strlen($name) <= 15 && strlen($forename) <= 15) {
 
-                $sql = "INSERT INTO user (email, password, matrikelnummer, name, forename,activated)
+
+            $sql = "SELECT * FROM user WHERE email like '" . $email . "' OR matrikelnummer like '" . $tmpMatrikel . "';";
+            if ($result = $db->query($sql)) {
+                $row_cnt = $result->num_rows;
+                $active = 1;
+                if ($row_cnt == 0) {
+
+                    $sql = "INSERT INTO user (email, password, matrikelnummer, name, forename,activated)
                         VALUES ('" . $email . "', '" . $password . "', '" . $matrikelnummer . "', '" . $name . "', '" . $forename . "','" . $active . "'); ";
-                $logFile = "../logs/user.log";
-                $log = file_get_contents($logFile);
-                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": User registered " . $email . "\n");
-                if ($result = $db->query($sql)) {
-                    $sql = "SELECT * FROM user WHERE email like '" . $email . "'";
+                    $logFile = "../logs/user.log";
+                    $log = file_get_contents($logFile);
+                    file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": User registered " . $email . "\n");
                     if ($result = $db->query($sql)) {
-                        $row = $result->fetch_array();
-                        $rowId = $row["id"];
+                        $sql = "SELECT * FROM user WHERE email like '" . $email . "'";
+                        if ($result = $db->query($sql)) {
+                            $row = $result->fetch_array();
+                            $rowId = $row["id"];
 
-                        $hash = $this->createHashForEmail($rowId);
-                        if ($hash != "") {
-                            $email = $row["email"];
-                            include('../etc/signatur.php');
-                            $header  = "MIME-Version: 1.0\r\n";
-                            $header .= "Content-type: text/html; charset=utf-8\r\n";
-                            $header .= "From: support@mikropi.de\r\n";
-                            $header .= "Return-Path: support@mikropi.de\r\n"; // Return path for errors
-                            $header .= "Reply-To: support@mikropi.de\r\n";
-                            $header .= "X-Mailer: PHP " . phpversion();
-                            $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
-                            $msg = $msg . $signatur;
-                            if(mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header)){
-                                $logFile = "../logs/user.log";
-                                $log = file_get_contents($logFile);
-                                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Verify Email  " . $email . " sent\n");
-                            }else{
-                                $logFile = "../logs/user.log";
-                                $log = file_get_contents($logFile);
-                                file_put_contents($logFile, $log . "Error-" . date('d/m/Y H:i:s', time()) . ": Verify Email not sent " . $email . "\n");
-                            }
-                            $jsonResult["success"] = true;
-                            $jsonResult["info"] = "Account erstellt. Bitte bestätige deine Email. Wir haben dir eine Email geschickt.";
-                            if (!$active) {
-                                $jsonResult["info"] = $jsonResult["info"] . " Dein Account wird von einem Mitarbeiter in 1 bis 2 Tagen aktiviert. Du wirst per Email benachrichtigt.";
+                            $hash = $this->createHashForEmail($rowId);
+                            if ($hash != "") {
+                                $email = $row["email"];
+                                include('../etc/signatur.php');
+                                $header  = "MIME-Version: 1.0\r\n";
+                                $header .= "Content-type: text/html; charset=utf-8\r\n";
+                                $header .= "From: support@mikropi.de\r\n";
+                                $header .= "Return-Path: support@mikropi.de\r\n"; // Return path for errors
+                                $header .= "Reply-To: support@mikropi.de\r\n";
+                                $header .= "X-Mailer: PHP " . phpversion();
+                                $msg = "Hallo " . $forename . ",<br><br>dein Account wurde nun erstellt. <br>Bitte klicke <a href='https://mikropi.de/verify.php?hash=" . $hash . "'>hier</a> um deine Email zu bestätigen.<br>Danach kannst du dich einloggen. <br><br>Mit freundlichen Grüßen<br><br>";
+                                $msg = $msg . $signatur;
+                                if (mail($email, 'Mikropi - Verifiziere deine Email', $msg, $header)) {
+                                    $logFile = "../logs/user.log";
+                                    $log = file_get_contents($logFile);
+                                    file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Verify Email  " . $email . " sent\n");
+                                } else {
+                                    $logFile = "../logs/user.log";
+                                    $log = file_get_contents($logFile);
+                                    file_put_contents($logFile, $log . "Error-" . date('d/m/Y H:i:s', time()) . ": Verify Email not sent " . $email . "\n");
+                                }
+                                $jsonResult["success"] = true;
+                                $jsonResult["info"] = "Account erstellt. Bitte bestätige deine Email. Wir haben dir eine Email geschickt.";
+                                if (!$active) {
+                                    $jsonResult["info"] = $jsonResult["info"] . " Dein Account wird von einem Mitarbeiter in 1 bis 2 Tagen aktiviert. Du wirst per Email benachrichtigt.";
+                                }
                             }
                         }
+                    } else {
+                        $jsonResult["success"] = false;
+                        $jsonResult["error"] = "Error by data inserting (" . $db->error . ").";
+                        $jsonResult["errorCode"] = "1";
                     }
                 } else {
                     $jsonResult["success"] = false;
-                    $jsonResult["error"] = "Error by data inserting (" . $db->error . ").";
-                    $jsonResult["errorCode"] = "1";
+                    $jsonResult["error"] = "Email oder Immatrikulationsnummer wird schon genutzt.";
+                    $jsonResult["errorCode"] = "2";
                 }
-            } else {
+            } else { 
                 $jsonResult["success"] = false;
-                $jsonResult["error"] = "Email oder Immatrikulationsnummer wird schon genutzt.";
-                $jsonResult["errorCode"] = "2";
+                $jsonResult["error"] = "Name oder Nachname zu lang (Maximal 15 Zeichen)";
+                $jsonResult["errorCode"] = "1";
             }
         } else {
             $jsonResult["success"] = false;
@@ -703,7 +711,7 @@ Mit freundlichen Grüßen<br><br>
                     if ($verifyResult = $db->query($sql)) {
                         $count = $verifyResult->num_rows;
                         if ($count == 1) {
-                            if($verifyResult->fetch_array()["activated"] == "1"){
+                            if ($verifyResult->fetch_array()["activated"] == "1") {
                                 $verifyed = true;
                             }
                         }

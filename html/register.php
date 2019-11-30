@@ -72,10 +72,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					?>
 					<form method="post" id="register" action="register.php">
 						<div class="form-group">
-							<input type="text" name="name" id="name" class="form-control" placeholder="Name" value="" required="true" />
+							<input type="text" name="name" id="name" maxLength="15" class="form-control" placeholder="Name" value="" required="true" />
 						</div>
 						<div class="form-group">
-							<input type="text" name="forename" id="forename" class="form-control" placeholder="Vorname" value="" required="true" />
+							<input type="text" name="forename" id="forename" maxLength="15" class="form-control" placeholder="Vorname" value="" required="true" />
 						</div>
 						<div class="form-group">
 							<input type="text" name="email" id="email" class="form-control" placeholder="Email" value="" required="true" />
@@ -87,7 +87,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<input type="password" id="password_repeat" name="" class="form-control" placeholder="Passwort wiederholen" value="" required="true" />
 						</div>
 						<div class="form-group">
-							<input type="text" name="matrikelnummer" id="matrikelnummer" class="form-control" placeholder="Immatrikulationsnummer" value="" />
+							<input type="text" name="matrikelnummer" id="matrikelnummer"  maxLength="10" class="form-control" placeholder="Immatrikulationsnummer" value="" />
 							<p style="color: white;">Falls du keine Immatrikulationsnummer besitzt, kannst du auch einfach "n/a" angeben.</p>
 
 						</div>

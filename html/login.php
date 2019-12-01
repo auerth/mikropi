@@ -65,7 +65,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 	<?php
 	echo ($pageBuilder->getNavBar(false, false));
 	?>
-	<main>
+	<main class="login">
 		<!-- Page Content -->
 		<div class="container login-container ">
 			<div class="row">

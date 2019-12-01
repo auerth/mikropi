@@ -87,7 +87,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			$moduls = $moduls["info"];
 			foreach ($moduls as $item) {
 				echo ("<div class='item' id='" . $item["id"] . "'>");
-				echo ($item["name"]);
+				echo ("<div class='centerDiv'><div class='modulId'>".substr($item["name"],0,3) ."</div>". substr($item["name"],3,strlen($item["name"]))."</div>");
 				echo ("</div>");
 			}
 		} else {

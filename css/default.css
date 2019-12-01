@@ -106,10 +106,12 @@
 .navbar {
     position: fixed;
     top: 0;
+    background-color: #0062cc;
     /* Position the navbar at the top of the page */
     width: 100%;
     height: 75px;
     z-index: 10;
+    padding: 0px;
     /* Full width */
 }
 
@@ -180,6 +182,15 @@ footer .row img {
     background: red;
 }
 
+.logo {
+    padding-left: 10px;
+}
+
+.navbar-toggler {
+    margin-right: 10px;
+    border: none;
+}
+
 .percentage span.waiting {
     background: rgb(230, 207, 0);
 }
@@ -217,6 +228,8 @@ embed {
     padding-top: 0;
     padding-bottom: 0;
     margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 100%;
 }
 
@@ -250,7 +263,7 @@ embed {
     flex-flow: wrap;
     justify-content: center;
     margin-top: 5%;
-    margin-bottom: 5%;
+    padding-bottom: 5%;
 }
 
 .modul {
@@ -322,13 +335,25 @@ h5 {
     border-radius: 10px;
 }
 
+.login {
+    background-image: url("../images/background_login.png");
+}
+
+.centerDiv {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .moduls .item {
-    width: 30%;
+    width: 300px;
+    height: 300px;
     margin: 10px;
     padding: 50px;
-    height: auto;
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     border-radius: 10px;
     box-shadow: 0rem 0 1rem #000;
 }
@@ -972,22 +997,6 @@ input[type="checkbox"]+label span:hover {
     height: calc(100% - 100px);
 }
 
-#zoom-in {
-    background-color: rgb(0, 0, 0, 0.8);
-}
-
-#zoom-in:hover {
-    background-color: rgb(0, 0, 0, 0.6);
-}
-
-#zoom-out {
-    background-color: rgb(0, 0, 0, 0.8);
-}
-
-#zoom-out:hover {
-    background-color: rgb(0, 0, 0, 0.6);
-}
-
 #home {
     background-color: rgb(0, 0, 0, 0.8);
 }
@@ -1010,7 +1019,11 @@ input[type="checkbox"]+label span:hover {
 }
 
 .icon:hover {
-    background-color: rgb(0, 0, 0, 0.6);
+    background-color: rgb(105, 105, 105, 0.8);
+}
+
+#home:hover {
+    background-color: rgb(105, 105, 105, 0.8);
 }
 
 .media h5 {
@@ -1019,9 +1032,13 @@ input[type="checkbox"]+label span:hover {
 
 .toolbar {
     padding: 5px;
+    display: flex;
+    flex-direction: row;
     position: absolute !important;
     z-index: 1;
-    width: 600px !important;
+    flex-wrap: nowrap;
+    width: 600px;
+    max-width: 600px;
     margin: 0px;
 }
 
@@ -1032,15 +1049,21 @@ input[type="checkbox"]+label span:hover {
 
 .viewerdetails {
     display: none;
-    top: 55px;
+    top: 105px;
     left: 5px;
     position: absolute !important;
     z-index: 1;
     width: 300px;
     margin: 0px;
     padding: 10px;
-    background-color: rgba(0, 0, 1, 0.5);
+    background-color: rgb(0, 0, 0, 0.8);
     color: white;
+}
+
+.modulId {
+    color: #0062cc;
+    font-weight: bold;
+    font-size: 33px !important;
 }
 
 #hide {

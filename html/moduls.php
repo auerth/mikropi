@@ -86,8 +86,51 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			$moduls = $modul->getModuls();
 			$moduls = $moduls["info"];
 			foreach ($moduls as $item) {
+				$img = "";
+				$mId = substr($item["name"],0,3);
+				switch($mId){
+					case "M00":
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/einfuehrung-02.png'/>";
+					break;
+					case "M01":
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/lunge-02.png'/>";
+					break;
+					case "M02":
+						$img = "";
+					break;
+					case "M03":
+						$img = "";
+					break;
+					case "M04":
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/gastro-02.png'/>";
+					break;
+					case "M05":
+						$img = "";
+					break;
+					case "M06":
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/niere-02.png'/>";
+					break;
+					case "M07":
+						$img = "";
+					break;
+					case "M08":
+						$img = "";
+					break;
+					case "M09":
+						$img = "";
+					break;
+					case "M10":
+						$img = "";
+					break;
+					case "M11":
+						$img = "";
+					break;
+					case "M12":
+						$img = "";
+					break;
+				}
 				echo ("<div class='item' id='" . $item["id"] . "'>");
-				echo ("<div class='centerDiv'><div class='modulId'>".substr($item["name"],0,3) ."</div>". substr($item["name"],3,strlen($item["name"]))."</div>");
+				echo ("<div class='centerDiv' id=' ".$item["id"] ."'>".$img."<div class='modulId' id='".$item["id"] ."'>".substr($item["name"],0,3) ."</div>". substr($item["name"],3,strlen($item["name"]))."</div>");
 				echo ("</div>");
 			}
 		} else {

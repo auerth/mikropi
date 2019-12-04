@@ -6,6 +6,7 @@
 .navbar-collapse {
     background-color: #0062cc;
     width: 100% !important;
+    padding-right: 30px;
 }
 
 .right {
@@ -15,6 +16,16 @@
 
 .ignoreCursor {
     cursor: default !important;
+}
+
+.center_h {
+    display: block;
+    margin-left: auto;
+    margin-top: 0px;
+    margin-bottom: 0;
+    padding: 0px;
+    margin-right: auto;
+    width: 50%;
 }
 
 #snackbar {
@@ -353,7 +364,7 @@ h5 {
     margin: 10px;
     padding: 50px;
     text-align: center;
-    font-size: 25px;
+    font-size: 18px;
     border-radius: 10px;
     box-shadow: 0rem 0 1rem #000;
 }
@@ -1063,7 +1074,11 @@ input[type="checkbox"]+label span:hover {
 .modulId {
     color: #0062cc;
     font-weight: bold;
-    font-size: 33px !important;
+    font-size: 30px !important;
+}
+
+.navbar-brand {
+    padding-left: 30px !important;
 }
 
 #hide {

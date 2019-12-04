@@ -367,8 +367,8 @@ class Cut
                     var tracker = new OpenSeadragon.MouseTracker({
                         element: elt,
                         clickHandler: function(event) {
-                            var overlay = viewer.getOverlayById(event.originalEvent.target.id);
-                            viewer.viewport.fitBounds(overlay.getBounds(viewer.viewport));
+                            //var overlay = viewer.getOverlayById(event.originalEvent.target.id);
+                            //viewer.viewport.fitBounds(overlay.getBounds(viewer.viewport));
                         }
                      });
                     

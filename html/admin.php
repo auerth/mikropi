@@ -201,7 +201,7 @@ if (!$isAdmin || !$loggedIn) {
             }
             ?>
             <div class="card">
-                <h5 class="card-header bg-2nd text-white">Benutzer Liste - Server-Zeit: <span id="msg"></span></h5>
+                <h5 class="card-header bg-2nd text-white">Benutzer Liste</h5>
                 <div class="card-body">
                     <form>
                         <h4>Sortieren nach: </h4>
@@ -459,7 +459,7 @@ if (!$isAdmin || !$loggedIn) {
 
     </body>
     <script type="text/javascript">
-        function AjaxFunction() {
+        function refreshServerTime() {
             var httpxml;
             try {
                 // Firefox, Opera 8.0+, Safari
@@ -480,12 +480,11 @@ if (!$isAdmin || !$loggedIn) {
 
             function stateck() {
                 if (httpxml.readyState == 4) {
-                    document.getElementById("msg").innerHTML = httpxml.responseText;
                     document.getElementById("msg2").innerHTML = httpxml.responseText;
 
                 }
             }
-            var url = "ajax-server-clock-demock.php";
+            var url = "server-clock.php";
             url = url + "?sid=" + Math.random();
             httpxml.onreadystatechange = stateck;
             httpxml.open("GET", url, true);
@@ -495,8 +494,8 @@ if (!$isAdmin || !$loggedIn) {
         timer_function();
         ///////////////////////////
         function timer_function() {
-            var refresh = 1000; // Refresh rate in milli seconds
-            mytime = setTimeout('AjaxFunction();', refresh)
+            var refresh = 2000; // Refresh rate in milli seconds
+            mytime = setTimeout('refreshServerTime();', refresh)
         }
     </script>
 

@@ -619,9 +619,14 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
             echo ($cut->getCutImage($_GET["cuts"]));
         }
     }
+   
     //JavaScript From Pagebuilder
-    $array = array("../js/list.js", "../js/cut.js", "../js/dashboard.js", "../js/notify.js");
+    $array = array("../js/list.js", "../js/cut.js", "../js/dashboard.js");
+    if(!isset($_GET["cuts"])){
+        array_push($array,"../js/notify.js");
+    }
     echo ($pageBuilder->getJsTags($array));
+ 
     ?>
 
 </body>

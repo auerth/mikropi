@@ -86,63 +86,93 @@ $("#disFilter").click(function(event) {
 
 });
 
-
-viewer.addHandler('canvas-nonprimary-press', function(event) {
-    if (trackMouse) {
-        if (event.button === 2) { // Right mouse
-            var dummy = document.createElement("textarea");
-            // to avoid breaking orgain page when copying more words
-            // cant copy when adding below this code
-            // dummy.style.display = 'none'
-            document.body.appendChild(dummy);
-            //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
-            var xString = "" + valueX;
-            var yString = "" + valueY;
-            dummy.value = "Zoom Level: " + valueZoom + "\nX-Position: " + xString.replace(".", ",") + "\nY-Position: " + yString.replace(".", ",");
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-            var x = document.getElementById("snackbar");
-
-            // Add the "show" class to DIV
-            x.className = "show";
-
-            // After 3 seconds, remove the show class from DIV
-            setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
-        }
-    }
-});
-
-$(viewer.element).on('contextmenu', function(event) {
-    event.preventDefault();
-});
-
-
-
-zoomlevel.innerHTML = viewer.viewport.getZoom().toFixed(2);
-
-var tracker = new OpenSeadragon.MouseTracker({
-    element: eltViewer,
-    moveHandler: function(event) {
+if (typeof viewer !== 'undefined') {
+    viewer.addHandler('canvas-nonprimary-press', function(event) {
         if (trackMouse) {
-            var webPoint = event.position;
-            var wp = viewer.viewport.pointFromPixel(webPoint);
-            if (wp.x > 0) {
-                valueX = wp.x;
+            if (event.button === 2) { // Right mouse
+                var dummy = document.createElement("textarea");
+                // to avoid breaking orgain page when copying more words
+                // cant copy when adding below this code
+                // dummy.style.display = 'none'
+                document.body.appendChild(dummy);
+                //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+                var xString = "" + valueX;
+                var yString = "" + valueY;
+                dummy.value = "Zoom Level: " + valueZoom + "\nX-Position: " + xString.replace(".", ",") + "\nY-Position: " + yString.replace(".", ",");
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
+                var x = document.getElementById("snackbar");
+
+                // Add the "show" class to DIV
+                x.className = "show";
+
+                // After 3 seconds, remove the show class from DIV
+                setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
             }
-            if (wp.y > 0) {
-                valueY = wp.y;
+        }
+    });
+    zoomlevel.innerHTML = viewer.viewport.getZoom().toFixed(2);
+
+    var tracker = new OpenSeadragon.MouseTracker({
+        element: eltViewer,
+        moveHandler: function(event) {
+            if (trackMouse) {
+                var webPoint = event.position;
+                var wp = viewer.viewport.pointFromPixel(webPoint);
+                if (wp.x > 0) {
+                    valueX = wp.x;
+                }
+                if (wp.y > 0) {
+                    valueY = wp.y;
+                }
+
+                coordinateX.innerHTML = valueX;
+                coordinateY.innerHTML = valueY;
+            }
+        }
+    });
+    viewer.addHandler("zoom", function(event) {
+        valueZoom = viewer.viewport.getZoom().toFixed(2);
+        zoomlevel.innerHTML = valueZoom;
+    });
+    $(viewer.element).on('contextmenu', function(event) {
+        event.preventDefault();
+    });
+
+    var tracker = new OpenSeadragon.MouseTracker({
+        element: viewer.container,
+        moveHandler: function(event) {
+            var webPoint = event.position;
+            viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+            if (runtimeelement != null) {
+                viewer.removeOverlay(runtimeelement);
+                runtimeelement = document.createElement("div");
+                runtimeelement.id = "runtime-overlay";
+                runtimeelement.className = "runtime-overlay";
+                runtimeelement.style.outline = "3px solid #3281D6";
+                runtimeelement.style.opacity = "0.9";
+                runtimeelement.textContent = "";
+                viewer.addOverlay({
+                    element: runtimeelement,
+                    id: "runtime-overlay",
+                    location: new OpenSeadragon.Rect(point1.x, point1.y,
+                        (viewportPoint.x - point1.x),
+                        (viewportPoint.y - point1.y)),
+                    rotationMode: OpenSeadragon.OverlayRotationMode.BOUNDING_BOX
+                });
             }
 
-            coordinateX.innerHTML = valueX;
-            coordinateY.innerHTML = valueY;
         }
-    }
-});
-viewer.addHandler("zoom", function(event) {
-    valueZoom = viewer.viewport.getZoom().toFixed(2);
-    zoomlevel.innerHTML = valueZoom;
-});
+    });
+    tracker.setTracking(false);
+}
+
+
+
+
+
+
 
 
 $("#zoomlevel").click(kClick);
@@ -443,32 +473,6 @@ $('#itemOverlayM').click(function() {
     $('#overlayM').show();
 });
 
-var tracker = new OpenSeadragon.MouseTracker({
-    element: viewer.container,
-    moveHandler: function(event) {
-        var webPoint = event.position;
-        viewportPoint = viewer.viewport.pointFromPixel(webPoint);
-        if (runtimeelement != null) {
-            viewer.removeOverlay(runtimeelement);
-            runtimeelement = document.createElement("div");
-            runtimeelement.id = "runtime-overlay";
-            runtimeelement.className = "runtime-overlay";
-            runtimeelement.style.outline = "3px solid #3281D6";
-            runtimeelement.style.opacity = "0.9";
-            runtimeelement.textContent = "";
-            viewer.addOverlay({
-                element: runtimeelement,
-                id: "runtime-overlay",
-                location: new OpenSeadragon.Rect(point1.x, point1.y,
-                    (viewportPoint.x - point1.x),
-                    (viewportPoint.y - point1.y)),
-                rotationMode: OpenSeadragon.OverlayRotationMode.BOUNDING_BOX
-            });
-        }
-
-    }
-});
-tracker.setTracking(false);
 
 function drawOverlay() {
 

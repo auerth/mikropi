@@ -45,7 +45,7 @@ class Dashboard
         return $jsonResult;
     }
 
-    public function addDashboardEntrie($sessionHash, $title, $text)
+    public function addDashboardEntry($sessionHash, $title, $text)
     {
         $jsonResult = array(
             'success' => false,
@@ -79,7 +79,7 @@ class Dashboard
         return $jsonResult;
     }
 
-    public function deleteDashboardEntrie($userId, $dashId)
+    public function deleteDashboardEntry($userId, $dashId)
     {
         $jsonResult = array(
             'success' => false,

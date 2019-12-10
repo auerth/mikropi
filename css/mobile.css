@@ -3,9 +3,10 @@
         max-width: 300px;
     }
     .moduls .item {
-        width: 50px !important;
-        height: 50px !important;
-        font-size: 20px !important;
+        font-size: 15px !important;
+    }
+    .modulId {
+        font-size: 17px !important;
     }
 }
 
@@ -14,18 +15,29 @@
         height: 80px !important;
         width: 80px !important;
     }
+    .modulId {
+        font-size: 20px !important;
+    }
     .cutcontainer .card {
         width: 100px !important;
         height: 150px !important;
+    }
+    .centerDiv {
+        position: relative;
+        float: left;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     .card img {
         width: 100px !important;
         height: auto;
     }
     .moduls .item {
-        width: 150px !important;
-        height: 150px !important;
-        font-size: 20px !important;
+        width: 200px !important;
+        word-break: break-all !important;
+        height: 200px !important;
+        font-size: 15px !important;
     }
     .mobilebar {
         display: block !important;
@@ -104,10 +116,6 @@
     }
     #description {
         display: none;
-    }
-    .moduls .item {
-        width: 80% !important;
-        font-size: 20px !important;
     }
     .descriptionM {
         display: block;

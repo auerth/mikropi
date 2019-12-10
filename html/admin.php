@@ -5,12 +5,13 @@
 
 $classFiles = "../etc/classfiles.php";
 include($classFiles);
-
 include_once($file_user);
 include($file_cut);
 include($file_category);
 include($file_modul);
 include($file_pagebuilder);
+
+
 $loggedIn = false;
 $isAdmin = false;
 $serverUrl = "https://mikropi.de/";

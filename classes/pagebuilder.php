@@ -1,17 +1,17 @@
 <?php
-
 class PageBuilder
 {
+    const version = "0.0.1";
 
     /**
      * Default Head Tag.
      *
      * Returns the Default HMLT Head Tag for every Webpage.
      *
-     * @param type String title.
+     * @param type String title
      * @param type String description
-     * @param type ArrayOfStrings stylesheets DEFAULT empty.
-     * @return type String author DEFAULT Thorben Auer.
+     * @param type ArrayOfStrings stylesheets DEFAULT empty
+     * @return type String
      */
     public function  getHead($title, $description, $stylesheets = array(), $author = "Thorben Auer")
     {
@@ -21,7 +21,8 @@ class PageBuilder
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="' . $description . '">
-        <meta name="author" content="'.$author.'">        
+        <meta name="author" content="'.$author.'">    
+        <meta name="version" content="'.self::version.'">    
         <title>' . $title . '</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
@@ -44,6 +45,7 @@ class PageBuilder
      * Default Footer Tag.
      *
      * Returns the Default HMLT Footer Tag for every Webpage.
+     * @return type String
      */
     public function  getFooter()
     {
@@ -78,6 +80,7 @@ class PageBuilder
      * Returns the Default HMLT JS Tags for every Webpage.
      * 
      * @param type ArrayOfStrings jsFiles DEFAULT empty.
+     * @return type String
      */
     public function  getJsTags($jsFiles = array())
     {
@@ -94,11 +97,13 @@ class PageBuilder
 
 
     /**
-     * Default JS-Tags.
+     * Returns HTML for Navbar.
      *
-     * Returns the Default HMLT JS Tags for every Webpage.
+     * Returns Navbar depending on logged in and isAdmin.
      * 
-     * 
+     * @param type Boolean loggedIn
+     * @param type Boolean isAdmin
+     * @return type String
      */
     public function  getNavBar($loggedIn, $isAdmin)
     {

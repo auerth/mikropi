@@ -1009,7 +1009,7 @@ input[type="checkbox"]+label span:hover {
 }
 
 #home {
-    background-color: rgb(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .icon {
@@ -1018,7 +1018,7 @@ input[type="checkbox"]+label span:hover {
     margin: 0px !important;
     height: 50px !important;
     width: 50px !important;
-    background-color: rgb(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .iconimg {
@@ -1030,11 +1030,11 @@ input[type="checkbox"]+label span:hover {
 }
 
 .icon:hover {
-    background-color: rgb(105, 105, 105, 0.8);
+    background-color: rgba(105, 105, 105, 0.8);
 }
 
 #home:hover {
-    background-color: rgb(105, 105, 105, 0.8);
+    background-color: rgba(105, 105, 105, 0.8);
 }
 
 .media h5 {
@@ -1074,7 +1074,7 @@ input[type="checkbox"]+label span:hover {
 .modulId {
     color: #0062cc;
     font-weight: bold;
-    font-size: 30px !important;
+    font-size: 30px;
 }
 
 .navbar-brand {

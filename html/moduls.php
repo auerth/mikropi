@@ -90,43 +90,43 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 				$mId = substr($item["name"],0,3);
 				switch($mId){
 					case "M00":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/einfuehrung-02.png'/>";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/einfuehrung.png'/>";
 					break;
 					case "M01":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/lunge-02.png'/>";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/lunge.png'/>";
 					break;
 					case "M02":
-						$img = "";
+						$img = "";					
 					break;
 					case "M03":
-						$img = "";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/heart.png'/>";
 					break;
 					case "M04":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/gastro-02.png'/>";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/gastro.png'/>";
 					break;
 					case "M05":
-						$img = "";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/kopf.png'/>";
 					break;
 					case "M06":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/niere-02.png'/>";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/niere.png'/>";
 					break;
 					case "M07":
-						$img = "";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/harnwege.png'/>";
 					break;
 					case "M08":
-						$img = "";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/hoden.png'/>";
 					break;
 					case "M09":
 						$img = "";
 					break;
 					case "M10":
-						$img = "";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/knochen.png'/>";
 					break;
 					case "M11":
-						$img = "";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/mamma.png'/>";
 					break;
 					case "M12":
-						$img = "";
+						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/gyno.png'/>";
 					break;
 				}
 				echo ("<div class='item' id='" . $item["id"] . "'>");

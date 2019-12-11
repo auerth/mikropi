@@ -112,7 +112,8 @@
         padding: 0;
     }
     .list .media {
-        width: 97%;
+        width: 98%;
+        margin: 5px !important;
     }
     #description {
         display: none;

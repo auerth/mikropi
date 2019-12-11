@@ -1,6 +1,6 @@
 @media only screen and (max-width: 500px) {
     .toolbar {
-        max-width: 300px;
+        max-width: 100%;
     }
     .moduls .item {
         font-size: 15px !important;
@@ -189,8 +189,7 @@
         height: 40px !important;
     }
     .toolbar {
-        width: 600px !important;
-        max-width: 500px;
+        max-width: 100%;
     }
     .viewerdetails {
         top: 45px;

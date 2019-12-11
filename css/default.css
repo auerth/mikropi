@@ -863,7 +863,7 @@ body {
     padding: 5px;
     margin-left: 10px;
     margin-top: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
     border-radius: 10px;
     box-shadow: 0rem 0 1rem #000;
 }
@@ -1018,6 +1018,7 @@ input[type="checkbox"]+label span:hover {
     margin: 0px !important;
     height: 50px !important;
     width: 50px !important;
+    max-width: 50px;
     background-color: rgba(0, 0, 0, 0.8);
 }
 

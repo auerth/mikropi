@@ -25,7 +25,6 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 				setcookie("isAdmin", $result["info"]["isAdmin"], time() + $expireTime);
 				setcookie("sessionHash", $result["info"]["sessionHash"], time() + $expireTime);
 				setcookie("matrikelnummer", $result["info"]["matrikelnummer"], time() + $expireTime);
-				setcookie("email", $result["info"]["email"], time() + $expireTime);
 				setcookie("creationDate", $result["info"]["creationDate"], time() + $expireTime);
 				header('Location: index.php?dash');
 			} else {
@@ -42,14 +41,16 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 		$result = $user->login($_POST["email"], hash('sha256', $_POST["password"]));
 		if ($result["errorCode"] == null && $result["success"]) {
 			$expireTime = 3600 * 2;
+			$emailTime = time() + $expireTime;
 			if ($keepLogin == "on") {
 				setcookie("loggedin_salt", hash('sha256', $_POST["password"]), 2147483647);
+				$emailTime = 2147483647;
 			}
 			setcookie("name", $result["info"]["forename"] . " " . $result["info"]["name"], time()+ $expireTime);
 			setcookie("isAdmin", $result["info"]["isAdmin"], time() + $expireTime);
 			setcookie("sessionHash", $result["info"]["sessionHash"], time() + $expireTime);
 			setcookie("matrikelnummer", $result["info"]["matrikelnummer"], time() + $expireTime);
-			setcookie("email", $result["info"]["email"], time() + $expireTime);
+			setcookie("email", $result["info"]["email"], $emailTime);
 			setcookie("creationDate", $result["info"]["creationDate"], time() + $expireTime);
 			if (isset($_POST["redirect"])) {
 				$redirect = $_POST["redirect"];

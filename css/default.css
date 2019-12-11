@@ -119,7 +119,7 @@
     background-color: #0062cc;
     /* Position the navbar at the top of the page */
     width: 100%;
-    height: 76px;
+    height: 76px !important;
     z-index: 10;
     padding: 0px;
     /* Full width */

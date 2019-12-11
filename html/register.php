@@ -78,7 +78,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<input type="text" name="forename" id="forename" maxLength="15" class="form-control" placeholder="Vorname" value="" required="true" />
 						</div>
 						<div class="form-group">
-							<input type="text" name="email" id="email" class="form-control" placeholder="Email" value="" required="true" />
+							<input type="email" name="email" id="email" class="form-control" placeholder="Email" value="" required="true" />
 						</div>
 						<div class="form-group">
 							<input type="password" id="password" name="password" class="form-control" placeholder="Passwort" value="" required="true" autocomplete="off" />

@@ -124,7 +124,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 				?>
 				<form method="post" action="settings.php">
 					<div class="form-group">
-						<input type="text" readonly onfocus="this.removeAttribute('readonly');" name="newEmail" class="form-control" placeholder="Neue Email" value="" required="true" />
+						<input type="email" readonly onfocus="this.removeAttribute('readonly');" name="newEmail" class="form-control" placeholder="Neue Email" value="" required="true" />
 					</div>
 					<div class="form-group">
 						<input type="password" readonly onfocus="this.removeAttribute('readonly');" name="password" class="form-control" placeholder="Aktuelles Passwort" value="" required="true" />

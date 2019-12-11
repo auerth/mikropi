@@ -60,7 +60,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					?>
 					<form method="post" action="verifyagain.php">
 						<div class="form-group">
-							<input type="text" name="email" class="form-control" placeholder="Email" value="" required="true" />
+							<input type="email" name="email" class="form-control" placeholder="Email" value="" required="true" />
 						</div>
 						<center>
 							<div class="form-group">

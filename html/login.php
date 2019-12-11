@@ -108,7 +108,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					?>
 					<form method="post" action="login.php">
 						<div class="form-group">
-							<input type="text" name="email" class="form-control" placeholder="Email" value="" required="true" />
+							<input type="email" name="email" class="form-control" placeholder="Email" value="" required="true" />
 						</div>
 						<div class="form-group">
 							<input type="password" name="password" class="form-control" placeholder="Passwort" value="" required="true" />

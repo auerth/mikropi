@@ -6,7 +6,6 @@
 .navbar-collapse {
     background-color: #0062cc;
     width: 100% !important;
-    padding-right: 30px;
 }
 
 .right {
@@ -47,7 +46,7 @@
     /* Padding */
     position: fixed;
     /* Sit on top of the screen */
-    z-index: 1;
+    z-index: 100;
     /* Add a z-index if needed */
     left: 50%;
     /* Center the snackbar */

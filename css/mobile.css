@@ -137,16 +137,18 @@
     .gridbox .box {
         width: 40% !important;
     }
+    .cutcontainer .card .thumbnail {
+        width: 100% !important;
+    }
     .gridbox .box p {
         font-size: 12px !important;
+        color: black !important;
         word-wrap: break-word !important;
     }
     .cutcontainer .card {
         transition: none !important;
         height: auto;
-    }
-    .cutcontainer .card img {
-        height: auto;
+        width: 13% !important;
     }
     .cutcontainer .card h3 {
         font-size: 10px !important;

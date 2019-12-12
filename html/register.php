@@ -87,26 +87,26 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<input type="password" id="password_repeat" name="" class="form-control" placeholder="Passwort wiederholen" value="" required="true" />
 						</div>
 						<div class="form-group">
-							<input type="text" name="matrikelnummer" id="matrikelnummer"  maxLength="10" class="form-control" placeholder="Immatrikulationsnummer" value="" />
+							<input type="text" name="matrikelnummer" id="matrikelnummer" maxLength="10" class="form-control" placeholder="Immatrikulationsnummer" value="" />
 							<p style="color: white;">Falls du keine Immatrikulationsnummer besitzt, kannst du auch einfach "n/a" angeben.</p>
 
 						</div>
 						<div class="form-group left">
 							<p><input type="checkbox" id="checkbox-agb" name="datenschutz" required /><label for="datenschutz" onclick="check('checkbox-agb')" style="color: white;"><span></span> Ich habe die Nutzungsbedingungen und Hinweise zum Datenschutz gelesen und akzeptiere diese.</label> </p>
 						</div>
+						<div class="form-group center">
+							<br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image' >
+						</div>
 						<center>
-							<div class="form-group">
-								<p><br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'></p>
-								<input type="text" style=" width: 25% !important;" class="form-control" name="captcha" />
+							<div class="form-group center">
+								<input type="text" style=" width: 25% !important;" class="form-control" placeholder="Captcha" name="captcha" />
 							</div>
-							<p style="color: white;">Sie können das Captcha nicht erkenne? <a href='javascript: refreshCaptcha();'>Dann hier drücken</a></p>
 						</center>
 						<div class="form-group center">
 							<input type="button" class="btnSubmit" onclick="postForm()" value="Registrieren" />
 						</div>
 					</form>
 
-					<p style="color: white;">Bei technischen Fragen wende dich bitte an den Administrator: <a href="mailto: admin@mikropi.de">admin@mikropi.de</a></p>
 				</div>
 			</div>
 		</div>

@@ -46,7 +46,7 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 				setcookie("loggedin_salt", hash('sha256', $_POST["password"]), 2147483647);
 				$emailTime = 2147483647;
 			}
-			setcookie("name", $result["info"]["forename"] . " " . $result["info"]["name"], time()+ $expireTime);
+			setcookie("name", $result["info"]["forename"] . " " . $result["info"]["name"], time() + $expireTime);
 			setcookie("isAdmin", $result["info"]["isAdmin"], time() + $expireTime);
 			setcookie("sessionHash", $result["info"]["sessionHash"], time() + $expireTime);
 			setcookie("matrikelnummer", $result["info"]["matrikelnummer"], time() + $expireTime);
@@ -59,7 +59,6 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 				header('Location: ' . $redirect);
 			} else {
 				header('Location: index.php?dash');
-
 			}
 		} else {
 			$error = $result["error"];
@@ -118,7 +117,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 						echo ('<input name="redirect" value="' . $redirect . '" type="hidden" />');
 						?>
 						<div class="form-group left">
-							<p><input type="checkbox" id="keep" name="keep"/><label for="keep" onclick="check('keep')" style="color: white;"><span></span> Eingeloggt bleiben</label> </p>
+							<p><input type="checkbox" id="keep" name="keep" /><label for="keep" onclick="check('keep')" style="color: white;"><span></span> Eingeloggt bleiben</label> </p>
 						</div>
 						<div class="form-group">
 							<input type="submit" class="btnSubmit" value="Login" />
@@ -127,9 +126,11 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<a href="forgotPassword.php" class="ForgetPwd" value="Login">Password
 								vergessen?</a>
 						</div>
+						<div class="form-group">
+							<a href="forgotPassword.php" class="ForgetPwd" value="Login">Noch keinen Account? Jetzt Regsitrieren</a>
+						</div>
 
 					</form>
-					<p style="color: white;">Bei technischen Fragen wende dich bitte an den Administrator: <a href="mailto: admin@mikropi.de">admin@mikropi.de</a></p>
 
 				</div>
 			</div>

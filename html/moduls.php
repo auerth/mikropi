@@ -87,50 +87,50 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			$moduls = $moduls["info"];
 			foreach ($moduls as $item) {
 				$img = "";
-				$mId = substr($item["name"],0,3);
-				switch($mId){
+				$mId = substr($item["name"], 0, 3);
+				switch ($mId) {
 					case "M00":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/einfuehrung.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/einfuehrung.png'/>";
+						break;
 					case "M01":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/lunge.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/lunge.png'/>";
+						break;
 					case "M02":
-						$img = "";					
-					break;
+						$img = "";
+						break;
 					case "M03":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/heart.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/heart.png'/>";
+						break;
 					case "M04":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/gastro.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/gastro.png'/>";
+						break;
 					case "M05":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/kopf.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/kopf.png'/>";
+						break;
 					case "M06":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/niere.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/niere.png'/>";
+						break;
 					case "M07":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/harnwege.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/harnwege.png'/>";
+						break;
 					case "M08":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/hoden.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/hoden.png'/>";
+						break;
 					case "M09":
 						$img = "";
-					break;
+						break;
 					case "M10":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/knochen.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/knochen.png'/>";
+						break;
 					case "M11":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/mamma.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/mamma.png'/>";
+						break;
 					case "M12":
-						$img = "<img id=' ".$item["id"] ."' class='center_h' src='../images/moduls/gyno.png'/>";
-					break;
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/gyno.png'/>";
+						break;
 				}
 				echo ("<div class='item' id='" . $item["id"] . "'>");
-				echo ("<div class='centerDiv' id=' ".$item["id"] ."'>".$img."<div class='modulId' id='".$item["id"] ."'>".substr($item["name"],0,3) ."</div>". substr($item["name"],3,strlen($item["name"]))."</div>");
+				echo ("<div class='centerDiv' id=' " . $item["id"] . "'>" . $img . "<div class='modulId' id='" . $item["id"] . "'>" . substr($item["name"], 0, 3) . "</div>" . substr($item["name"], 3, strlen($item["name"])) . "</div>");
 				echo ("</div>");
 			}
 		} else {
@@ -153,11 +153,19 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 		<input type="submit" value="PDF hochladen" />
 	</form>');
 			}
+			$iPod    = stripos($_SERVER['HTTP_USER_AGENT'], "iPod");
+			$iPhone  = stripos($_SERVER['HTTP_USER_AGENT'], "iPhone");
+			$iPad    = stripos($_SERVER['HTTP_USER_AGENT'], "iPad");
+			$Android = stripos($_SERVER['HTTP_USER_AGENT'], "Android");
 			if ($modulPath != "") {
-
-
-				echo ('<embed src= "' . $modulPath . '" width= "100%" >');
+				if (!$iPod &&!$iPhone &&!$Android) {
+					echo ('<embed src= "' . $modulPath . '" width= "99%"></embed>');
+				}else{
+					echo ('<div class="alert alert-warning">Dein Gerät unterstützt keine PDF im WebBrowser, <a href="' . $modulPath . '">klick hier</a> um die PDF herrunter zu laden
+								</div>');
+				}
 			}
+		
 
 			$result = $cut->getCutsFiltered(-1, -1, -1, -1, -1, -1, -1, -1);
 			$result = json_decode($result, true);
@@ -202,12 +210,12 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			}
 		}
 		?>
-		</div>
-		<?php
+			</div>
+			<?php
 
-		echo ($pageBuilder->getFooter());
+			echo ($pageBuilder->getFooter());
 
-		?>
+			?>
 	</main>
 	<?php
 

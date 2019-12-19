@@ -96,7 +96,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/lunge.png'/>";
 						break;
 					case "M02":
-						$img = "";
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/haut.png'/>";
 						break;
 					case "M03":
 						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/heart.png'/>";
@@ -117,7 +117,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/hoden.png'/>";
 						break;
 					case "M09":
-						$img = "";
+						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/blut.png'/>";
 						break;
 					case "M10":
 						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/knochen.png'/>";

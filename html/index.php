@@ -39,6 +39,10 @@ if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_o
           die(json_encode($result));
     }
 
+    if ((!isset($_COOKIE["sessionHash"]) || $_COOKIE["sessionHash"] == -1) &&  isset($_COOKIE["loggedin_salt"])) {
+        header("Location: login.php");
+    }
+
     //If sessionHash is set user is logged in
     if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
         $loggedIn = true;

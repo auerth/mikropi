@@ -17,6 +17,15 @@ $("li .dropdown-item").click(function(event) {
 
 });
 
+function countChar(val) {
+    var len = val.value.length;
+    if (len >= 500) {
+        val.value = val.value.substring(0, 500);
+    } else {
+        $('#charNum').text(len + "/500");
+    }
+};
+
 function filter(text) {
     var semester = $("#semester").val();
     var dozent = $("#lecturer").val();

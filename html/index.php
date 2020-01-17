@@ -31,12 +31,12 @@ if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_o
 
     //Add Category to Cut
     if (isset($_POST["filterid"]) && isset($_POST["cutid"]) && isset($_POST["hash"])) {
-          $hash = $_POST["hash"];
-          $filterId = $_POST["filterid"];
-          $cutId = $_POST["cutid"];
-          $category = new Category();
-          $result = $category->putCategory($hash, $cutId, $filterId);
-          die(json_encode($result));
+        $hash = $_POST["hash"];
+        $filterId = $_POST["filterid"];
+        $cutId = $_POST["cutid"];
+        $category = new Category();
+        $result = $category->putCategory($hash, $cutId, $filterId);
+        die(json_encode($result));
     }
 
     if ((!isset($_COOKIE["sessionHash"]) || $_COOKIE["sessionHash"] == -1) &&  isset($_COOKIE["loggedin_salt"])) {
@@ -95,14 +95,14 @@ if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_o
                 $cutMessage = $result["error"];
                 $alertType = "alert-danger";
             }
-        //change description of cut
+            //change description of cut
         } else if (isset($_POST["cutId"]) && isset($_POST["newDescription"]) && $isAdmin) {
             $result = $cut->updateCutDescription($_COOKIE["sessionHash"], $_POST["cutId"], $_POST["newDescription"]);
             if (!$result["success"]) {
                 $cutMessage = $result["error"];
                 $alertType = "alert-danger";
             }
-        //delte cut
+            //delte cut
         } else if (isset($_POST["cutId"]) && isset($_POST["deleteCut"]) && $isAdmin) {
             $result = $cut->deleteCut($_COOKIE["sessionHash"], $_POST["cutId"]);
             if (!$result["success"]) {
@@ -113,7 +113,7 @@ if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_o
                 $alertType = "alert-success";
                 header("Location: index.php?cuts");
             }
-        //change overlay name    
+            //change overlay name    
         } else if (isset($_POST["overlayId"]) && isset($_POST["newOverlay"]) && $isAdmin) {
             $result = $overlay->editOverlay($_COOKIE["sessionHash"], $_POST["overlayId"], $_POST["newOverlay"]);
             if (!$result["success"]) {
@@ -327,8 +327,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     echo ('<div class="alert ' . $alertType . '">' . $overlayMessage . '
 								</div>');
                 }
-                
-                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle .$editFilter. $deleteCut . "</div>");
+
+                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle . $editFilter . $deleteCut . "</div>");
                 echo ('<div class="flexbox" style="flex-wrap: nowrap; background-color: white;">');
                 $overlayDiv = "<div class='overlays' style='display: none;' id='overlay'>";
                 $overlayDivM = "<div class='overlaysM' style='display: none;' id='overlayM'>";
@@ -343,7 +343,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
         " . $overlayDiv . "<div class='row'>" . $editOverlays . "</div>" . $overlays . "
         </div><ul class='cutbar'><li><img src='../images/left.png'  id='hide'></li><li><i class='fas fa-align-left fa-2x bg-main' id='itemDescription'></i></li><li><i id='itemOverlay' class='fas fa-flag fa-2x bg-main'></i></li></ul>");
                 echo ("<div class='cutfile'>");
-                
+
                 //openseadragon element (cut)
                 echo ('<div id="toolbarDiv" class="toolbar" style="width: 100%; height: 2%;">
                 <div class="row">
@@ -518,7 +518,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 </div>');
                 }
             } else {
-                header('Location: login.php?redirect=index.php?cuts='.$_GET["cuts"]);
+                header('Location: login.php?redirect=index.php?cuts=' . $_GET["cuts"]);
             }
         } else {
             //If cuts parameter not set show dashboard
@@ -538,7 +538,16 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                             </div>
                         </div>
                     </div>
-                </div>');
+                </div>'); ?>
+                    <div id="overlay" onclick="overlayOff()">
+
+                        <div id="overlayText">
+                            <div class="row"><img src="/images/feedback.png" height="200" alt="feedback"><h1 style="color:white;"> Gib uns Feedback!</h1></div>
+                            <div class="row">Nimm dir 2 Minuten und fülle&nbsp<a target="_blank" style="color: #0062cc;" href="https://www.surveymonkey.de/r/R8L8LDL"> hier&nbsp </a>das Formular aus.</div>
+                            <div class="row" >Wir würden uns über dein Feedback freuen!</div>
+                        </div>
+                    </div>
+        <?php
 
                     if ($isAdmin) {
                         if ($dashboardMessage != null) {
@@ -575,18 +584,17 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								</div>');
                 }
                 echo ("</div>");
-
             } else if (!$loggedIn) {
                 echo (file_get_contents("home.html"));
             }
         }
         ?>
-                    <?php
-                    //Load Footer from page loader
-                    echo ($pageBuilder->getFooter());
-                    if ($loggedIn) {
-                        if (!isset($_COOKIE["bugreport"])) {
-                            echo (' <div class="toast__container" id="reportBug">
+        <?php
+        //Load Footer from page loader
+        echo ($pageBuilder->getFooter());
+        if ($loggedIn) {
+            if (!isset($_COOKIE["bugreport"])) {
+                echo (' <div class="toast__container" id="reportBug">
                         <div class="toast__cell">
                             <div class="toast toast--blue">
                                 <div class="toast__icon">
@@ -604,14 +612,14 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                             </div>
                         </div>
                         </div>');
-                        }
-                    }
-                    ?>
+            }
+        }
+        ?>
 
 
     </main>
 
-  
+
     <?php
     //Get Javascript for Openseadragon Element
     if (isset($_GET["cuts"]) && $_GET["cuts"] > 0) {
@@ -623,14 +631,14 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
             echo ($cut->getCutImage($_GET["cuts"]));
         }
     }
-   
+
     //JavaScript From Pagebuilder
     $array = array("../js/list.js", "../js/cut.js", "../js/dashboard.js");
-    if(!isset($_GET["cuts"])){
-        array_push($array,"../js/notify.js");
+    if (!isset($_GET["cuts"])) {
+        array_push($array, "../js/notify.js");
     }
     echo ($pageBuilder->getJsTags($array));
- 
+
     ?>
 
 </body>

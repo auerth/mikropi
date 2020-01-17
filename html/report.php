@@ -28,7 +28,6 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
     $email = $_COOKIE["email"];
     $matrikelnummer = $_COOKIE["matrikelnummer"];
     $erstelltAm = $_COOKIE["creationDate"];
-    setcookie("bugreport", "clicked", time() + 43200); 
     if (isset($_GET["sent"])) {
         $msg = "Nachricht wurde erfolgreicht versendet.";
     }
@@ -100,9 +99,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                             <div class="col-md-12">
 
                                 <div class="md-form">
-
                                     <label for="message">Fehlerbeschreibung *</label>
-                                    <textarea type="text" id="message" name="message" rows="2" maxlength="300" class="form-control md-textarea" required></textarea>
+                                    <textarea type="text" id="message" onkeyup="countChar(this)" name="message" rows="2" maxlength="500" class="form-control md-textarea" required></textarea>
+                                    <div id="charNum">0/500</div>
                                 </div>
 
                             </div>

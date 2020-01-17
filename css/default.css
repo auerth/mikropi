@@ -3,7 +3,7 @@
     background-color: #0062cc;
 }
 
-#overlay {
+#overlayFeedback {
     position: fixed;
     /* Sit on top of the page content */
     display: none;
@@ -28,7 +28,7 @@
     float: right;
 }
 
-#overlayText {
+#overlayTextFeedback {
     position: absolute;
     top: 50%;
     left: 50%;

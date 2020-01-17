@@ -539,9 +539,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                         </div>
                     </div>
                 </div>'); ?>
-                    <div id="overlay" onclick="overlayOff()">
-
-                        <div id="overlayText">
+                    <div id="overlayFeedback" onclick="overlayOff()">
+                        <div id="overlayTextFeedback">
                             <div class="row"><img src="/images/feedback.png" height="200" alt="feedback"><h1 style="color:white;"> Gib uns Feedback!</h1></div>
                             <div class="row">Nimm dir 2 Minuten und fülle&nbsp<a target="_blank" style="color: #0062cc;" href="https://www.surveymonkey.de/r/R8L8LDL"> hier&nbsp </a>das Formular aus.</div>
                             <div class="row" >Wir würden uns über dein Feedback freuen!</div>

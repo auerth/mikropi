@@ -5,7 +5,7 @@ function deleteDashItem(dashId) {
     $('body').append(form);
     form.submit();
 }
-document.getElementById("overlayFeedback").style.display = "block";
+//document.getElementById("overlayFeedback").style.display = "block";
 
 function overlayOff() {
     document.getElementById("overlayFeedback").style.display = "none";

@@ -110,6 +110,18 @@ if (typeof viewer !== 'undefined') {
                 // After 3 seconds, remove the show class from DIV
                 setTimeout(function() { x.className = x.className.replace("show", ""); }, 3000);
             }
+        } else {
+            viewer.gestureSettingsMouse.clickToZoom = true;
+            tracker.setTracking(false);
+            point1 = 0;
+            point2 = 0;
+            $('#addOverlay').removeClass('btn-danger');
+            $('#addOverlay').addClass('btn-primary');
+            try {
+                viewer.removeOverlay(runtimeelement);
+            } catch (e) {
+
+            }
         }
     });
     zoomlevel.innerHTML = viewer.viewport.getZoom().toFixed(2);
@@ -485,11 +497,12 @@ function drawOverlay() {
     } else {
         viewer.gestureSettingsMouse.clickToZoom = true;
         tracker.setTracking(false);
+        point1 = null;
+        point2 = null;
         $('#addOverlay').removeClass('btn-danger');
         $('#addOverlay').addClass('btn-primary');
         try {
             viewer.removeOverlay(runtimeelement);
-
         } catch (e) {
 
         }

@@ -49,7 +49,8 @@ if (file_exists($classFiles)) {
 				$msg = $result["error"];
 			}
 		}
-	} else { }
+	} else {
+	}
 	if (!$loggedIn) {
 		$actual_link = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		header("Location: login.php?redirect=" . $actual_link);
@@ -90,47 +91,47 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 				$mId = substr($item["name"], 0, 3);
 				switch ($mId) {
 					case "M00":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/einfuehrung.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/einfuehrung.png'/>";
 						break;
 					case "M01":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/lunge.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/lunge.png'/>";
 						break;
 					case "M02":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/haut.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/haut.png'/>";
 						break;
 					case "M03":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/heart.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/heart.png'/>";
 						break;
 					case "M04":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/gastro.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/gastro.png'/>";
 						break;
 					case "M05":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/kopf.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/kopf.png'/>";
 						break;
 					case "M06":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/niere.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/niere.png'/>";
 						break;
 					case "M07":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/harnwege.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/harnwege.png'/>";
 						break;
 					case "M08":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/hoden.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/hoden.png'/>";
 						break;
 					case "M09":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/blut.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/blut.png'/>";
 						break;
 					case "M10":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/knochen.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/knochen.png'/>";
 						break;
 					case "M11":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/mamma.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/mamma.png'/>";
 						break;
 					case "M12":
-						$img = "<img id=' " . $item["id"] . "' class='center_h' src='../images/moduls/gyno.png'/>";
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/gyno.png'/>";
 						break;
 				}
-				echo ("<div class='item' id='" . $item["id"] . "'>");
-				echo ("<div class='centerDiv' id=' " . $item["id"] . "'>" . $img . "<div class='modulId' id='" . $item["id"] . "'>" . substr($item["name"], 0, 3) . "</div>" . substr($item["name"], 3, strlen($item["name"])) . "</div>");
+				echo ("<div class='item' id='".$item["id"]."'>");
+				echo ("<div class='centerDiv' id='" . $item["id"] . "'>" . $img . "<div class='modulId' id='".$item["id"]."'>" . substr($item["name"], 0, 3) . "</div>" . substr($item["name"], 3, strlen($item["name"])) . "</div>");
 				echo ("</div>");
 			}
 		} else {
@@ -158,14 +159,14 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			$iPad    = stripos($_SERVER['HTTP_USER_AGENT'], "iPad");
 			$Android = stripos($_SERVER['HTTP_USER_AGENT'], "Android");
 			if ($modulPath != "") {
-				if (!$iPod &&!$iPhone &&!$Android) {
-					echo ('<embed src= "' . $modulPath . '" width= "99%"></embed>');
-				}else{
+				if (!$iPod && !$iPhone && !$Android) {
+					echo ('<embed src= "' . $modulPath . '" width= "99%">');
+				} else {
 					echo ('<div class="alert alert-warning">Dein Gerät unterstützt keine PDF im WebBrowser, <a href="' . $modulPath . '">klick hier</a> um die PDF herrunter zu laden
 								</div>');
 				}
 			}
-		
+
 
 			$result = $cut->getCutsFiltered(-1, -1, -1, -1, -1, -1, -1, -1);
 			$result = json_decode($result, true);
@@ -178,21 +179,42 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 
 			if ($isAdmin) {
+				echo ("<div class='row col-12'><button type='submit' style='margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;' id='saveModul' class='btn btn-primary' >Speichern</button></div>");
+				$actual_link = 'http://' . $_SERVER['HTTP_HOST'] . "/moduls.php";
 
+				if (isset($_GET["normal"])) {
+					echo ("<div class='row col-12'><a href='$actual_link?id=$modulId' style='color: black; margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'>Zu Administrator Ansicht wechseln</a></div>");
+				} else {
+					echo ("<div class='row col-12'><a href='$actual_link?id=$modulId&normal' style='color: black; margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'>Zu Benutzer Ansicht wechseln</a></div>");
+				}
 
+				if (!isset($_GET["normal"])) {
 
-
-				echo ("<div class'row col-12'><button type='submit' style='margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;' id='saveModul' class='btn btn-primary' >Speichern</button></div>");
-				echo ('<div id="listAdmin" class="gridbox">');
-				foreach ($cuts as $item) {
-					echo ('
+					echo ('<div id="listAdmin" class="gridbox">');
+					foreach ($cuts as $item) {
+						echo ('
 								<div id="' . $item["id"] . '" class="box">
 									<img id="' . $item["id"] . '" class="mr-3" src="' . $serverUrl . $item["thumbnail"] . '"  alt="No Thumbnail">
 									<p id="' . $item["id"] . '" class="mt-0">' . $item["name"] . '</p>
 								</div>
 							');
+					}
+					echo ("</div>");
+				} else {
+					echo ('<div id="listCutr" class="cutcontainer">');
+					foreach ($cuts as $item) {
+						if (in_array($item["id"], $cutListf)) {
+							echo ('
+								<div id="' . $item["id"] . '" class="card">
+									<img id="' . $item["id"] . '" class="thumbnail" src="' . $serverUrl . $item["thumbnail"] . '"  alt="No Thumbnail">
+													<h3 id="' . $item["id"] . '" class="title">' . $item["name"] . '</h3>
+									
+								</div>
+							');
+						}
+					}
+					echo ("</div>");
 				}
-				echo ("</div>");
 			} else {
 				echo ('<div id="listCutr" class="cutcontainer">');
 				foreach ($cuts as $item) {
@@ -210,12 +232,12 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			}
 		}
 		?>
-			</div>
-			<?php
+		</div>
+		<?php
 
-			echo ($pageBuilder->getFooter());
+		echo ($pageBuilder->getFooter());
 
-			?>
+		?>
 	</main>
 	<?php
 

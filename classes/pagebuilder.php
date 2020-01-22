@@ -111,7 +111,7 @@ class PageBuilder
         $nav = ' <nav class="navbar navbar-expand-lg navbar-dark navbar-background static-top"><a class="navbar-brand" href="index.php?dash"><img src="../images/logo_white.png" height="40" width="120" class="logo" alt="Logo"></a><button class="navbar-toggler" type="button" tabIndex="-1" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarResponsive"><ul class="navbar-nav ml-auto" style="width: 100% !important;">';
 
         if (!$loggedIn) {
-            $activeHome = "";
+            $activeHome="";
             if ($fileName == "index.php") {
                 $activeHome = "active";
             }
@@ -135,7 +135,7 @@ class PageBuilder
                 $activeModuls = "active";
             }
             $nav = $nav . ('
-					            <li class="nav-item ' . $activeDashboard . '" ">
+					            <li class="nav-item ' . $activeDashboard . '">
 								    <a class="nav-link" href="index.php?dash">Dashboard</a>
 							    </li>
 					            <li class="nav-item ' . $activSchnitt . '">

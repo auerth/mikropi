@@ -183,9 +183,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 				$actual_link = 'http://' . $_SERVER['HTTP_HOST'] . "/moduls.php";
 
 				if (isset($_GET["normal"])) {
-					echo ("<div class='row col-12'><a href='$actual_link?id=$modulId' style='color: black; margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'>Zu Administrator Ansicht wechseln</a></div>");
+					echo ("<div class='row col-12'><a href='$actual_link?id=$modulId' style='color: black; margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'>Zur Administrator Ansicht wechseln</a></div>");
 				} else {
-					echo ("<div class='row col-12'><a href='$actual_link?id=$modulId&normal' style='color: black; margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'>Zu Benutzer Ansicht wechseln</a></div>");
+					echo ("<div class='row col-12'><a href='$actual_link?id=$modulId&normal' style='color: black; margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'>Zur Benutzer Ansicht wechseln</a></div>");
 				}
 
 				if (!isset($_GET["normal"])) {

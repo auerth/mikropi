@@ -498,7 +498,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                 echo ('<li> 
                                 
                                 <input type="checkbox" id="checkBox-' . $checkBoxId . '" ' . $isChecked . '><label onclick="putFilter(' . $item["id"] . ',' . $cutId . ',`' . $_COOKIE["sessionHash"] . '`,' . $checkBoxId . ')" value="' . $item["name"] . '" >
-                                <span></span>' . $item["name"] . '</lable>');
+                                <span></span>' . $item["name"] . '</label></li>');
                                 $checkBoxId++;
                             }
                         }

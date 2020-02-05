@@ -5,7 +5,7 @@
 $error = null;
 $classFiles = "../etc/classfiles.php";
 include($classFiles);
-
+$email = "";
 if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 	include($file_user);
 	include($file_pagebuilder);
@@ -37,7 +37,7 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 	}
 	if (isset($_POST["email"]) && isset($_POST["password"])) {
 		$keepLogin = $_POST["keep"];
-
+		$email =$_POST["email"];
 		$result = $user->login($_POST["email"], hash('sha256', $_POST["password"]));
 		if ($result["errorCode"] == null && $result["success"]) {
 			$expireTime = 3600 * 2;
@@ -108,7 +108,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					?>
 					<form method="post" action="login.php">
 						<div class="form-group">
-							<input type="email" name="email" class="form-control" placeholder="Email" value="" required="true" />
+							<input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo($email);?>" required="true" />
 						</div>
 						<div class="form-group">
 							<input type="password" name="password" class="form-control" placeholder="Passwort" value="" required="true" />

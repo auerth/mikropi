@@ -38,7 +38,6 @@ if (!$json["working"]) {
     $json["working"] = false;
     $jsonString = json_encode($json);
     file_put_contents($statusFile,$jsonString);
-    echo "Done";
 } else {
     echo "Script is running";
 }

@@ -5,8 +5,8 @@ $logFile = "../logs/worklist.log";
 $sql = "SELECT  id, name,file  FROM cut WHERE toDelete = 1;";
 if ($result = $db->query($sql)) {
     while ($row = $result->fetch_array()) {
-        $out = exec('cd ../files/cuts && rm -r ' . $row["file"] . "_files/");
-        $out = exec('cd ../files/cuts && rm -r ' . $row["file"] . ".dzi");
+        $out = exec('cd ../files/cuts && rm -r "' . $row["file"] . '_files/"');
+        $out = exec('cd ../files/cuts && rm -r "' . $row["file"] . '.dzi"');
         $sql = "DELETE FROM cut WHERE id = '" . $row["id"] . "';";
         if ($result2 = $db->query($sql)) {
             $sql = "DELETE FROM ttCutCategory WHERE cutId = '" . $row["id"] . "';";

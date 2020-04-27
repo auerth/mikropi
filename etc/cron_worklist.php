@@ -1,15 +1,19 @@
 <?php
 // Ignoriere Abbruch durch den Benutzer und erlaube dem Skript weiterzulaufen
-ignore_user_abort(true);
 set_time_limit(0);
 $dir = "../files/tmp/";
 $logFile = "../logs/worklist.log";
-if ($_SERVER['worklist'] == "") {
-    $_SERVER['worklist'] = "ended";
-}
-$runningScript = $_SERVER['worklist'];
-if ($runningScript == "ended") {
-    $_SERVER['worklist'] = "running";
+$statusFile = "worklist.meta";
+
+$json = file_get_contents($statusFile);
+$json = json_decode($json,true);
+
+if (!$json["working"]) {
+    $json["working"] = true;
+    $jsonString = json_encode($json);
+    file_put_contents($statusFile,$jsonString);
+
+
     $files1 = scandir($dir);
     $files1 = array_diff($files1, array('.', '..'));
 
@@ -20,22 +24,24 @@ if ($runningScript == "ended") {
         $nameNoExtention = str_replace(".TIFF", "", $nameNoExtention);
         $nameNoExtention = str_replace(".TIF", "", $nameNoExtention);
         $log = file_get_contents($logFile);
-        file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() ) . ": Converting File " . $value . "\n");
+        file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() ) . ": Converting File '" . $value . "'\n");
 
-        $out = exec('cd ../etc/ && bash prepare_tiff.sh ../files/tmp/' . $value . ' ../files/cuts/' . $nameNoExtention);
-        $out = exec('cd ../files/tmp && rm -r ' . $value);
+        $out = exec('cd ../etc/ && bash prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention.'"');
+        $out = exec('cd ../files/tmp && rm -r "' . $value.'"');
         //$out = exec('cd ../files/cut && rm -r '.$nameNoExtention);
         $log = file_get_contents($logFile);
-        file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Finished Converting " . $nameNoExtention . "\n");
+        file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Finished Converting '" . $nameNoExtention . "'\n");
         checkForCuts();
+  
         break;
     }
-
-    $_SERVER['worklist'] = "ended";
+    $json["working"] = false;
+    $jsonString = json_encode($json);
+    file_put_contents($statusFile,$jsonString);
+    echo "Done";
 } else {
     echo "Script is running";
 }
-
 
 function checkForCuts()
 {
@@ -83,16 +89,6 @@ function checkForCuts()
             $jsonResult["error"] = "Error by data selecting.";
             $jsonResult["errorCode"] = "1";
         }
-    }
-    if ($added > 0) {
-        include("../classes/dashboard.php");
-        $dashboard = new Dashboard();
-        $dashboard->addDashboardEntrie($userId, "Schnitte", "Es wurden " . $added . " neue Schnitte hinzugefügt.");
-        $jsonResult["success"] = true;
-        $jsonResult["info"] = $added;
-    } else if ($jsonResult["errorCode"] == 0) {
-        $jsonResult["success"] = true;
-        $jsonResult["info"] = $added;
     }
 
     return $jsonResult;

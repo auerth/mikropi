@@ -129,6 +129,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					case "M12":
 						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/gyno.png'/>";
 						break;
+					case "___":
+						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/zahn.png'/>";
+
+						break;
 				}
 				echo ("<div class='item' id='".$item["id"]."'>");
 				echo ("<div class='centerDiv' id='" . $item["id"] . "'>" . $img . "<div class='modulId' id='".$item["id"]."'>" . substr($item["name"], 0, 3) . "</div>" . substr($item["name"], 3, strlen($item["name"])) . "</div>");

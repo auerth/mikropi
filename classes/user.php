@@ -786,7 +786,6 @@ Mit freundlichen Grüßen<br><br>
         $editUserId = $db->real_escape_string($editUserId);
         $setAdmin = $db->real_escape_string($setAdmin);
         $isAdmin = $this->isAdmin($userId);
-        echo("UserID: " . $userId);
         $isAdmin = $isAdmin["success"];
 
         if ($isAdmin) {

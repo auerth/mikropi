@@ -50,7 +50,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
         if (isset($_POST["admin"])) {
             $admin = true;
         }
-        $result = $user->updateUser($sessionHash, $active, $_POST["userId"], $admin);
+        $result = $user->updateUser($userId, $active, $_POST["userId"], $admin);
         if (!$result["success"]) {
             $msg = $result["error"];
             $alertType = "alert-danger";

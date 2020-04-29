@@ -44,6 +44,7 @@ if (!$json["working"]) {
             }else{
                 $log = file_get_contents($logFile);
                 file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time() ) . ": DZI and Files Folder for'" . $nameNoExtention . "' already exists\n");
+                $out = exec('cd ../files/tmp && rm -r "' . $value.'"');
                 echo "Already exsists " . $nameNoExtention;
 
             }

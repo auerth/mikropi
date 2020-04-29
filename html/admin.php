@@ -26,7 +26,7 @@ $category = new Category();
 $modul = new Modul();
 $pageBuilder = new PageBuilder();
 
-
+$sessionHash = null;
 if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
     $loggedIn = true;
     if (isset($_COOKIE["isAdmin"])) {
@@ -36,6 +36,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
         header("Location: index.php?dash");
     }
     $userId = $_COOKIE["sessionHash"];
+    $sessionHash = $userId;
     $name = $_COOKIE["name"];
     $email = $_COOKIE["email"];
     $matrikelnummer = $_COOKIE["matrikelnummer"];

@@ -127,7 +127,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								vergessen?</a>
 						</div>
 						<div class="form-group">
-							<a href="forgotPassword.php" class="ForgetPwd" value="Login">Noch keinen Account? Jetzt Regsitrieren</a>
+							<a href="register.php" class="ForgetPwd" value="Login">Noch keinen Account? Jetzt registrieren</a>
 						</div>
 
 					</form>

@@ -23,17 +23,33 @@ if (!$json["working"]) {
         $nameNoExtention = str_replace(".tif", "", $nameNoExtention);
         $nameNoExtention = str_replace(".TIFF", "", $nameNoExtention);
         $nameNoExtention = str_replace(".TIF", "", $nameNoExtention);
-        $log = file_get_contents($logFile);
-        file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() ) . ": Converting File '" . $value . "'\n");
+        if(file_exists("../files/cuts/".$nameNoExtention)){
+            $log = file_get_contents($logFile);
+            file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time() ) . ": Converting Folder '" . $nameNoExtention . "' already exists\n");
+            echo "Converting Folder already exsists " . $nameNoExtention;
 
-        $out = exec('cd ../etc/ && bash prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention.'"');
-        $out = exec('cd ../files/tmp && rm -r "' . $value.'"');
-        //$out = exec('cd ../files/cut && rm -r '.$nameNoExtention);
-        $log = file_get_contents($logFile);
-        file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Finished Converting '" . $nameNoExtention . "'\n");
-        checkForCuts();
-  
+        }else{
+            if(!file_exists("../files/cuts/".$nameNoExtention."_files") && !file_exists("../files/cuts/".$nameNoExtention.".dzi")){
+
+                $log = file_get_contents($logFile);
+                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() ) . ": Converting File '" . $value . "'\n");
+
+                $out = exec('cd ../etc/ && bash prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention.'"');
+                $out = exec('cd ../files/tmp && rm -r "' . $value.'"');
+                //$out = exec('cd ../files/cut && rm -r '.$nameNoExtention);
+                $log = file_get_contents($logFile);
+                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Finished Converting '" . $nameNoExtention . "'\n");
+                checkForCuts();
+                echo "Done " . $nameNoExtention;
+            }else{
+                $log = file_get_contents($logFile);
+                file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time() ) . ": DZI and Files Folder for'" . $nameNoExtention . "' already exists\n");
+                echo "Already exsists " . $nameNoExtention;
+
+            }
+        }
         break;
+    
     }
     $json["working"] = false;
     $jsonString = json_encode($json);

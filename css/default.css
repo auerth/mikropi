@@ -1158,6 +1158,7 @@ embed {
     padding-bottom: 45px;
     flex-direction: row;
     flex-wrap: wrap;
+    
 }
 
 .gridbox {
@@ -1218,9 +1219,9 @@ embed {
     left: 0px;
 }
 
-.cutcontainer .card:not(:first-child) {
+/*.cutcontainer .card:not(:first-child) {
     margin-left: -50px;
-}
+}*/
 
 .cutcontainer .card:hover {
     transform: translateY(-20px);

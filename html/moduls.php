@@ -131,7 +131,6 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 						break;
 					case "___":
 						$img = "<img id='" . $item["id"] . "' class='center_h' src='../images/moduls/zahn.png'/>";
-
 						break;
 				}
 				echo ("<div class='item' id='".$item["id"]."'>");

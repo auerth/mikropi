@@ -45,7 +45,13 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
     <!-- Page Content -->
     <main style="align-content: center; text-align: center;">
-        
+        <h1>Neuen Schnitt hochladen.</h1>
+        <video width="70%" controls>
+            <source src="files/tutorial/Neue_Schnitte_x264.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <br>
+        <br>
         <h1>Name und Beschreibung von Schnitten ändern.</h1>
         <video width="70%" controls>
             <source src="files/tutorial/Schnittname_Beschreibung_x264.mp4" type="video/mp4">

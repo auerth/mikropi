@@ -72,10 +72,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					?>
 					<form method="post" id="register" action="register.php">
 						<div class="form-group">
-							<input type="text" name="name" id="name" maxLength="15" class="form-control" placeholder="Name" value="" required="true" />
+							<input type="text" name="name" id="name" maxLength="30" class="form-control" placeholder="Name" value="" required="true" />
 						</div>
 						<div class="form-group">
-							<input type="text" name="forename" id="forename" maxLength="15" class="form-control" placeholder="Vorname" value="" required="true" />
+							<input type="text" name="forename" id="forename" maxLength="30" class="form-control" placeholder="Vorname" value="" required="true" />
 						</div>
 						<div class="form-group">
 							<input type="email" name="email" id="email" class="form-control" placeholder="Email" value="" required="true" />

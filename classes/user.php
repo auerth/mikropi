@@ -557,7 +557,7 @@ Mit freundlichen Grüßen<br><br>
         if ($matrikelnummer != 'n/a') {
             $tmpMatrikel = $matrikelnummer;
         }
-        if (strlen($name) <= 15 && strlen($forename) <= 15) {
+        if (strlen($name) <= 30 && strlen($forename) <= 30) {
 
 
             $sql = "SELECT * FROM user WHERE email like '" . $email . "' OR matrikelnummer like '" . $tmpMatrikel . "';";

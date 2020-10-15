@@ -407,9 +407,8 @@ if (!$isAdmin || !$loggedIn) {
                 <h5 class="card-header bg-2nd text-white">Schnitt hochladen (Tiff / Tif)</h5>
                 <div class="card-body">
                     <form action="" method="post" enctype="multipart/form-data">
-                        <input type="file" id="files" name="files[]" multiple="multiple" accept=".tif,.tiff,.TIFF,.TIF" /><br /><br />
+                        <input type="file" id="files" name="files[]" multiple="multiple" accept=".pdf,.PDF" /><br /><br />
                         <button class="btn btn-primary" type="submit" id="upload" name="upload" value="Upload">Hochladen</button><br />
-
                         <!-- Progress will be shown here -->
                         <div id="uploadlist" class="progress"></div>
                     </form>

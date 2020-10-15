@@ -79,7 +79,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<div class="name">Vorname</div>
 								<div class="value">
 									<div class="input-group">
-										<input class="input--style-5" type="text" id="forename" name="forename">
+										<input class="input--style-5" type="text" id="forename" name="forename" required>
 									</div>
 								</div>
 							</div>
@@ -87,7 +87,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<div class="name">Name</div>
 								<div class="value">
 									<div class="input-group">
-										<input class="input--style-5" type="text" id="name" name="name">
+										<input class="input--style-5" type="text" id="name" name="name" required>
 									</div>
 								</div>
 							</div>
@@ -95,7 +95,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<div class="name">Email</div>
 								<div class="value">
 									<div class="input-group">
-										<input class="input--style-5" type="email" id="email" name="email">
+										<input class="input--style-5" type="email" id="email" name="email" required>
 									</div>
 								</div>
 							</div>
@@ -103,7 +103,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<div class="name">Passwort</div>
 								<div class="value">
 									<div class="input-group">
-										<input class="input--style-5" type="password" id="password" name="password">
+										<input class="input--style-5" type="password" id="password" name="password" required>
 									</div>
 								</div>
 							</div>
@@ -111,7 +111,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<div class="name">Passwort wiederholen</div>
 								<div class="value">
 									<div class="input-group">
-										<input class="input--style-5" type="password" id="password_repeat" name="password_repeat">
+										<input class="input--style-5" type="password" id="password_repeat" name="password_repeat" required>
 									</div>
 								</div>
 							</div>
@@ -119,7 +119,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<div class="name">Matrikelnummer</div>
 								<div class="value">
 									<div class="input-group">
-										<input class="input--style-5" type="text" id="matrikelnummer" name="matrikelnummer">
+										<input class="input--style-5" type="text" id="matrikelnummer" name="matrikelnummer" required>
 									</div>
 								</div>
 								<p style="color: white;">Falls du keine Immatrikulationsnummer besitzt, kannst du auch einfach "n/a" angeben.</p>
@@ -133,7 +133,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								<br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'>
 							</div>
 							<div class="form-group center">
-								<input type="text" style=" width: 25% !important;" class="form-control" placeholder="Captcha" name="captcha" />
+								<input type="text" style=" width: 25% !important;" class="form-control" placeholder="Captcha" name="captcha"  required/>
 							</div>
 							<div class="form-group center">
 								<input type="button" class="btnSubmit" onclick="postForm()" value="Registrieren" style="  font-weight: 600;"/>

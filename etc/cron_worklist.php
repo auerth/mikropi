@@ -33,7 +33,6 @@ if (!$json["working"]) {
 
                 $log = file_get_contents($logFile);
                 file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() ) . ": Converting File '" . $value . "'\n");
-
                 $out = exec('cd ../etc/ && bash prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention.'"');
                 $out = exec('cd ../files/tmp && rm -r "' . $value.'"');
                 //$out = exec('cd ../files/cut && rm -r '.$nameNoExtention);
@@ -57,6 +56,20 @@ if (!$json["working"]) {
     file_put_contents($statusFile,$jsonString);
 } else {
     echo "Script is running";
+}
+
+
+
+function sleepUntilWritten($filename){
+	while(true){
+		$filesize_old = filesize($filename);
+		sleep(4);
+		$filesize_new = filesize($filename);
+		if($filesize_old ==$filesize_new){
+            echo("file is written");
+			return true;
+		}
+	}
 }
 
 function checkForCuts()

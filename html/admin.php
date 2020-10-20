@@ -187,7 +187,7 @@ if (!$isAdmin || !$loggedIn) {
     echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen."));
     ?>
 
-    <body onload="display_ct()">
+    <body>
 
         <!-- Navigation -->
         <?php
@@ -407,7 +407,7 @@ if (!$isAdmin || !$loggedIn) {
                 <h5 class="card-header bg-2nd text-white">Schnitt hochladen (Tiff / Tif)</h5>
                 <div class="card-body">
                     <form action="" method="post" enctype="multipart/form-data">
-                        <input type="file" id="files" name="files[]" multiple="multiple" accept=".pdf,.PDF" /><br /><br />
+                        <input type="file" id="files" name="files[]" multiple="multiple" accept=".tiff,.tif" /><br /><br />
                         <button class="btn btn-primary" type="submit" id="upload" name="upload" value="Upload">Hochladen</button><br />
                         <!-- Progress will be shown here -->
                         <div id="uploadlist" class="progress"></div>

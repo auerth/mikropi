@@ -89,21 +89,7 @@ class PageBuilder
         <script src="js/bootstrap/jquery.js"></script>
         <script src="js/bootstrap/propper.js"></script>
         <script src="js/bootstrap/bootstrap.min.js"></script>';
-        $tags = $tags."<!-- Matomo -->
-        <script type='text/javascript'>
-          var _paq = window._paq || [];
-          /* tracker methods like 'setCustomDimension' should be called before 'trackPageView' */
-          _paq.push(['trackPageView']);
-          _paq.push(['enableLinkTracking']);
-          (function() {
-            var u='//mikropi.de/analytics/matomo/';
-            _paq.push(['setTrackerUrl', u+'matomo.php']);
-            _paq.push(['setSiteId', '1']);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-          })();
-        </script>
-        <!-- End Matomo Code -->";
+   
         foreach ($jsFiles as &$link) {
             $tags = $tags . '<script src="' . $link . '"></script>';
         }
@@ -193,7 +179,6 @@ class PageBuilder
                 $accountItems = $accountItems . '<a class="dropdown-item ' . $activeAdmin . '" href="admin.php"><i class="fas fa-unlock-alt"></i> Admin</a><a class="dropdown-item ' . $activeTutorials . '" href="tutorial.php"><i class="fas fa-book"></i> Tutorials</a>';
             }
             $accountItems .= '<a class="dropdown-item ' . $activeReport . '" href="report.php"><i class="fas fa-bug"></i> Bug Report</a>';
-            $accountItems .= '<a class="dropdown-item" href="https://www.surveymonkey.de/r/R8L8LDL" target="_blank"><i class="fas fa-comments"></i> Feedback</a>';
 
             $nav = $nav . (' <li class="nav-item ' . $activeReport . $activeSettings . $activeAdmin . $activeTutorials .' dropdown" >
 								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >

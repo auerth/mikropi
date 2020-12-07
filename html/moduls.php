@@ -163,7 +163,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			$Android = stripos($_SERVER['HTTP_USER_AGENT'], "Android");
 			if ($modulPath != "") {
 				if (!$iPod && !$iPhone && !$Android) {
-					echo ('<embed src= "' . $modulPath . '" width= "99%">');
+
 				} else {
 					echo ('<div class="alert alert-warning">Dein Gerät unterstützt keine PDF im WebBrowser, <a href="' . $modulPath . '">klick hier</a> um die PDF herrunter zu laden
 								</div>');
@@ -182,7 +182,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 
 			if ($isAdmin) {
-				echo ("<div class='row col-12'><button type='submit' style='margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;' id='saveModul' class='btn btn-primary' >Speichern</button></div>");
+				echo ("<div class='row col-12'><a href='" . $modulPath . "' target='_blank'><button type='submit' style='margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'  class='btn btn-primary' >PDF Skript</button></a><button type='submit' style='margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;' id='saveModul' class='btn btn-primary' >Speichern</button></div>");
 				$actual_link = 'http://' . $_SERVER['HTTP_HOST'] . "/moduls.php";
 
 				if (isset($_GET["normal"])) {
@@ -219,6 +219,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					echo ("</div>");
 				}
 			} else {
+				echo ("<div class='row col-12'><a href='" . $modulPath . "' target='_blank'><button type='submit' style='margin-left: auto; margin-top: 10px; margin-bottom: 10px; margin-right: 10px; float: right;'  class='btn btn-primary' >PDF Skript</button></a></div>");
 				echo ('<div id="listCutr" class="cutcontainer">');
 				foreach ($cuts as $item) {
 					if (in_array($item["id"], $cutListf)) {

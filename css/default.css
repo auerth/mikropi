@@ -381,6 +381,7 @@ h5 {
 
 .login {
     background-image: url("../images/background_login.png");
+    background-size: cover;
 }
 
 .centerDiv {
@@ -646,6 +647,7 @@ main::after {
 
 .bgimg {
     background-image: url('/images/background.png');
+    background-size: cover;
 }
 
 footer {

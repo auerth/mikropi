@@ -16,7 +16,7 @@ class User
         $email = strtolower(trim($email));
 
         include("../etc/db.php");
-        include("../classes/sessionHash.php");
+        require_once("../classes/sessionHash.php");
         $session = new SessionHash();
         $email = $db->real_escape_string($email);
         $password = $db->real_escape_string($password);

@@ -26,8 +26,6 @@ Create Folder files/cuts/ in web folder root
 
 Rename etc/db_.php to etc/db.php and edit login credentials
 
-Rename etc/captcha_.php to etc/captcha.php and edit api key (You can get [Google Recaptcha Api Key](https://www.google.com/recaptcha) here use V2)
-
 Register your first account on [yourdomain]/register.php
 
 Go to database and activate account in table "user"
@@ -43,11 +41,13 @@ Now upload Cut Slides in Tiff Format on webpage ([yourdomain]/admin.php)
 * [Openseadragon](https://openseadragon.github.io/) - An open-source, web-based viewer for high-resolution zoomable images, implemented in pure JavaScript, for desktop and mobile. 
 * [Font Awesome](https://rometools.github.io/rome/) - Used for Icons
 
+## Authors
 
+* **Class documentation** - [Softwelop](https://dev.softwelop.com/mikropi)
 
 ## Authors
 
-* **Thorben Auer ** - *Initial work* - [auerth](https://github.com/auerth)
+* **Thorben Auer** - *Developer* - [auerth](https://github.com/auerth)
 
 ## License
 

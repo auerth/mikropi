@@ -232,7 +232,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     }
                     echo ('
 								<div id="' . $item["id"] . '" class="media">
-									<img id="' . $item["id"] . '" class="mr-3" src="' . $serverUrl . $item["thumbnail"] . '"  alt="No Thumbnail">
+									<img id="' . $item["id"] . '" class="mr-3" src="' . $item["thumbnail"] . '"  alt="No Thumbnail">
 									<div id="' . $item["id"] . '" class="media-body">
 										<h5 id="' . $item["id"] . '" class="mt-0">' . $item["name"] . '</h5>
                                         <p id="' . $item["id"] . '">' . $item["description"] . '</p>
@@ -440,6 +440,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 <form method="POST" action="index.php?cuts=' . $cutId . '">
                 
 <div class="form-group row text-center">');
+$checkBoxId = 0;
+
                     while ($fruit_name = current($categorys)) {
                         $catName = key($categorys);
                         switch (key($categorys)) {
@@ -484,7 +486,6 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 																			    <p style="color: black; font-size: 13px;">' . ucfirst($catName) . ':</p>   <button type="button" id="' . key($categorys) . '" value="-1" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">' . "--" . '</button>
 																			<ul class="dropdown-menu scrollable-menu">
                                                                         ');
-                        $checkBoxId = 0;
                         foreach ($categorys[key($categorys)] as $item) {
                             if ($item["name"] != "Alle") {
                                 $isChecked = "";
@@ -496,8 +497,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                     }
                                 }
                                 echo ('<li> 
-                                
-                                <input type="checkbox" id="checkBox-' . $checkBoxId . '" ' . $isChecked . '><label onclick="putFilter(' . $item["id"] . ',' . $cutId . ',`' . $_COOKIE["sessionHash"] . '`,' . $checkBoxId . ')" value="' . $item["name"] . '" >
+                                <input type="checkbox" class="Test" id="checkBox-' . $checkBoxId . '" ' . $isChecked . '><label onclick="putFilter(' . $item["id"] . ',' . $cutId . ',`' . $_COOKIE["sessionHash"] . '`,' . $checkBoxId . ')" value="' . $item["name"] . '" >
                                 <span></span>' . $item["name"] . '</label></li>');
                                 $checkBoxId++;
                             }
@@ -541,9 +541,11 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 </div>'); ?>
                     <div id="overlayFeedback" onclick="overlayOff()">
                         <div id="overlayTextFeedback">
-                            <div class="row"><img src="/images/feedback.png" height="200" alt="feedback"><h1 style="color:white;"> Gib uns Feedback!</h1></div>
+                            <div class="row"><img src="/images/feedback.png" height="200" alt="feedback">
+                                <h1 style="color:white;"> Gib uns Feedback!</h1>
+                            </div>
                             <div class="row">Nimm dir 2 Minuten und fülle&nbsp<a target="_blank" style="color: #0062cc;" href="https://www.surveymonkey.de/r/R8L8LDL"> hier&nbsp </a>das Formular aus.</div>
-                            <div class="row" >Wir würden uns über dein Feedback freuen!</div>
+                            <div class="row">Wir würden uns über dein Feedback freuen!</div>
                         </div>
                     </div>
         <?php

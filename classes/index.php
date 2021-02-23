@@ -16,7 +16,7 @@ if ($cuts["success"]) {
         }
         $inf = array("html"=>'
         <div id="' . $item["id"] . '" class="media">
-            <img id="' . $item["id"] . '" class="mr-3" src="' . $serverUrl . $item["thumbnail"] . '"  alt="No Thumbnail">
+            <img id="' . $item["id"] . '" class="mr-3" src="'. $item["thumbnail"] . '"  alt="No Thumbnail">
             <div id="' . $item["id"] . '" class="media-body">
                 <h5 id="' . $item["id"] . '" class="mt-0">' . $item["name"] . '</h5>
                 <p id="' . $item["id"] . '">' . $item["description"] . '</p>

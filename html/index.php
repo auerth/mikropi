@@ -384,7 +384,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
   <div class="modal-content">
     <div class="row"><h3>Name ändern:</h3><span class="close">&times;</span></div>
 	   <form method="POST" action="index.php?cuts=' . $cutId . '">
-	   <input id="cutId" name="cutId" type="text" style="display: none;" value="' . $cutId . '"/>
+	   <input  name="cutId" type="text" style="display: none;" value="' . $cutId . '"/>
         <div class="form-group">
             <input name="newTitle" id="newTitle" type="text" class="form-control" placeholder="Name eingeben"/>
         </div>
@@ -420,7 +420,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 <div class="modal-content">
 <div class="row"><h3>Beschreibung ändern:</h3><span class="close" id="closeDec">&times;</span></div><div>' . $listOverlayWithId . '</ul></div>
 <form method="POST" action="index.php?cuts=' . $cutId . '">
-<input id="cutId" name="cutId" type="text" style="display: none;" value="' . $cutId . '">
+<input  name="cutId" type="text" style="display: none;" value="' . $cutId . '">
 
 <div class="form-group">
 <textarea name="newDescription" rows="8" id="newDescription" class="form-control" placeholder="Beschreibung eingeben"></textarea>

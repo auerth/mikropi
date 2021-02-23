@@ -1,8 +1,19 @@
 <?php
 
+/**
+ * The Dashboard Class - Add, get and remove dashboardentries from database
+ * @author     Thorben Auer
+ * @link       https://softwelop.com
+ */
 class Dashboard
 {
 
+     /**
+     * Get dashboard entries
+     *
+     * 
+     * @return array
+     */
     public function getDashboardEntries()
     {
         $jsonResult = array(
@@ -45,6 +56,15 @@ class Dashboard
         return $jsonResult;
     }
 
+     /**
+     * Add dashboard entrie
+     *
+     * @param string    $sessionHash   Hash of user
+     * @param string    $title         Title of entry
+     * @param string    $text          Text of entry
+     * 
+     * @return array
+     */
     public function addDashboardEntry($sessionHash, $title, $text)
     {
         $jsonResult = array(
@@ -79,7 +99,17 @@ class Dashboard
         return $jsonResult;
     }
 
-    public function deleteDashboardEntry($userId, $dashId)
+
+    
+     /**
+     * Delete dashboard entrie
+     *
+     * @param string    $sessionHash   Hash of user
+     * @param int   $dashId        Id of entry
+     * 
+     * @return array
+     */
+    public function deleteDashboardEntry($sessionHash, $dashId)
     {
         $jsonResult = array(
             'success' => false,
@@ -89,11 +119,11 @@ class Dashboard
         );
         include ("../etc/db.php");
         require_once ("../classes/user.php");
-        $userId = utf8_encode($db->real_escape_string($userId));
+        $sessionHash = utf8_encode($db->real_escape_string($sessionHash));
         $dashId = utf8_decode($db->real_escape_string($dashId));
         
         $user = new User();
-        $isAdmin = $user->isAdmin($userId);
+        $isAdmin = $user->isAdmin($sessionHash);
         $isAdmin = $isAdmin["success"];
         if (! $isAdmin) {
             $jsonResult["success"] = false;

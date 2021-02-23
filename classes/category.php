@@ -1,10 +1,18 @@
 <?php
 
 
-
-class category
+/**
+ * The Category Class - Add, get and remove moduls from database
+ * @author     Thorben Auer
+ * @link       https://softwelop.com
+ */
+class Category
 {
-
+    /**
+     * Get all categorys
+     * 
+     * @return array
+     */
     public function getCategorys()
     {
         $jsonResult = array(
@@ -194,7 +202,13 @@ class category
         return $jsonResult;
     }
 
-
+    /**
+     * Get Categorys of cut (Ids)
+     *
+     * @param int   $cutId   Id if cut
+     * 
+     * @return array
+     */
     public function getAllCategorysFromCut($cutId)
     {
 
@@ -229,6 +243,14 @@ class category
         return ($jsonResult);
     }
 
+    /**
+     * Get Categorys of cut (Names)
+     *
+     * @param string   $sessionHash   Hash of user
+     * @param int   $cutId   Id if cut
+     * 
+     * @return array
+     */
     public function getCategoryOfCut($sessionHash, $cutId)
     {
         $jsonResult = array(
@@ -248,8 +270,6 @@ class category
             "icd_10" => ""
 
         );
-        include_once("../classes/user.php");
-        $user = new User();
         include("../etc/db.php");
         $sessionHash = $db->real_escape_string($sessionHash);
         $cutId = $db->real_escape_string($cutId);
@@ -357,6 +377,16 @@ class category
         return $jsonResult;
     }
 
+
+    /**
+     * Delete Category
+     *
+     * @param string   $sessionHash   Hash of user
+     * @param string   $category      Type of Category
+     * @param int  $categoryId   Category Id
+     * 
+     * @return array
+     */
     public function deleteCategory($sessionHash, $category, $categoryId)
     {
         $jsonResult = array(
@@ -407,6 +437,16 @@ class category
         return $jsonResult;
     }
 
+
+    /**
+     * Add Category
+     *
+     * @param string   $sessionHash     Hash of user
+     * @param string   $category        Type of Category
+     * @param string   $categoryName    Name of Category
+     * 
+     * @return array
+     */
     public function addCategory($userId, $category, $categoryName)
     {
         $jsonResult = array(
@@ -478,8 +518,16 @@ class category
         return $jsonResult;
     }
 
-
-    public function putCategory($userId, $cutId, $categoryId)
+    /**
+     * Put Category to Cut
+     *
+     * @param string    $sessionHash   Hash of user
+     * @param int   $cutId         Id of cut
+     * @param int   $categoryId    Id of category
+     * 
+     * @return array
+     */
+    public function putCategory($hash, $cutId, $categoryId)
     {
         $jsonResult = array(
             'success' => false,
@@ -491,7 +539,7 @@ class category
         include_once("../classes/user.php");
         include_once("../etc/db.php");
         $user = new User();
-        $isAdmin = $user->isAdmin($userId);
+        $isAdmin = $user->isAdmin($hash);
         $isAdmin = $isAdmin["success"];
         if (!$isAdmin) {
             $jsonResult["success"] = false;

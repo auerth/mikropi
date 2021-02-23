@@ -1,4 +1,9 @@
 <?php
+/**
+ * The PageBuilder Class - Get head, footer and script tags for every page
+ * @author     Thorben Auer
+ * @link       https://softwelop.com
+ */
 class PageBuilder
 {
     const version = "0.0.1";
@@ -8,10 +13,10 @@ class PageBuilder
      *
      * Returns the Default HMLT Head Tag for every Webpage.
      *
-     * @param type String title
-     * @param type String description
-     * @param type ArrayOfStrings stylesheets DEFAULT empty
-     * @return type String
+     * @param string  $title
+     * @param string  $description
+     * @param array  $stylesheets DEFAULT empty
+     * @return string 
      */
     public function  getHead($title, $description, $stylesheets = array(), $author = "Thorben Auer")
     {
@@ -45,7 +50,7 @@ class PageBuilder
      * Default Footer Tag.
      *
      * Returns the Default HMLT Footer Tag for every Webpage.
-     * @return type String
+     * @return string 
      */
     public function  getFooter()
     {
@@ -79,8 +84,8 @@ class PageBuilder
      *
      * Returns the Default HMLT JS Tags for every Webpage.
      * 
-     * @param type ArrayOfStrings jsFiles DEFAULT empty.
-     * @return type String
+     * @param array  $jsFiles DEFAULT empty.
+     * @return string 
      */
     public function  getJsTags($jsFiles = array())
     {
@@ -118,9 +123,9 @@ class PageBuilder
      *
      * Returns Navbar depending on logged in and isAdmin.
      * 
-     * @param type Boolean loggedIn
-     * @param type Boolean isAdmin
-     * @return type String
+     * @param bool  loggedIn
+     * @param bool  isAdmin
+     * @return string 
      */
     public function  getNavBar($loggedIn, $isAdmin)
     {

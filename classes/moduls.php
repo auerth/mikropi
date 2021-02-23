@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * The Modul Class - Add, get and remove moduls from database
+ * @author     Thorben Auer
+ * @link       https://softwelop.com
+ */
 class Modul
 {
-
+    /**
+     * Get modul list
+     * 
+     * @return array
+     */
     public function getModuls()
     {
         $jsonResult = array(
@@ -36,6 +45,14 @@ class Modul
         return $jsonResult;
     }
 
+    /**
+     * Add modul to database
+     *
+     * @param string   $sessionHash   Hash of User
+     * @param string   $name          Name of modul
+     * 
+     * @return array
+     */
     public function addModul($sessionHash, $name)
     {
         $jsonResult = array(
@@ -82,6 +99,14 @@ class Modul
         return $jsonResult;
     }
 
+    /**
+     * Delete modul to database
+     *
+     * @param string   $sessionHash   Hash of User
+     * @param int   $modulId      Id of modul
+     * 
+     * @return array
+     */
     public function deleteModul($sessionHash, $modulId)
     {
         $jsonResult = array(

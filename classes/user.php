@@ -1,10 +1,22 @@
 <?php
 
+/**
+ * The User Class - Register, login, delete and edit users
+ * @author     Thorben Auer
+ * @link       https://softwelop.com
+ */
 class User
 {
 
 
-
+    /**
+     * User Login
+     *
+     * @param string   $email     Email of User Account
+     * @param string   $password  Password of User Account (SHA-512)
+     * 
+     * @return array
+     */
     public function login($email, $password)
     {
         $jsonResult = array(
@@ -29,7 +41,7 @@ class User
                     if ($this->isVerifydEmail($email)) {
                         if ($row["activated"] == true) {
 
-                            $sessionHash = $session->createHash($row["id"], $db);
+                            $sessionHash = $session->createHash($row["id"]);
                             if ($sessionHash["success"]) {
                                 $isAdmin = $this->isAdmin($sessionHash["info"]);
                                 if ($isAdmin["success"]) {
@@ -81,7 +93,14 @@ class User
 
         return $jsonResult;
     }
-
+    /**
+     * Add Matrikelnumber to Database to allow register
+     *
+     * @param string   $sessionHash     User who wants to add 
+     * @param int   $matrikelnumber  Number to add
+     * 
+     * @return array
+     */
     public function addMatrikelnumber($sessionHash, $matrikelnumber)
     {
         $jsonResult = array(
@@ -119,7 +138,14 @@ class User
         }
         return $jsonResult;
     }
-
+    /**
+     * Change Password
+     *
+     * @param string   $hash            User who wants to change his password
+     * @param string   $newPassword     New password (SHA-512)
+     * 
+     * @return bool
+     */
     public function changePassword($hash, $newPassword)
     {
         include("../etc/db.php");
@@ -146,13 +172,19 @@ class User
         }
     }
 
+    /**
+     * Get user id by hash
+     *
+     * @param string   $sessionHash     Hash of user
+     * 
+     * @return int
+     */
     public function getUserId($sessionHash)
     {
         include("../etc/db.php");
         $sessionHash = $db->real_escape_string($sessionHash);
         $sql = "SELECT userId FROM hash WHERE hash like '" . $sessionHash . "';";
         if ($result = $db->query($sql)) {
-            $row_cnt = $result->num_rows;
             $userId = $result->fetch_array();
             return $userId["userId"];
         } else {
@@ -160,6 +192,14 @@ class User
         }
     }
 
+    /**
+     * Check if password is equal to User Account
+     *
+     * @param string   $sessionHash     Hash of user to check password
+     * @param string   $password        Password to check
+     * 
+     * @return bool
+     */
     public function checkPassword($hash, $password)
     {
         include("../etc/db.php");
@@ -189,6 +229,15 @@ class User
         }
     }
 
+
+    /**
+     * Change email of user
+     *
+     * @param string   $hash            Hash of user to change email
+     * @param string   $email           New email
+     * 
+     * @return bool
+     */
     public function changeEmail($hash, $email)
     {
         include("../etc/db.php");
@@ -223,7 +272,15 @@ class User
     }
 
 
-
+    /**
+     * Delete User (Non Admin)
+     *
+     * @param string   $hash            Hash of user to delete
+     * @param int   $matrikelnummer  Matrikelnumber of user (For confirmation)
+     * @param string   $password        Password of user (For confirmation)
+     * 
+     * @return bool
+     */
     public function deleteUser($hash, $matrikelnummer, $password)
     {
         include("../etc/db.php");
@@ -261,6 +318,16 @@ class User
         }
     }
 
+
+
+    /**
+     * Delete User 
+     *
+     * @param string   $hash            Hash of user who wants to delete
+     * @param int  $userId          Id of user to delete
+     * 
+     * @return array
+     */
     public function deleteUserByAdmin($hash, $userId)
     {
         $jsonResult = array(
@@ -299,6 +366,14 @@ class User
         return $jsonResult;
     }
 
+    /**
+     * Forgot Password
+     *
+     * @param string   $email               Email of user to reset password
+     * @param string   $matrikelnummer      Matrikelnumber of User
+     * 
+     * @return array
+     */
     public function forgotPassword($email, $matrikelnummer)
     {
         $jsonResult = array(
@@ -363,6 +438,15 @@ Mit freundlichen Grüßen<br><br>
         }
         return $jsonResult;
     }
+
+
+    /**
+     * Create hash for email verification
+     *
+     * @param int   $userId               User Id of User to create Email Hash
+     * 
+     * @return string
+     */
     public function createHashForEmail($userId)
     {
         include("../etc/db.php");
@@ -377,6 +461,14 @@ Mit freundlichen Grüßen<br><br>
         return "";
     }
 
+
+    /**
+     * Send Reverify Email if user changes Email
+     *
+     * @param string   $email               Email to verify
+     * 
+     * @return array
+     */
     public function reVerifyEmail($email)
     {
         $jsonResult = array(
@@ -438,6 +530,13 @@ Mit freundlichen Grüßen<br><br>
         return $jsonResult;
     }
 
+    /**
+     * Verify Email by hash
+     *
+     * @param string   $hash      Email Hash
+     * 
+     * @return array
+     */
     public function verifyEmail($hash)
     {
         $jsonResult = array(
@@ -485,6 +584,13 @@ Mit freundlichen Grüßen<br><br>
         return $jsonResult;
     }
 
+    /**
+     * Check if email is verified
+     *
+     * @param string   $email      Email
+     * 
+     * @return bool
+     */
     public function isVerifydEmail($email)
     {
         $jsonResult = array(
@@ -522,7 +628,12 @@ Mit freundlichen Grüßen<br><br>
     }
 
 
-
+    /**
+     * Generate random passwort
+     *
+     * 
+     * @return string
+     */
     private function randomPassword()
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzGdzVHQ4E7pvx6R98h7BXLpcar1LRvdSKNc90';
@@ -535,6 +646,18 @@ Mit freundlichen Grüßen<br><br>
         return implode($pass); // turn the array into a string
     }
 
+
+    /**
+     * Register new User
+     *
+     * @param string   $email           Email of user
+     * @param string   $password        Password of user (SHA-512)
+     * @param int   $matrikelnummer  Matrikelnumber of user
+     * @param string   $name            Name of user
+     * @param string   $forename        Forename of user
+     * 
+     * @return array
+     */
     public function register($email, $password, $matrikelnummer, $name, $forename)
     {
         $jsonResult = array(
@@ -615,7 +738,7 @@ Mit freundlichen Grüßen<br><br>
                     $jsonResult["error"] = "Email oder Immatrikulationsnummer wird schon genutzt.";
                     $jsonResult["errorCode"] = "2";
                 }
-            } else { 
+            } else {
                 $jsonResult["success"] = false;
                 $jsonResult["error"] = "Name oder Nachname zu lang (Maximal 15 Zeichen)";
                 $jsonResult["errorCode"] = "1";
@@ -629,6 +752,13 @@ Mit freundlichen Grüßen<br><br>
         return $jsonResult;
     }
 
+    /**
+     * Check if hash is admin
+     *
+     * @param string   $hash           Hash of User
+     * 
+     * @return array
+     */
     public function isAdmin($hash)
     {
         $jsonResult = array(
@@ -675,7 +805,14 @@ Mit freundlichen Grüßen<br><br>
         }
         return $jsonResult;
     }
-
+    /**
+     * Get list of registered users
+     *
+     * @param string   $hash                     Hash of User
+     * @param string   $sortBy    (optional)     Value to sort list
+     * 
+     * @return array
+     */
     public function getUserList($hash, $sortBy = 'name')
     {
         $jsonResult = array(
@@ -772,7 +909,18 @@ Mit freundlichen Grüßen<br><br>
         return $jsonResult;
     }
 
-    public function updateUser($userId, $activated, $editUserId, $setAdmin)
+
+    /**
+     * Update user
+     *
+     * @param string   $hash             Hash of User
+     * @param bool  $activated        Is Activated
+     * @param int   $editUserId       Id of user to edit
+     * @param bool   $setAdmin         Is Admin
+     * 
+     * @return array
+     */
+    public function updateUser($hash, $activated, $editUserId, $setAdmin)
     {
         $jsonResult = array(
             'success' => false,
@@ -781,11 +929,11 @@ Mit freundlichen Grüßen<br><br>
             'info' => null
         );
         include("../etc/db.php");
-        $userId = $db->real_escape_string($userId);
+        $userId = $db->real_escape_string($hash);
         $activated = $db->real_escape_string($activated);
         $editUserId = $db->real_escape_string($editUserId);
         $setAdmin = $db->real_escape_string($setAdmin);
-        $isAdmin = $this->isAdmin($userId);
+        $isAdmin = $this->isAdmin($hash);
         $isAdmin = $isAdmin["success"];
 
         if ($isAdmin) {

@@ -1,10 +1,40 @@
 <?php
 
+/**
+ * The Cut Class - Add, get and remove cuts from database
+ * @author     Thorben Auer
+ * @link       https://softwelop.com
+ */
 class Cut
 {
-
+    /**
+     * Path of cuts
+     *
+     * @var string
+     */
     private $fileURL = "/files/cuts/";
+
+    /**
+     * Path of log for cut events
+     *
+     * @var string
+     */
     private $logFile = "../logs/cuts.log";
+
+    /**
+     * Get filtered list of cuts
+     *
+     * @param int    $semester       Semster Category Id
+     * @param int    $dozent         Dozent Category Id
+     * @param int    $organ          Organ Category Id
+     * @param int    $organgruppe    Organgruppe Category Id
+     * @param int    $schnittquelle  Schnittquelle Category Id
+     * @param int    $icd_0_         ICD_0 Category Id
+     * @param int    $icd_10_        ICD_10 Category Id
+     * @param int    $diagnosegruppe Diagnosegruppe Category Id
+     * 
+     * @return array
+     */
     public function getCutsFiltered($semester, $dozent, $organ, $organgruppe, $schnittquelle, $icd_0_, $icd_10_, $diagnosegruppe)
     {
         $jsonResult = array(
@@ -153,7 +183,8 @@ class Cut
                                                     $path = "../files/cuts/" . $row2["file"] . "_files/" . $folderNumber;
                                                     $isFolder = true;
                                                 }
-                                            } catch (Exception $e) { }
+                                            } catch (Exception $e) {
+                                            }
                                         } else {
                                             $isFolder = false;
                                         }
@@ -173,7 +204,8 @@ class Cut
                                         "thumbnail" => $thumbnail
                                     ));
                                 }
-                            } else { }
+                            } else {
+                            }
                         } else {
                             // $sql = 'DELETE * FROM cut WHERE id = "' . $row2["id"] . '";'; 
                             // $db->query($sql);
@@ -195,7 +227,14 @@ class Cut
     }
 
 
-
+    /**
+     * Sort array by key
+     *
+     * @param array    $array    array to sort
+     * @param string   $key      Sort by key
+     * 
+     * @return void
+     */
     public function aasort(&$array, $key)
     {
         $sorter = array();
@@ -212,7 +251,11 @@ class Cut
     }
 
 
-
+    /**
+     * Get count of cuts
+     *
+     * @return int
+     */
     public function countCuts()
     {
         include("../etc/db.php");
@@ -224,7 +267,14 @@ class Cut
         return 0;
     }
 
-    public function checkForCuts($userId)
+    /**
+     * Check if new cuts are in filesystem but not in database
+     *
+     * @param string    $array    array to sort
+     * 
+     * @return array
+     */
+    public function checkForCuts($hash)
     {
         $jsonResult = array(
             'success' => false,
@@ -234,10 +284,10 @@ class Cut
         );
 
         include("../etc/db.php");
-        $userId = $db->real_escape_string($userId);
+        $hash = $db->real_escape_string($hash);
 
         $user = new User();
-        $isAdmin = $user->isAdmin($userId);
+        $isAdmin = $user->isAdmin($hash);
         $isAdmin = $isAdmin["success"];
         if (!$isAdmin) {
             $jsonResult["success"] = false;
@@ -259,8 +309,8 @@ class Cut
             if ($result = $db->query($sql)) {
                 $row_cnt = $result->num_rows;
                 if ($row_cnt < 1) {
-                    $sql = "INSERT INTO cut (name, description, uploader,file)
-						VALUES ('" . $fileS . "', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','" . $userId . "','" . $fileS . "'); ";
+                    $sql = "INSERT INTO cut (name, description, uploader, file)
+						VALUES ('" . $fileS . "', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','" . $hash . "','" . $fileS . "'); ";
                     if ($result = $db->query($sql)) {
                         $added++;
                     } else {
@@ -282,6 +332,14 @@ class Cut
         return $jsonResult;
     }
 
+    /**
+     * Get Information of cut
+     *
+     * @param int    $id    Id of cut
+     * @param bool    $overlay  (optinal)  Get list of overlay (true/false)
+     * 
+     * @return array
+     */
     public function getCutInfo($id, $overlay = true)
     {
         $jsonResult = array(
@@ -330,7 +388,14 @@ class Cut
 
         return $jsonResult;
     }
-
+    /**
+     * Returns Openseadragon Object (Javascript) with Cut Image Information
+     *
+     * @param int    $id    Id of cut
+     * @param bool    $overlay  (optinal)  Get list of overlay (true/false)
+     * 
+     * @return string
+     */
     public function getCutImage($id, $overlay = true)
     {
         include("../etc/db.php");
@@ -377,9 +442,9 @@ class Cut
 
                    
                      ';
-                    
                             }
-                        } else { }
+                        } else {
+                        }
                     }
 
                     $html = '
@@ -414,7 +479,24 @@ class Cut
         }
     }
 
-    public function addCutWithFilter($uploaderId, $name, $description, $filename, $semester, $dozent, $diagnosegruppe, $organ, $organgruppe, $schnittquelle, $icd_0, $icd_10)
+    /**
+     * Add Cut with filter
+     *
+     * @param string    $hash           Hash of user
+     * @param string    $name           Name of cut     
+     * @param string    $description    Description of cut
+     * @param int    $semester       Semester of cut
+     * @param int    $dozent         Dozent of cut
+     * @param int    $diagnosegruppe Diagnosegruppe of cut
+     * @param int    $organ          Organ of cut
+     * @param int    $organgruppe    Organgruppe of cut
+     * @param int    $schnittquelle  Schnittquelle of cut
+     * @param int    $icd_0          Icd_0 of cut
+     * @param int    $icd_10         Icd_10 of cut
+     * 
+     * @return array
+     */
+    public function addCutWithFilter($hash, $name, $description, $filename, $semester, $dozent, $diagnosegruppe, $organ, $organgruppe, $schnittquelle, $icd_0, $icd_10)
     {
         $jsonResult = array(
             'success' => false,
@@ -423,10 +505,10 @@ class Cut
             'info' => null
         );
         include("../classes/user.php");
-        $uploaderId = $db->real_escape_string($uploaderId);
+        $hash = $db->real_escape_string($hash);
 
         $user = new User();
-        $isAdmin = $user->isAdmin($uploaderId);
+        $isAdmin = $user->isAdmin($hash);
         $isAdmin = $isAdmin["success"];
         if (!$isAdmin) {
             $jsonResult["success"] = false;
@@ -445,7 +527,7 @@ class Cut
             }
             if (!$nameExists) {
                 $sql = "INSERT INTO cut (name, description, uploader,file)
-						VALUES ('" . $name . "', '" . $description . "', '" . $uploaderId . "','" . $filename . "'); ";
+						VALUES ('" . $name . "', '" . $description . "', '" . $hash . "','" . $filename . "'); ";
                 if ($result = $db->query($sql)) {
                     $cutId = $db->insert_id;
                     if ($semester > -1) {
@@ -549,7 +631,16 @@ class Cut
         return $jsonResult;
     }
 
-    public function updateCutName($userId, $id, $name)
+    /**
+     * Update cut name
+     *
+     * @param string    $hash           Hash of user
+     * @param int   $id             Id if cut
+     * @param string    $name           New name
+     * 
+     * @return array
+     */
+    public function updateCutName($hash, $id, $name)
     {
         $jsonResult = array(
             'success' => false,
@@ -560,12 +651,12 @@ class Cut
         include_once("../classes/user.php");
         include("../etc/db.php");
 
-        $userId = $db->real_escape_string($userId);
+        $hash = $db->real_escape_string($hash);
         $id = $db->real_escape_string($id);
         $name = $db->real_escape_string($name);
 
         $user = new User();
-        $isAdmin = $user->isAdmin($userId);
+        $isAdmin = $user->isAdmin($hash);
         $isAdmin = $isAdmin["success"];
         if (!$isAdmin) {
             $jsonResult["success"] = false;
@@ -581,7 +672,7 @@ class Cut
                     $jsonResult["success"] = true;
                     $jsonResult["info"] = "Cut updated";
                     $log = file_get_contents($this->logFile);
-                    file_put_contents($this->logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() + 2 * 3600) . ": Name changed from Cut-".$id." from " . $userId . "\n");
+                    file_put_contents($this->logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() + 2 * 3600) . ": Name changed from Cut-" . $id . " from " . $hash . "\n");
                 } else {
                     $jsonResult["success"] = false;
                     $jsonResult["error"] = "Error by data inserting (" . $db->error . ").";
@@ -600,6 +691,15 @@ class Cut
         return $jsonResult;
     }
 
+    /**
+     * Update cut description
+     *
+     * @param string    $hash           Hash of user
+     * @param int   $id             Id if cut
+     * @param string    $description    New description
+     * 
+     * @return array
+     */
     public function updateCutDescription($userId, $id, $description)
     {
         $jsonResult = array(
@@ -632,7 +732,7 @@ class Cut
                     $jsonResult["success"] = true;
                     $jsonResult["info"] = "Cut updated.";
                     $log = file_get_contents($this->logFile);
-                    file_put_contents($this->logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() + 2 * 3600) . ": Description changed from Cut-".$id." from " . $userId . "\n");
+                    file_put_contents($this->logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() + 2 * 3600) . ": Description changed from Cut-" . $id . " from " . $userId . "\n");
                 } else {
                     $jsonResult["success"] = false;
                     $jsonResult["error"] = "Error by data inserting (" . $db->error . ").";
@@ -651,7 +751,15 @@ class Cut
         return $jsonResult;
     }
 
-    public function deleteCut($sessionHash,$cutId)
+      /**
+     * Update cut description
+     *
+     * @param string    $sessionHash       Hash of user
+     * @param int   $cutId             Id if cut
+     * 
+     * @return array
+     */
+    public function deleteCut($sessionHash, $cutId)
     {
         $jsonResult = array(
             'success' => false,
@@ -676,7 +784,6 @@ class Cut
         if ($result = $db->query($sql)) {
             $jsonResult["success"] = true;
             $jsonResult["info"] = "Schnitt wird in kürze gelöscht.";
-
         } else {
             $jsonResult["success"] = false;
             $jsonResult["error"] = "Error by data selecting (" . $db->error . ").";

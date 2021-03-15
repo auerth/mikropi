@@ -183,65 +183,65 @@ if (!$isAdmin || !$loggedIn) {
     header("Location: login.php?redirect=admin.php");
 }
 ?>
+<?php
+echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen."));
+?>
+
+<body>
+
+    <!-- Navigation -->
     <?php
-    echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen."));
+    echo ($pageBuilder->getNavBar($loggedIn, $isAdmin));
     ?>
 
-    <body>
-
-        <!-- Navigation -->
+    <!-- Page Content -->
+    <main>
         <?php
-        echo ($pageBuilder->getNavBar($loggedIn, $isAdmin));
-        ?>
-
-        <!-- Page Content -->
-        <main>
-            <?php
-            if ($msg != null) {
-                echo ('<div class="alert ' . $alertType . '" style="margin-bottom: 0px;">' . $msg . '
+        if ($msg != null) {
+            echo ('<div class="alert ' . $alertType . '" style="margin-bottom: 0px;">' . $msg . '
                       </div>');
-            }
-            ?>
-            <div class="card">
-                <h5 class="card-header bg-2nd text-white">Benutzer Liste</h5>
-                <div class="card-body">
-                    <form>
-                        <h4>Sortieren nach: </h4>
-                        <fieldset>
-                            <input type="radio" id="name" onclick="sort('name')" name="filter" value="Name" <?php echo $nameChecked; ?>>
-                            <label for="name"> Name</label>
-                            <input type="radio" id="vorname" onclick="sort('forename')" name="filter" value="Vorname" <?php echo $forenameChecked; ?>>
-                            <label for="vorname"> Vorname</label>
-                            <input type="radio" id="email" onclick="sort('email')" name="filter" value="Email" <?php echo $emailChecked; ?>>
-                            <label for="email"> Email</label>
-                            <input type="radio" id="admin" onclick="sort('admin')" name="filter" value="Admin" <?php echo $adminChecked; ?>>
-                            <label for="admin"> Admin</label>
-                            <input type="radio" id="active" onclick="sort('activated')" name="filter" value="Aktiviert" <?php echo $activeChecked; ?>>
-                            <label for="active"> Aktiviert</label>
-                            <input type="radio" id="immatrikulationsnummer" onclick="sort('matrikelnummer')" name="filter" value="Immatrikulationsnummer" <?php echo $matrikelChecked; ?>>
-                            <label for="immatrikulationsnummer"> Immatrikulationsnummer</label>
-                        </fieldset>
-                    </form>
-                    <input type="text" id="searchUser" name="name" class="form-control" placeholder="Suche (Email, Immatrikulationsnummer oder Name)">
-                    <div class="list" style="height: 600px; margin-top: 5px;" id="userListe">
-                        <?php
-                        if ($userList["success"]) {
-                            $userList = $userList["info"];
-                            $checkBoxId = 0;
-                            foreach ($userList as $user) {
-                                $activatedChecked = "";
-                                $adminChecked = "";
-                                $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px; color: red;"></i>';
-                                if ($user["verifyed"]) {
-                                    $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px; color: green;"></i>';
-                                }
-                                if ($user["activated"]) {
-                                    $activatedChecked = "checked";
-                                }
-                                if ($user["admin"]) {
-                                    $adminChecked = "checked";
-                                }
-                                echo ('
+        }
+        ?>
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Benutzer Liste</h5>
+            <div class="card-body">
+                <form>
+                    <h4>Sortieren nach: </h4>
+                    <fieldset>
+                        <input type="radio" id="name" onclick="sort('name')" name="filter" value="Name" <?php echo $nameChecked; ?>>
+                        <label for="name"> Name</label>
+                        <input type="radio" id="vorname" onclick="sort('forename')" name="filter" value="Vorname" <?php echo $forenameChecked; ?>>
+                        <label for="vorname"> Vorname</label>
+                        <input type="radio" id="email" onclick="sort('email')" name="filter" value="Email" <?php echo $emailChecked; ?>>
+                        <label for="email"> Email</label>
+                        <input type="radio" id="admin" onclick="sort('admin')" name="filter" value="Admin" <?php echo $adminChecked; ?>>
+                        <label for="admin"> Admin</label>
+                        <input type="radio" id="active" onclick="sort('activated')" name="filter" value="Aktiviert" <?php echo $activeChecked; ?>>
+                        <label for="active"> Aktiviert</label>
+                        <input type="radio" id="immatrikulationsnummer" onclick="sort('matrikelnummer')" name="filter" value="Immatrikulationsnummer" <?php echo $matrikelChecked; ?>>
+                        <label for="immatrikulationsnummer"> Immatrikulationsnummer</label>
+                    </fieldset>
+                </form>
+                <input type="text" id="searchUser" name="name" class="form-control" placeholder="Suche (Email, Immatrikulationsnummer oder Name)">
+                <div class="list" style="height: 600px; margin-top: 5px;" id="userListe">
+                    <?php
+                    if ($userList["success"]) {
+                        $userList = $userList["info"];
+                        $checkBoxId = 0;
+                        foreach ($userList as $user) {
+                            $activatedChecked = "";
+                            $adminChecked = "";
+                            $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px; color: red;"></i>';
+                            if ($user["verifyed"]) {
+                                $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px; color: green;"></i>';
+                            }
+                            if ($user["activated"]) {
+                                $activatedChecked = "checked";
+                            }
+                            if ($user["admin"]) {
+                                $adminChecked = "checked";
+                            }
+                            echo ('
                                     <div class="userMedia">
                                     
                                     <details>
@@ -270,10 +270,10 @@ if (!$isAdmin || !$loggedIn) {
                                     <div class="adminstration">
                                             <form method="POST" style="float: right;"action="admin.php">
                                                 <input name="userId" value="' . $user["id"] . '" style="display: none;">');
-                                if (isset($_POST["sortBy"])) {
-                                    echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
-                                }
-                                echo ('
+                            if (isset($_POST["sortBy"])) {
+                                echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
+                            }
+                            echo ('
                                                     <div class="row">
                                                     
                                                     <div class="form-check">
@@ -295,217 +295,177 @@ if (!$isAdmin || !$loggedIn) {
                                         </div>
                                     </div>
                                     </details>');
-                                $checkBoxId++;
-                            }
+                            $checkBoxId++;
                         }
-                        ?>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h5 class="card-header bg-2nd text-white">Schnitte</h5>
-                <div class="card-body">
-
-                    <p>Es sind aktuelle <?php echo ($cut->countCuts()); ?> Schnitte in der Datenbank</p>
+                    }
+                    ?>
 
                 </div>
             </div>
-            <div class="card">
-                <h5 class="card-header bg-2nd text-white">Immatrikulationsnummern</h5>
-                <div class="card-body">
+        </div>
 
-                    <form enctype="multipart/form-data" action="admin.php" method="POST">
-                        <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
-                        <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                        <!-- Der Name des Input Felds bestimmt den Namen im $_FILES Array -->
-                        CSV hochladen: <input name="csvFile" type="file" />
-                        <button type="submit" class="btn btn-primary">Hochladen und
-                            Hinzufügen</button>
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Schnitte</h5>
+            <div class="card-body">
 
-                    </form>
+                <p>Es sind aktuelle <?php echo ($cut->countCuts()); ?> Schnitte in der Datenbank</p>
 
-                </div>
             </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Immatrikulationsnummern</h5>
+            <div class="card-body">
 
-            <div class="card">
-                <h5 class="card-header bg-2nd text-white">Filter</h5>
-                <div class="card-body">
+                <form enctype="multipart/form-data" action="admin.php" method="POST">
+                    <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+                    <!-- Der Name des Input Felds bestimmt den Namen im $_FILES Array -->
+                    CSV hochladen: <input name="csvFile" type="file" />
+                    <button type="submit" class="btn btn-primary">Hochladen und
+                        Hinzufügen</button>
 
-                    <div class="filter">
-                        <?php
-                        while ($fruit_name = current($categorys)) {
-                            $catName = key($categorys);
-                            switch (key($categorys)) {
-                                case "lecturer":
-                                    $catName = "Dozent";
-                                    break;
-                                case "organgroup":
-                                    $catName = "organgruppe";
-                                    break;
-                                case "diagnosisgroup":
-                                    $catName = "Diagnosegruppe";
-                                    break;
-                            }
-                            echo ('<div class="dropdown filter-dropdown">
+                </form>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Filter</h5>
+            <div class="card-body">
+
+                <div class="filter">
+                    <?php
+                    while ($fruit_name = current($categorys)) {
+                        $catName = key($categorys);
+                        switch (key($categorys)) {
+                            case "lecturer":
+                                $catName = "Dozent";
+                                break;
+                            case "organgroup":
+                                $catName = "organgruppe";
+                                break;
+                            case "diagnosisgroup":
+                                $catName = "Diagnosegruppe";
+                                break;
+                        }
+                        echo ('<div class="dropdown filter-dropdown">
 																			<p>' . ucfirst($catName) . ':</p><button type="button" id="' . key($categorys) . '" value="-1" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">- - </button>
 																			<ul class="dropdown-menu">
 																		');
-                            foreach ($categorys[key($categorys)] as $item) {
-                                if ($item["name"] != "Alle")
-                                    echo ('<li><a id="' . $item["id"] . '" class="dropdown-item"><i style="color: #0062cc; margin-right:5px;" id="' . $item["id"] . '" class="fas fa-trash-alt" ></i>' . $item["name"] . '</a></li>');
-                            }
-                            echo ('<li><a id="-2" class="dropdown-item">[Hinzufügen]</a></li>');
+                        foreach ($categorys[key($categorys)] as $item) {
+                            if ($item["name"] != "Alle")
+                                echo ('<li><a id="' . $item["id"] . '" class="dropdown-item"><i style="color: #0062cc; margin-right:5px;" id="' . $item["id"] . '" class="fas fa-trash-alt" ></i>' . $item["name"] . '</a></li>');
+                        }
+                        echo ('<li><a id="-2" class="dropdown-item">[Hinzufügen]</a></li>');
 
-                            echo ('</ul>
+                        echo ('</ul>
 																			  </div>
 																			  ');
 
-                            next($categorys);
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h5 class="card-header bg-2nd text-white">Module</h5>
-                <div class="card-body">
-                    <form action="admin.php" method="POST" style="width: 100%">
-
-                        <div class="row" style="margin-bottom: 10px;">
-
-                            <div class="col-8">
-                                <input type="text" id="addModul" name="modulName" class="form-control" style="margin: 0px;" placeholder="Neues Modul" value="" />
-
-                            </div>
-                            <div class="col-3">
-                                <button type="submit" class="btn btn-primary" style="margin: 0px;">+</button>
-                            </div>
-
-                        </div>
-                    </form>
-
-                    <div class="list" style="height: 350px;" id="modulList">
-                        <?php
-                        $moduls = $modul->getModuls();
-                        $moduls = $moduls["info"];
-                        foreach ($moduls as $item) {
-                            echo ('<div class="userMedia"><div class="row"><div class="col-11">');
-                            echo ($item["name"]);
-                            echo ('</div><div class="col-1"><i style="float: right; margin-left: auto; margin-top: 4px;" onclick="deleteModul(' . $item["id"] . ')" class="fas fa-trash-alt"></i></div></div></div>');
-                        }
-
-                        ?>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="card">
-                <h5 class="card-header bg-2nd text-white">Schnitt hochladen (Tiff / Tif)</h5>
-                <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <input type="file" id="files" name="files[]" multiple="multiple" accept=".tiff,.tif" /><br /><br />
-                        <button class="btn btn-primary" type="submit" id="upload" name="upload" value="Upload">Hochladen</button><br />
-                        <!-- Progress will be shown here -->
-                        <div id="uploadlist" class="progress"></div>
-                    </form>
-                </div>
-            </div>
-            <div class="card">
-                <h5 class="card-header bg-2nd text-white">Log-Files - Server-Zeit: <span id="msg2"></span> </h5>
-                <div class="card-body">
-                    <form>
-                        <h4>Log-Files:</h4>
-                        <fieldset>
-                            <input type="radio" id="worklist" onclick="loadLog('worklist.log')" name="filter" value="Worklist" checked>
-                            <label for="worklist"> Worklist-Log</label>
-                            <input type="radio" id="hash" onclick="loadLog('hash.log')" name="filter" value="Hash">
-                            <label for="hash"> Hash-Log</label>
-                            <input type="radio" id="user" onclick="loadLog('user.log')" name="filter" value="User">
-                            <label for="user"> User-Log</label>
-                        </fieldset>
-                    </form>
-                    <textarea id="log" readonly></textarea>
-                </div>
-            </div>
-
-
-            <div id="modalCategory" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="row">
-                        <h3>Filter Name:</h3>
-                        <span class="close">&times;</span>
-                    </div>
-                    <form method="POST" action="admin.php">
-                        <input id="categoryName" name="category" type="text" style="display: none;" value="" />
-                        <div class="form-group">
-                            <input name="newCategory" id="newCategory" type="text" class="form-control" placeholder="Filter Name" />
-                        </div>
-                        <button type="submit" style="margin-left: 10px;" class="btn btn-primary">Hinzuf&uuml;gen</button>
-
-                    </form>
-                </div>
-            </div>
-            <?php
-
-            echo ($pageBuilder->getFooter());
-
-            ?>
-        </main>
-
-    </body>
-    <script type="text/javascript">
-        function refreshServerTime() {
-            var httpxml;
-            try {
-                // Firefox, Opera 8.0+, Safari
-                httpxml = new XMLHttpRequest();
-            } catch (e) {
-                // Internet Explorer
-                try {
-                    httpxml = new ActiveXObject("Msxml2.XMLHTTP");
-                } catch (e) {
-                    try {
-                        httpxml = new ActiveXObject("Microsoft.XMLHTTP");
-                    } catch (e) {
-                        alert("Your browser does not support AJAX!");
-                        return false;
+                        next($categorys);
                     }
-                }
-            }
+                    ?>
+                </div>
+            </div>
+        </div>
 
-            function stateck() {
-                if (httpxml.readyState == 4) {
-                    document.getElementById("msg2").innerHTML = httpxml.responseText;
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Module</h5>
+            <div class="card-body">
+                <form action="admin.php" method="POST" style="width: 100%">
 
-                }
-            }
-            var url = "server-clock.php";
-            url = url + "?sid=" + Math.random();
-            httpxml.onreadystatechange = stateck;
-            httpxml.open("GET", url, true);
-            httpxml.send(null);
-            tt = timer_function();
-        }
-        timer_function();
-        ///////////////////////////
-        function timer_function() {
-            var refresh = 2000; // Refresh rate in milli seconds
-            mytime = setTimeout('refreshServerTime();', refresh)
-        }
-    </script>
+                    <div class="row" style="margin-bottom: 10px;">
+
+                        <div class="col-8">
+                            <input type="text" id="addModul" name="modulName" class="form-control" style="margin: 0px;" placeholder="Neues Modul" value="" />
+
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-primary" style="margin: 0px;">+</button>
+                        </div>
+
+                    </div>
+                </form>
+
+                <div class="list" style="height: 350px;" id="modulList">
+                    <?php
+                    $moduls = $modul->getModuls();
+                    $moduls = $moduls["info"];
+                    foreach ($moduls as $item) {
+                        echo ('<div class="userMedia"><div class="row"><div class="col-11">');
+                        echo ($item["name"]);
+                        echo ('</div><div class="col-1"><i style="float: right; margin-left: auto; margin-top: 4px;" onclick="deleteModul(' . $item["id"] . ')" class="fas fa-trash-alt"></i></div></div></div>');
+                    }
+
+                    ?>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Schnitt hochladen (Tiff / Tif) <span id="working"> - Tiff Dateien werden konvertiert . . .</span></h5>
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <input type="file" id="files" name="files[]" multiple="multiple" accept=".tiff,.tif" /><br /><br />
+                    <button class="btn btn-primary" type="submit" id="upload" name="upload" value="Upload">Hochladen</button><span style="color: red;" id="errormsg"></span><br />
+                    <!-- Progress will be shown here -->
+                    <div id="uploadlist" class="progress"></div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Log-Files</h5>
+            <div class="card-body">
+                <form>
+                    <h4>Log-Files:</h4>
+                    <fieldset>
+                        <input type="radio" id="worklist" onclick="loadLog('worklist.log')" name="filter" value="Worklist" checked>
+                        <label for="worklist"> Worklist-Log</label>
+                        <input type="radio" id="hash" onclick="loadLog('hash.log')" name="filter" value="Hash">
+                        <label for="hash"> Hash-Log</label>
+                        <input type="radio" id="user" onclick="loadLog('user.log')" name="filter" value="User">
+                        <label for="user"> User-Log</label>
+                    </fieldset>
+                </form>
+                <textarea id="log" readonly></textarea>
+            </div>
+        </div>
 
 
-    <?php
-    $array = array("../js/admin.js", "../js/filter.js", "../js/log.js");
-    echo ($pageBuilder->getJsTags($array));
+        <div id="modalCategory" class="modal">
 
-    ?>
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="row">
+                    <h3>Filter Name:</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <form method="POST" action="admin.php">
+                    <input id="categoryName" name="category" type="text" style="display: none;" value="" />
+                    <div class="form-group">
+                        <input name="newCategory" id="newCategory" type="text" class="form-control" placeholder="Filter Name" />
+                    </div>
+                    <button type="submit" style="margin-left: 10px;" class="btn btn-primary">Hinzuf&uuml;gen</button>
+
+                </form>
+            </div>
+        </div>
+        <?php
+
+        echo ($pageBuilder->getFooter());
+
+        ?>
+    </main>
+
+</body>
+
+
+<?php
+$array = array("../js/admin.js", "../js/filter.js", "../js/log.js");
+echo ($pageBuilder->getJsTags($array));
+
+?>
 
 
 

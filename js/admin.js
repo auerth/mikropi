@@ -5,6 +5,31 @@ $(document).ready(function() {
         prepare();
     });
 });
+var allowUpload = true;
+$("#files").change(function(e) {
+    var uploadButton = document.getElementById("upload");
+    var errormsg = document.getElementById("errormsg");
+
+    uploadButton.disabled = false;
+    errormsg.innerHTML = "";
+    for (var i = 0; i < this.files.length; i++) {
+        var count = this.files.item(i).name.count(".");
+        if (count != 1) {
+            allowUpload = false;
+            uploadButton.disabled = true;
+            errormsg.innerHTML = " " + this.files.item(i).name + " hat mehr als einen . im Namen";
+
+            break;
+        }
+    }
+});
+String.prototype.count = function(c) {
+    var result = 0,
+        i = 0;
+    for (i; i < this.length; i++)
+        if (this[i] == c) result++;
+    return result;
+};
 
 async function prepare() {
     var uploader = document.getElementById('files');
@@ -47,6 +72,23 @@ function searchUser() {
 
 
     }
+}
+var tid = setInterval(isWorking, 1000);
+
+function isWorking() {
+    $.ajax({
+        url: "../etc/worklist.meta",
+        dataType: "json",
+        success: function(response) {
+            var el = document.getElementById("working");
+            if (response.working) {
+                el.style.visibility = "visible";
+            } else {
+                el.style.visibility = "hidden";
+
+            }
+        }
+    });
 }
 
 async function upload(files, i, data) {

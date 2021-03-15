@@ -6,12 +6,12 @@ $logFile = "../logs/worklist.log";
 $statusFile = "worklist.meta";
 
 $json = file_get_contents($statusFile);
-$json = json_decode($json,true);
+$json = json_decode($json, true);
 
 if (!$json["working"]) {
     $json["working"] = true;
     $jsonString = json_encode($json);
-    file_put_contents($statusFile,$jsonString);
+    file_put_contents($statusFile, $jsonString);
 
 
     $files1 = scandir($dir);
@@ -23,53 +23,60 @@ if (!$json["working"]) {
         $nameNoExtention = str_replace(".tif", "", $nameNoExtention);
         $nameNoExtention = str_replace(".TIFF", "", $nameNoExtention);
         $nameNoExtention = str_replace(".TIF", "", $nameNoExtention);
-        if(file_exists("../files/cuts/".$nameNoExtention)){
+        if (file_exists("../files/cuts/" . $nameNoExtention)) {
             $log = file_get_contents($logFile);
-            file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time() ) . ": Converting Folder '" . $nameNoExtention . "' already exists\n");
+            file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time()) . ": Converting Folder '" . $nameNoExtention . "' already exists\n");
             echo "Converting Folder already exsists " . $nameNoExtention;
-
-        }else{
-            if(!file_exists("../files/cuts/".$nameNoExtention."_files") && !file_exists("../files/cuts/".$nameNoExtention.".dzi")){
-
+        } else {
+            if (!file_exists("../files/cuts/" . $nameNoExtention . "_files") && !file_exists("../files/cuts/" . $nameNoExtention . ".dzi")) {
                 $log = file_get_contents($logFile);
-                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() ) . ": Converting File '" . $value . "'\n");
-                $out = exec('cd ../etc/ && bash prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention.'"');
-                $out = exec('cd ../files/tmp && rm -r "' . $value.'"');
+                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Converting File '" . $value . "'\n");
+                $out = exec('cd ../etc/ && bash prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention . '"');
+                if (file_exists("../files/cuts/" . $nameNoExtention . "_files") && file_exists("../files/cuts/" . $nameNoExtention . ".dzi")) {
+                    $out = exec('cd ../files/tmp && rm -r "' . $value . '"');
+                    $log = file_get_contents($logFile);
+                    file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Finished Converting '" . $nameNoExtention . "'\n");
+                    checkForCuts();
+                    echo "Done " . $nameNoExtention;
+                } else {
+                    $log = file_get_contents($logFile);
+                    file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time()) . ": DZI and Files Folder for'" . $nameNoExtention . "' does not exists. Converting Failed\n");
+
+                    $out = exec('cd ../files/cuts && rm -r "' . $nameNoExtention . '/"');
+                    $log = file_get_contents($logFile);
+                    file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": DELETED KONVERTING FOLDER'" . $nameNoExtention . "'\n");
+
+                }
                 //$out = exec('cd ../files/cut && rm -r '.$nameNoExtention);
+            } else {
                 $log = file_get_contents($logFile);
-                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Finished Converting '" . $nameNoExtention . "'\n");
-                checkForCuts();
-                echo "Done " . $nameNoExtention;
-            }else{
-                $log = file_get_contents($logFile);
-                file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time() ) . ": DZI and Files Folder for'" . $nameNoExtention . "' already exists\n");
-                $out = exec('cd ../files/tmp && rm -r "' . $value.'"');
+                file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time()) . ": DZI and Files Folder for'" . $nameNoExtention . "' already exists\n");
+                $out = exec('cd ../files/tmp && rm -r "' . $value . '"');
                 echo "Already exsists " . $nameNoExtention;
-
             }
         }
         break;
-    
     }
     $json["working"] = false;
     $jsonString = json_encode($json);
-    file_put_contents($statusFile,$jsonString);
+    file_put_contents($statusFile, $jsonString);
 } else {
     echo "Script is running";
 }
 
 
 
-function sleepUntilWritten($filename){
-	while(true){
-		$filesize_old = filesize($filename);
-		sleep(4);
-		$filesize_new = filesize($filename);
-		if($filesize_old ==$filesize_new){
-            echo("file is written");
-			return true;
-		}
-	}
+function sleepUntilWritten($filename)
+{
+    while (true) {
+        $filesize_old = filesize($filename);
+        sleep(4);
+        $filesize_new = filesize($filename);
+        if ($filesize_old == $filesize_new) {
+            echo ("file is written");
+            return true;
+        }
+    }
 }
 
 function checkForCuts()
@@ -104,7 +111,7 @@ function checkForCuts()
                 $sql = "INSERT INTO cut (name, description, uploader,file)
 						VALUES ('" . $fileS . "', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','" . $userId . "','" . $fileS . "'); ";
                 $log = file_get_contents($logFile);
-                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time() ) . ": Added cut to database\n");
+                file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Added cut to database\n");
                 if ($result = $db->query($sql)) {
                     $added++;
                 } else {

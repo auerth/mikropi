@@ -45,7 +45,7 @@ if (file_exists($file_pagebuilder) && file_exists($file_user) && file_exists($fi
  * 
  * @see ../classes/pagebuilder.php
  */
-echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Hier Registrieren und als Student vom Institut für Klinische Pathologie Freiburg Mikroskopschnitte schnell und einfach einsehen.", array("../css/login.css",'../css/form.css')));
+echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Hier Registrieren und als Student vom Institut für Klinische Pathologie Freiburg Mikroskopschnitte schnell und einfach einsehen.", array("../css/login.css", '../css/form.css')));
 ?>
 
 <body>
@@ -56,88 +56,89 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 	<main class="login">
 		<!-- Page Content -->
 		<div class="container">
-			<div class="wrapper wrapper--w790">
+			<div class="wrapper wrapper--w790" style="padding: 20px;">
 				<div class="card card-5">
 
-				<div class="card-heading">
-                    <h2 class="title">Registrieren</h2>
-                </div>
-				
+					<div class="card-heading">
+						<h2 class="title">Registrieren</h2>
+					</div>
+
 					<div class="card-body">
-					<?php
-					if ($error != null) {
-						echo ('<div class="alert alert-danger">' . $error . '
+						<?php
+						if ($error != null) {
+							echo ('<div class="alert alert-danger">' . $error . '
 </div>');
-					}
-					if ($info != null) {
-						echo ('<div class="alert alert-success">' . $info . '
+						}
+						if ($info != null) {
+							echo ('<div class="alert alert-success">' . $info . '
 </div>');
-					}
-					?>
-						<form method="POST" id="register"  action="register.php">
+						}
+						?>
+						<form method="POST" id="register" action="register.php">
 							<div class="form-row">
 								<div class="name">Vorname</div>
 								<div class="value">
-									<div class="input-group">
-										<input class="input--style-5" type="text" id="forename" name="forename" required>
+									<div class="form-group">
+										<input class="form-control" type="text" id="forename" name="forename" required>
 									</div>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="name">Name</div>
 								<div class="value">
-									<div class="input-group">
-										<input class="input--style-5" type="text" id="name" name="name" required>
+									<div class="form-group">
+										<input class="form-control" type="text" id="name" name="name" required>
 									</div>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="name">Email</div>
 								<div class="value">
-									<div class="input-group">
-										<input class="input--style-5" type="email" id="email" name="email" required>
+									<div class="form-group">
+										<input class="form-control" type="email" id="email" name="email" required>
 									</div>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="name">Passwort</div>
 								<div class="value">
-									<div class="input-group">
-										<input class="input--style-5" type="password" id="password" name="password" required>
+									<div class="form-group">
+										<input class="form-control" type="password" id="password" name="password" required>
 									</div>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="name">Passwort wiederholen</div>
 								<div class="value">
-									<div class="input-group">
-										<input class="input--style-5" type="password" id="password_repeat" name="password_repeat" required>
+									<div class="form-group">
+										<input class="form-control" type="password" id="password_repeat" name="password_repeat" required>
 									</div>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="name">Matrikelnummer</div>
 								<div class="value">
-									<div class="input-group">
-										<input class="input--style-5" type="text" id="matrikelnummer" name="matrikelnummer" required>
+									<div class="form-group">
+										<input class="form-control" type="text" id="matrikelnummer" name="matrikelnummer" required>
 									</div>
 								</div>
 								<p style="color: white;">Falls du keine Immatrikulationsnummer besitzt, kannst du auch einfach "n/a" angeben.</p>
 
 							</div>
-
-							<div class="form-row p-t-20">
-								<p><input type="checkbox" id="checkbox-agb" name="datenschutz" required /><label  style="color: white;" for="datenschutz" onclick="check('checkbox-agb')"><span></span> Ich habe die Nutzungsbedingungen und Hinweise zum Datenschutz gelesen und akzeptiere diese.</label> </p>
-							</div>
-							<div class="form-group center">
-								<br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'>
-							</div>
-							<div class="form-group center">
-								<input type="text" style=" width: 25% !important;" class="form-control" placeholder="Captcha" name="captcha"  required/>
-							</div>
-							<div class="form-group center">
-								<input type="button" class="btnSubmit" onclick="postForm()" value="Registrieren" style="  font-weight: 600;"/>
-							</div>
+							<center>
+								<div class="form-row p-t-20">
+									<p><input type="checkbox" id="checkbox-agb" name="datenschutz" required /><label style="color: white;" for="datenschutz" onclick="check('checkbox-agb')"><span></span> Ich habe die Nutzungsbedingungen und Hinweise zum Datenschutz gelesen und akzeptiere diese.</label> </p>
+								</div>
+								<div class="form-group center">
+									<br /><img src="classes/captcha.php?rand=<?php echo rand(); ?>" id='captcha_image'>
+								</div>
+								<div class="form-group center">
+									<input type="text" style=" width: 25% !important;" class="form-control" placeholder="Captcha" name="captcha" required />
+								</div>
+								<div class="form-group center">
+									<input type="button" class="btnSubmit" onclick="postForm()" value="Registrieren" style="  font-weight: 600;" />
+								</div>
+								</center>
 						</form>
 					</div>
 				</div>

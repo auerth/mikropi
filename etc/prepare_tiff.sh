@@ -52,3 +52,4 @@ else
 fi
 done
 tiffHeader=`vips dzsave "$tiffPath[page=$biggestPage]"  "$savePathAndName" --suffix .jpg[Q=90]` 
+

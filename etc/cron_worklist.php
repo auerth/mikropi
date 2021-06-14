@@ -27,13 +27,18 @@ if (!$json["working"]) {
             $log = file_get_contents($logFile);
             file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time()) . ": Converting Folder '" . $nameNoExtention . "' already exists\n");
             echo "Converting Folder already exsists " . $nameNoExtention;
+            rename("../files/tmp/" . $value, "../files/converting/failed/" . $value);
         } else {
             if (!file_exists("../files/cuts/" . $nameNoExtention . "_files") && !file_exists("../files/cuts/" . $nameNoExtention . ".dzi")) {
                 $log = file_get_contents($logFile);
                 file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Converting File '" . $value . "'\n");
-                $out = exec('cd ../etc/ && bash prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention . '"');
+                $out = exec('../etc/prepare_tiff.sh "../files/tmp/' . $value . '" "../files/cuts/' . $nameNoExtention . '"');
+                if (strlen($out) > 0) {
+                    $log = file_get_contents($logFile);
+                    file_put_contents($logFile, $log . "WARNING-" . date('d/m/Y H:i:s', time()) . ": Output for '" . $nameNoExtention . "': '" . $out . "'\n");
+                }
                 if (file_exists("../files/cuts/" . $nameNoExtention . "_files") && file_exists("../files/cuts/" . $nameNoExtention . ".dzi")) {
-                    $out = exec('cd ../files/tmp && rm -r "' . $value . '"');
+                    rename("../files/tmp/" . $value, "../files/converting/successed/" . $value);
                     $log = file_get_contents($logFile);
                     file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Finished Converting '" . $nameNoExtention . "'\n");
                     checkForCuts();
@@ -41,17 +46,16 @@ if (!$json["working"]) {
                 } else {
                     $log = file_get_contents($logFile);
                     file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time()) . ": DZI and Files Folder for'" . $nameNoExtention . "' does not exists. Converting Failed\n");
-
+                    rename("../files/tmp/" . $value, "../files/converting/failed/" . $value);
                     $out = exec('cd ../files/cuts && rm -r "' . $nameNoExtention . '/"');
                     $log = file_get_contents($logFile);
                     file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": DELETED KONVERTING FOLDER'" . $nameNoExtention . "'\n");
-
                 }
                 //$out = exec('cd ../files/cut && rm -r '.$nameNoExtention);
             } else {
                 $log = file_get_contents($logFile);
                 file_put_contents($logFile, $log . "ERROR-" . date('d/m/Y H:i:s', time()) . ": DZI and Files Folder for'" . $nameNoExtention . "' already exists\n");
-                $out = exec('cd ../files/tmp && rm -r "' . $value . '"');
+                rename("../files/tmp/" . $value, "../files/converting/failed/" . $value);
                 echo "Already exsists " . $nameNoExtention;
             }
         }

@@ -78,6 +78,7 @@ var tid = setInterval(isWorking, 1000);
 function isWorking() {
     $.ajax({
         url: "../etc/worklist.meta",
+        cache: false,
         dataType: "json",
         success: function(response) {
             var el = document.getElementById("working");
@@ -92,11 +93,14 @@ function isWorking() {
 }
 
 async function upload(files, i, data) {
+    if(i >= files.length){
+        return;
+    }
     var xhr = new XMLHttpRequest();
     var startTime = new Date().getTime();
+  
     var file = files[i];
     data.append('files', file); //Appending the File object
-
     xhr.timeout = -1;
     //Upload progress listener     
 

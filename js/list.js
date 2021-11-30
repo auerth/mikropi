@@ -1,4 +1,5 @@
 $(".media").click(function(event) {
+    console.log("Test");
     window.location.href = "?cuts=" + event.target.id;
 });
 

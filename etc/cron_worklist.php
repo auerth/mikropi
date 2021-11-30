@@ -4,15 +4,14 @@ set_time_limit(0);
 $dir = "../files/tmp/";
 $logFile = "../logs/worklist.log";
 $statusFile = "worklist.meta";
-
 $json = file_get_contents($statusFile);
 $json = json_decode($json, true);
 
 if (!$json["working"]) {
+
     $json["working"] = true;
     $jsonString = json_encode($json);
     file_put_contents($statusFile, $jsonString);
-
 
     $files1 = scandir($dir);
     $files1 = array_diff($files1, array('.', '..'));

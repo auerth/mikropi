@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 isBiggestPage=true
 pageIndex="0"
 biggestPage="0"
@@ -26,30 +26,44 @@ fi
 
 while [ "$isBiggestPage" = true ] 
 do
-tiffHeader=`vipsheader -a  $tiffPath[page=$pageIndex]` 
-string='width:'
-variable2='height:'
-tmp=${tiffHeader#*$string}
-width=${tmp%$variable2*}
-width=$((width+1))
-string='height:'
-variable2='bands:'
-tmp=${tiffHeader#*$string}
-height=${tmp%$variable2*}
-height=$((height+1))
-if [ "$height" -gt "$biggestHeight" ]; then
-    biggestHeight=$height
-    biggestPage=$pageIndex
-fi
-if [ "$width" -gt "$biggestWidth" ]; then
-    biggestWidth=$width
-fi
-
-if [[ $tiffHeader =~ $substring ]]; then
-    pageIndex=$((pageIndex+1))
+tiffHeader=`vipsheader -a  $tiffPath[page=$pageIndex] 2>&1`
+if [[ $tiffHeader =~ "no property named" ]]; then
+   isBiggestPage=false
+   biggestPage=-1
+   echo "page atrribute not found. Trying to convert without page arrtribute ..."
 else
-    isBiggestPage=false
+echo $tiffHeader
+   	string='width:'
+	variable2='height:'
+	tmp=${tiffHeader#*$string}
+	width=${tmp%$variable2*}
+	width=$((width+1))
+	string='height:'
+	variable2='bands:'
+	tmp=${tiffHeader#*$string}
+	height=${tmp%$variable2*}
+	height=$((height+1))
+	if [ "$height" -gt "$biggestHeight" ]; then
+		biggestHeight=$height
+		biggestPage=$pageIndex
+	fi
+	if [ "$width" -gt "$biggestWidth" ]; then
+		biggestWidth=$width
+	fi
+
+	if [[ $tiffHeader =~ $substring ]]; then
+		pageIndex=$((pageIndex+1))
+	else
+		isBiggestPage=false
+	fi
 fi
 done
-tiffHeader=`vips dzsave "$tiffPath[page=$biggestPage]"  "$savePathAndName" --suffix .jpg[Q=90]` 
+if [ "$biggestPage" -gt "-1" ]; then
+	
+ echo "Converting tiff page $biggestPage"
+ 
+ tiffHeader=`vips dzsave "$tiffPath[page=$biggestPage]"  "$savePathAndName" --suffix .jpg[Q=90] 2>&1` 
+else
+ tiffHeader=`vips dzsave "$tiffPath"  "$savePathAndName" --suffix .jpg[Q=90] 2>&1` 
+fi
 

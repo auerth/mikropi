@@ -427,7 +427,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                         <input type="radio" id="user" onclick="loadLog('user.txt')" name="filter" value="User">
                         <label for="user"> User-Log</label>
                         <input type="radio" id="cuts" onclick="loadLog('cuts.txt')" name="filter" value="Schnitte">
-                        <label for="user"> Schnitte-Log</label>
+                        <label for="cuts"> Schnitte-Log</label>
                     </fieldset>
                 </form>
                 <textarea id="log" readonly></textarea>

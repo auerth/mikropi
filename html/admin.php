@@ -420,12 +420,14 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 <form>
                     <h4>Log-Files:</h4>
                     <fieldset>
-                        <input type="radio" id="worklist" onclick="loadLog('worklist.log')" name="filter" value="Worklist" checked>
+                        <input type="radio" id="worklist" onclick="loadLog('worklist.txt')" name="filter" value="Worklist" checked>
                         <label for="worklist"> Worklist-Log</label>
-                        <input type="radio" id="hash" onclick="loadLog('hash.log')" name="filter" value="Hash">
+                        <input type="radio" id="hash" onclick="loadLog('hash.txt')" name="filter" value="Hash">
                         <label for="hash"> Hash-Log</label>
-                        <input type="radio" id="user" onclick="loadLog('user.log')" name="filter" value="User">
+                        <input type="radio" id="user" onclick="loadLog('user.txt')" name="filter" value="User">
                         <label for="user"> User-Log</label>
+                        <input type="radio" id="cuts" onclick="loadLog('cuts.txt')" name="filter" value="Schnitte">
+                        <label for="user"> Schnitte-Log</label>
                     </fieldset>
                 </form>
                 <textarea id="log" readonly></textarea>

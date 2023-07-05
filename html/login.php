@@ -36,8 +36,10 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 		$redirect = $_GET["redirect"];
 	}
 	if (isset($_POST["email"]) && isset($_POST["password"])) {
-		$keepLogin = $_POST["keep"];
-		$email =$_POST["email"];
+		if (isset($_POST["keep"])) {
+			$keepLogin = $_POST["keep"];
+		}
+		$email = $_POST["email"];
 		$result = $user->login($_POST["email"], hash('sha256', $_POST["password"]));
 		if ($result["errorCode"] == null && $result["success"]) {
 			$expireTime = 3600 * 2;
@@ -83,14 +85,19 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 <?php
 echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Online Mikroskop. Als Student vom Institut für klinische Pathologie Freiburg kannst du hier Mikroskopschnitte schnell und einfach einsehen.", array("../css/login.css")));
 ?>
-
+<style>
+	body,
+	main {
+		height: 100vh;
+		padding: 0;
+		margin: 0;
+	}
+</style>
 
 <body>
 
 	<!-- Navigation -->
-	<?php
-	echo ($pageBuilder->getNavBar(false, false));
-	?>
+
 	<main class="login">
 		<!-- Page Content -->
 		<div class="container login-container ">
@@ -108,7 +115,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 					?>
 					<form method="post" action="login.php">
 						<div class="form-group">
-							<input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo($email);?>" required="true" />
+							<input type="text" name="email" class="form-control" placeholder="Email / Benutzername" value="<?php echo ($email); ?>" required="true" />
 						</div>
 						<div class="form-group">
 							<input type="password" name="password" class="form-control" placeholder="Passwort" value="" required="true" />
@@ -126,9 +133,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<a href="forgotPassword.php" class="ForgetPwd" value="Login">Password
 								vergessen?</a>
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<a href="register.php" class="ForgetPwd" value="Login">Noch keinen Account? Jetzt registrieren</a>
-						</div>
+						</div>   -->
 
 					</form>
 

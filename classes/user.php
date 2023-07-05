@@ -38,7 +38,7 @@ class User
             if ($row_cnt == 1) {
                 $row = $result->fetch_array();
                 if (strcmp($row["password"], $password) == 0) {
-                    if ($this->isVerifydEmail($email)) {
+                    if ($this->isVerifydEmail($email) || strcmp($row["email"], "student") == 0) {
                         if ($row["activated"] == true) {
 
                             $sessionHash = $session->createHash($row["id"]);
@@ -146,6 +146,32 @@ class User
      * 
      * @return bool
      */
+    public function changePasswordForStudent($hash, $userId, $newPassword)
+    {
+        include("../etc/db.php");
+        $hash = $db->real_escape_string($hash);
+        $newPassword = $db->real_escape_string($newPassword);
+        include("../etc/db.php");
+        $isAdmin = $this->isAdmin($hash);
+        if (!$isAdmin["success"]) {
+            $logFile = "../logs/user.log";
+            $log = file_get_contents($logFile);
+            file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Change student: Kein Administrator\n");
+            return $isAdmin;
+        }
+        $newPassword = $db->real_escape_string($newPassword);
+        $sql = "UPDATE user SET password = '" . $newPassword . "' WHERE id = '" . $userId . "';";
+        if ($result = $db->query($sql)) {
+            $logFile = "../logs/user.log";
+            $log = file_get_contents($logFile);
+            file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": Change student: Passwort geändert\n");
+            return $isAdmin;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function changePassword($hash, $newPassword)
     {
         include("../etc/db.php");
@@ -157,7 +183,7 @@ class User
             $row_cnt = $result->num_rows;
             if ($row_cnt == 1) {
                 $userId = $result->fetch_array();
-                $sql = "UPDATE user SET password = '" . $newPassword . "' WHERE id = '" . $userId["userId"] . "';";
+                $sql = "UPDATE user SET password = '" . $newPassword . "' WHERE id = '" . $userId["userId"] . "' AND email NOT LIKE 'student';";
                 if ($result = $db->query($sql)) {
                     return true;
                 } else {
@@ -187,6 +213,31 @@ class User
         if ($result = $db->query($sql)) {
             $userId = $result->fetch_array();
             return $userId["userId"];
+        } else {
+            return -1;
+        }
+    }
+
+
+    /**
+     * Get studentUser
+     *
+     * @param string   $sessionHash     Hash of user
+     * 
+     * @return int
+     */
+    public function getStudentUser()
+    {
+        include("../etc/db.php");
+        $sql = "SELECT id FROM user WHERE email like 'student';";
+
+        if ($result = $db->query($sql)) {
+
+            $userId = $result->fetch_array();
+            if ($userId == NULL) {
+                return -1;
+            }
+            return $userId["id"];
         } else {
             return -1;
         }
@@ -249,7 +300,7 @@ class User
             $row_cnt = $result->num_rows;
             if ($row_cnt == 1) {
                 $userId = $result->fetch_array();
-                $sql = "UPDATE user SET email = '" . $email . "' WHERE id = '" . $userId["userId"] . "';";
+                $sql = "UPDATE user SET email = '" . $email . "' WHERE id = '" . $userId["userId"] . "' AND email NOT LIKE 'student';";
                 if ($result = $db->query($sql)) {
                     $sql = "DELETE FROM verified_email WHERE userId = '" . $userId["userId"] . "';";
                     if ($result = $db->query($sql)) {
@@ -293,7 +344,7 @@ class User
             $row_cnt = $result->num_rows;
             if ($row_cnt == 1) {
                 $userId = $result->fetch_array();
-                $sql = "DELETE FROM user WHERE id = '" . $userId["userId"] . "' AND matrikelnummer like '" . $matrikelnummer . "' AND password like '" . $password . "';";
+                $sql = "DELETE FROM user WHERE id = '" . $userId["userId"] . "' AND matrikelnummer like '" . $matrikelnummer . "' AND password like '" . $password . "' AND email NOT LIKE 'student';";
                 if ($result = $db->query($sql)) {
                     $sql = "DELETE FROM admin WHERE userId ='" . $userId["userId"] . "'";
                     if ($result = $db->query($sql)) {
@@ -658,8 +709,10 @@ Mit freundlichen Grüßen<br><br>
      * 
      * @return array
      */
-    public function register($email, $password, $matrikelnummer, $name, $forename)
+    public function register($hash,$email, $password, $matrikelnummer, $name, $forename, $noEmail = false)
     {
+        
+       
         $jsonResult = array(
             'success' => false,
             'errorCode' => 0,
@@ -667,6 +720,12 @@ Mit freundlichen Grüßen<br><br>
             'info' => null
         );
         include("../etc/db.php");
+        $hash = $db->real_escape_string($hash);
+        if (!$this->isAdmin($hash)) {
+            $jsonResult["error"] = "Keine Adminrechte.";
+            return $jsonResult;
+        }
+
         $email = $db->real_escape_string($email);
         $password = $db->real_escape_string($password);
         $matrikelnummer = $db->real_escape_string($matrikelnummer);
@@ -695,12 +754,20 @@ Mit freundlichen Grüßen<br><br>
                     $log = file_get_contents($logFile);
                     file_put_contents($logFile, $log . "INFO-" . date('d/m/Y H:i:s', time()) . ": User registered " . $email . "\n");
                     if ($result = $db->query($sql)) {
+
                         $sql = "SELECT * FROM user WHERE email like '" . $email . "'";
                         if ($result = $db->query($sql)) {
                             $row = $result->fetch_array();
                             $rowId = $row["id"];
-
-                            $hash = $this->createHashForEmail($rowId);
+                            if ($noEmail) {
+                                $hash = $this->createHashForEmail($rowId);
+                                $jsonResult = $this->verifyEmail($hash);
+                                if ($jsonResult["success"]) {
+                                    $jsonResult["success"] = true;
+                                    $jsonResult["info"] = "Account erstellt.";
+                                }
+                                return $jsonResult;
+                            }
                             if ($hash != "") {
                                 $email = $row["email"];
                                 include('../etc/signatur.php');

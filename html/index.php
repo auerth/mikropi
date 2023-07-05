@@ -586,7 +586,7 @@ $checkBoxId = 0;
                 }
                 echo ("</div>");
             } else if (!$loggedIn) {
-                echo (file_get_contents("home.html"));
+                header("Location: login.php");
             }
         }
         ?>

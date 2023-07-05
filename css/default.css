@@ -339,7 +339,7 @@ h3 {
     text-align: left !important;
     align-content: left;
     margin: 0px !important;
-    padding-bottom: 3px;
+    padding-bottom: 1rem;
 }
 
 summary {
@@ -1254,4 +1254,18 @@ embed {
     border-radius: 10px;
     left: 20px;
     top: 45px;
+}
+
+.form-row{
+    display:  flex;
+    width: 100%;
+    column-gap: 1rem;
+    flex-wrap: nowrap;
+}
+.form-row .form-group {
+    width: 100%;
+}
+.form-row .form-group input{
+    min-width: 400px;
+    width: 100%;
 }

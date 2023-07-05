@@ -60,8 +60,7 @@ function validateEmail(email) {
 }
 
 function filled() {
-    if ($('#name').val() != "" && $('#forename').val() != "" &&
-        $('#matrikelnummer').val() != "" && document.getElementById("checkbox-agb").checked)
+    if ($('#name').val() != "" && $('#forename').val() != "" )
         return true;
     else
         return false;
@@ -70,19 +69,13 @@ function filled() {
 function postForm() {
     if (password) {
         if (filled()) {
-            if (validateEmail($('#email').val())) {
                 if (validPassword($('#password').val())) {
-                    if (!isNaN($('#matrikelnummer').val()) || $('#matrikelnummer').val().toLowerCase() == "n/a") {
                         document.getElementById("register").submit();
-                    } else {
-                        alert("Deine Matrikelnummer darf nur aus Zahlen bestehen");
-                    }
+                  
                 } else {
                     alert("Dein Passwort muss muss aus 4 bis 15 Ziffern bestehen und mindestens eine Ziffer enthalten.");
                 }
-            } else {
-                alert("Email Format stimmt nicht.");
-            }
+          
         } else {
             alert("Bitte fülle alles im Formular aus.");
 

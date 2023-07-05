@@ -106,78 +106,84 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 			<h5 class="card-header bg-2nd text-white"><?php echo ($name); ?></h5>
 			<div class="card-body">
 				<ul class="list-group">
-					<li class="list-group-item">Email: <?php echo ($email); ?></li>
+					<li class="list-group-item">Email / Benutzername: <?php echo ($email); ?></li>
 					<li class="list-group-item">Immatrikulationsnummer: <?php echo ($matrikelnummer); ?></li>
 					<li class="list-group-item">Erstellt am: <?php echo (date("d.m.Y", $erstelltAm)); ?></li>
 				</ul>
 			</div>
 		</div>
+		<?php 
 
-		<div class="card">
-			<h5 class="card-header bg-2nd text-white">Email ändern</h5>
-			<div class="card-body">
-				<?php
-				if ($emailChangeInfo != null) {
-					echo ('<div class="alert ' . $alertType . '">' . $emailChangeInfo . '
-                      </div>');
-				}
-				?>
-				<form method="post" action="settings.php">
-					<div class="form-group">
-						<input type="email" readonly onfocus="this.removeAttribute('readonly');" name="newEmail" class="form-control" placeholder="Neue Email" value="" required="true" />
-					</div>
-					<div class="form-group">
-						<input type="password" readonly onfocus="this.removeAttribute('readonly');" name="password" class="form-control" placeholder="Aktuelles Passwort" value="" required="true" />
-					</div>
-					<div class="form-group">
-						<input type="submit" class="btnSubmit" value="Email ändern" />
-					</div>
-				</form>
-			</div>
+	if($email !== "student"){
+		echo '<div class="card">
+		<h5 class="card-header bg-2nd text-white">Email ändern</h5>
+		<div class="card-body">';
+		
+			if ($emailChangeInfo != null) {
+				echo ('<div class="alert ' . $alertType . '">' . $emailChangeInfo . '
+				  </div>');
+			}
+		
+			 echo '
+			<form method="post" action="settings.php">
+				<div class="form-group">
+					<input type="email" readonly onfocus="this.removeAttribute(\'readonly\');" name="newEmail" class="form-control" placeholder="Neue Email" value="" required="true" />
+				</div>
+				<div class="form-group">
+					<input type="password" readonly onfocus="this.removeAttribute(\'readonly\');" name="password" class="form-control" placeholder="Aktuelles Passwort" value="" required="true" />
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btnSubmit" value="Email ändern" />
+				</div>
+			</form>
 		</div>
-		<div class="card">
-			<h5 class="card-header bg-2nd text-white">Passwort ändern</h5>
-			<div class="card-body">
-				<?php
-				if ($newPasswordInfo != null) {
-					echo ('<div class="alert ' . $alertType . '">' . $newPasswordInfo . '
-											</div>');
-				}
-				?>
-				<form method="post" action="settings.php">
-					<div class="form-group">
-						<input type="password" readonly onfocus="this.removeAttribute('readonly');" name="password" class="form-control" placeholder="Altes Passwort" value="" required="true" />
-					</div>
-					<div class="form-group">
-						<input type="password" readonly onfocus="this.removeAttribute('readonly');" name="newPassword" class="form-control" placeholder="Neues Passwort" value="" required="true" />
-					</div>
-					<div class="form-group">
-						<input type="password" readonly onfocus="this.removeAttribute('readonly');" name="newPasswordRepeate" class="form-control" placeholder="Neues Passwort wiederholen" value="" required="true" />
-					</div>
-					<div class="form-group">
-						<input type="submit" class="btnSubmit" value="Passwort ändern" />
-					</div>
-				</form>
-			</div>
+	</div>
+	<div class="card">
+		<h5 class="card-header bg-2nd text-white">Passwort ändern</h5>
+		<div class="card-body">';
+	
+			if ($newPasswordInfo != null) {
+				echo ('<div class="alert ' . $alertType . '">' . $newPasswordInfo . '
+										</div>');
+			}
+			echo '
+			<form method="post" action="settings.php">
+				<div class="form-group">
+					<input type="password" readonly onfocus="this.removeAttribute(\'readonly\');" name="password" class="form-control" placeholder="Altes Passwort" value="" required="true" />
+				</div>
+				<div class="form-group">
+					<input type="password" readonly onfocus="this.removeAttribute(\'readonly\');" name="newPassword" class="form-control" placeholder="Neues Passwort" value="" required="true" />
+				</div>
+				<div class="form-group">
+					<input type="password" readonly onfocus="this.removeAttribute(\'readonly\');" name="newPasswordRepeate" class="form-control" placeholder="Neues Passwort wiederholen" value="" required="true" />
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btnSubmit" value="Passwort ändern" />
+				</div>
+			</form>
 		</div>
-		<div class="card">
-			<h5 class="card-header bg-2nd text-white">Account löschen</h5>
-			<div class="card-body">
+	</div>
+	<div class="card">
+		<h5 class="card-header bg-2nd text-white">Account löschen</h5>
+		<div class="card-body">
 
-				<form method="post" autocomplete="off" action="settings.php">
-					<div class="form-group">
-						<input type="text" name="matrikelnummer" readonly onfocus="this.removeAttribute('readonly');" id="matrikelnummer" class="form-control" placeholder="Immatrikulationsnummer" value="" required="true" />
-					</div>
-					<div class="form-group">
-						<input type="password" name="newPassword" readonly onfocus="this.removeAttribute('readonly');" class="form-control" placeholder="Aktuelles Passwort" value="" required="true" />
-					</div>
+			<form method="post" autocomplete="off" action="settings.php">
+				<div class="form-group">
+					<input type="text" name="matrikelnummer" readonly onfocus="this.removeAttribute(\'readonly\');" id="matrikelnummer" class="form-control" placeholder="Immatrikulationsnummer" value="" required="true" />
+				</div>
+				<div class="form-group">
+					<input type="password" name="newPassword" readonly onfocus="this.removeAttribute(\'readonly\');" class="form-control" placeholder="Aktuelles Passwort" value="" required="true" />
+				</div>
 
-					<div class="form-group">
-						<input type="submit" class="btnSubmit bg-danger text-white" value="Account löschen?" />
-					</div>
-				</form>
-			</div>
+				<div class="form-group">
+					<input type="submit" class="btnSubmit bg-danger text-white" value="Account löschen?" />
+				</div>
+			</form>
 		</div>
+	</div>';
+	}
+?>
+		
 		<?php
 
 		echo ($pageBuilder->getFooter());

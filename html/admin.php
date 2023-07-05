@@ -60,6 +60,38 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
             $alertType = "alert-success";
         }
     }
+    if (isset($_POST["password"]) && !isset($_POST["email"])) {
+        $exists = $user->getStudentUser() > 0;
+        if (!$exists) {
+            $result = $user->register($_COOKIE["sessionHash"], "student", hash('sha256', $_POST["password"]), "n/a", "Studierenden", "Benutzer", true);
+            if (!$result["success"]) {
+                $msg = $result["error"];
+                $alertType = "alert-danger";
+            } else {
+                $msg = $result["info"];
+                $alertType = "alert-success";
+            }
+        } else {
+            $result = $user->changePasswordForStudent($_COOKIE["sessionHash"],  $user->getStudentUser(), hash('sha256', $_POST["password"]));
+            if ($result) {
+                $msg = "Passwort geändert";
+                $alertType = "alert-success";
+            } else {
+                $msg = "Passwort konnte nicht geändert werden";
+                $alertType = "alert-danger";
+            }
+        }
+    }
+    if (isset($_POST["email"]) && isset($_POST["password"])) {
+        $result = $user->register($_COOKIE["sessionHash"], $_POST["email"], hash('sha256', $_POST["password"]), "n/a", $_POST["name"], $_POST["forename"], true);
+        if ($result) {
+            $msg = "Benutzer " . $_POST["email"] . " wurde angelegt";
+            $alertType = "alert-success";
+        } else {
+            $msg = "Benutzer " . $_POST["email"] . " konnte nicht angelegt werden";
+            $alertType = "alert-danger";
+        }
+    }
 
     if (isset($_POST["deleteUser"]) && isset($_POST["userId"])) {
 
@@ -228,17 +260,17 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     if ($userList["success"]) {
                         $userList = $userList["info"];
                         $checkBoxId = 0;
-                        foreach ($userList as $user) {
+                        foreach ($userList as $userEntry) {
                             $activatedChecked = "";
                             $adminChecked = "";
                             $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px; color: red;"></i>';
-                            if ($user["verifyed"]) {
+                            if ($userEntry["verifyed"]) {
                                 $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px; color: green;"></i>';
                             }
-                            if ($user["activated"]) {
+                            if ($userEntry["activated"]) {
                                 $activatedChecked = "checked";
                             }
-                            if ($user["admin"]) {
+                            if ($userEntry["admin"]) {
                                 $adminChecked = "checked";
                             }
                             echo ('
@@ -246,30 +278,30 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                     
                                     <details>
                                              
-                                    <summary>' . $user["name"] . ", " . $user["forename"] . '
+                                    <summary>' . $userEntry["name"] . ", " . $userEntry["forename"] . '
                                                 </summary>
                                     <div class="row">
                                     <div class="information">
                                         <div class="element">
-                                                <p class="filterMatrikel">Matrikelnummer: ' . $user["matrikelnummer"] . '</p>
+                                                <p class="filterMatrikel">Matrikelnummer: ' . $userEntry["matrikelnummer"] . '</p>
                                         </div>
                                         <div class="element" >
-                                                <p>Email: <a href="mailto: ' . $user["email"] . '">' . $user["email"] . '</a></p>
+                                                <p>Email: <a href="mailto: ' . $userEntry["email"] . '">' . $userEntry["email"] . '</a></p>
                                         </div>
                                         <div class="element">
-                                            <p>Letzter Login: ' . date('d.m.Y H:i', $user["last_login"]) . ' Uhr</p>
+                                            <p>Letzter Login: ' . date('d.m.Y H:i', $userEntry["last_login"]) . ' Uhr</p>
                                         </div>
                                         <div class="element">
                                             <p>Email verifiziert: ' .  $emailVerifyed . '</p>
                                         </div>
                                         <div class="element">
-                                            <p>Erstellt am: ' .  date('d.m.Y', $user["created"]) . '</p>
+                                            <p>Erstellt am: ' .  date('d.m.Y', $userEntry["created"]) . '</p>
                                         </div>
                                     </div>
 
                                     <div class="adminstration">
                                             <form method="POST" style="float: right;"action="admin.php">
-                                                <input name="userId" value="' . $user["id"] . '" style="display: none;">');
+                                                <input name="userId" value="' . $userEntry["id"] . '" style="display: none;">');
                             if (isset($_POST["sortBy"])) {
                                 echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
                             }
@@ -283,7 +315,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                                         <label class="form-check-label" onclick="check(`checkbox-' . $checkBoxId . '`)" for="exampleCheck1"><span></span>Admin</label>
                                                     </div>
                                                     <div class="form-check"  style="float: right;">
-                                                        <i onclick="deleteUser(' . $user["id"] . ')" class="fas fa-trash-alt"></i>
+                                                        <i onclick="deleteUser(' . $userEntry["id"] . ')" class="fas fa-trash-alt"></i>
                                                     </div>
                                                     </div>
                                                     <div class="form-check">
@@ -303,7 +335,46 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 </div>
             </div>
         </div>
+        <div class="card">
+            <h5 class="card-header bg-2nd text-white">Benutzer erstellen</h5>
+            <div class="card-body">
 
+                <form method="POST" id="register" action="admin.php">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input class="form-control" type="text" id="forename" placeholder="Vorname" name="forename" required>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" id="name" name="name" placeholder="Nachname" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <input class="form-control" type="email" id="email" name="email" placeholder="Email" required>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input class="form-control" type="password" id="password" name="password" placeholder="Passwort" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input class="form-control" type="password" id="password_repeat" name="password_repeat" placeholder="Passwort wiederholen" required>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <input type="button" class="btn btn-primary" onclick="postForm()" value="Erstellen" style="  font-weight: 600; margin: 0 0 0 auto;" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
         <div class="card">
             <h5 class="card-header bg-2nd text-white">Schnitte</h5>
             <div class="card-body">
@@ -313,17 +384,31 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
             </div>
         </div>
         <div class="card">
-            <h5 class="card-header bg-2nd text-white">Immatrikulationsnummern</h5>
+            <h5 class="card-header bg-2nd text-white">Studierenden-Login</h5>
             <div class="card-body">
-
+                <?php
+                $userId = $user->getStudentUser();
+                if ($userId == -1) {
+                    echo "<p><strong>Studierenden Benutzer noch nicht erstellt.</strong></p>";
+                }
+                ?>
                 <form enctype="multipart/form-data" action="admin.php" method="POST">
-                    <!-- MAX_FILE_SIZE muss vor dem Dateiupload Input Feld stehen -->
-                    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-                    <!-- Der Name des Input Felds bestimmt den Namen im $_FILES Array -->
-                    CSV hochladen: <input name="csvFile" type="file" />
-                    <button type="submit" class="btn btn-primary">Hochladen und
-                        Hinzufügen</button>
+                    <?php
+                    if ($userId > 0) {
+                        echo "<p>Benutzername: student</p>";
+                    }
 
+                    ?>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Passwort" required="true" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="margin: 0px;"><?php if ($userId == -1) {
+                                                                                                echo "Erstellen";
+                                                                                            } else {
+                                                                                                echo "Aktualisieren";
+                                                                                            } ?></button>
+                    </div>
                 </form>
 
             </div>
@@ -464,8 +549,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 
 <?php
-$array = array("../js/admin.js", "../js/filter.js", "../js/log.js");
+$array = array("../js/admin.js", "../js/filter.js", "../js/log.js", "../js/register.js");
 echo ($pageBuilder->getJsTags($array));
+
 
 ?>
 

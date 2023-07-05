@@ -59,7 +59,7 @@ function deleteUser(id) {
     if (check == true) {
         var params = {
             'userId': id,
-            'deleteUser': null
+            'deleteUser': ""
         };
         post("admin.php", params, "POST");
     }

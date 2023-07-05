@@ -611,7 +611,7 @@ Mit freundlichen Grüßen<br><br>
                         $email = $result->fetch_array()["email"];
                     }
                 }
-                $sql = "UPDATE verified_email SET activated = '1' WHERE id = '" . $row["id"] . "';";
+                $sql = "UPDATE verified_email SET activated = 1 WHERE id = '" . $row["id"] . "';";
                 if ($result = $db->query($sql)) {
                     $jsonResult["success"] = true;
                     $logFile = "../logs/user.log";
@@ -1014,7 +1014,7 @@ Mit freundlichen Grüßen<br><br>
                 $wasActivated = $result["activated"];
                 $email = $result["email"];
             }
-            $sql = "UPDATE user SET activated = '" . $activated . "' WHERE id = '" . $editUserId . "';";
+            $sql = "UPDATE user SET activated = " . $activated . " WHERE id = " . $editUserId . ";";
             if ($result = $db->query($sql)) {
                 if ($wasActivated != $activated) {
                     $to = $email;

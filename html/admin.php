@@ -42,7 +42,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
     $matrikelnummer = $_COOKIE["matrikelnummer"];
     $erstelltAm = $_COOKIE["creationDate"];
 
-    if (isset($_POST["userId"])) {
+    if (isset($_POST["userId"])  && !isset($_POST["deleteUser"])) {
         $active = false;
         $admin = false;
         if (isset($_POST["active"])) {

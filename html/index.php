@@ -89,8 +89,14 @@ if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_o
             }
         }
         //change title of cut
-        if (isset($_POST["cutId"]) && isset($_POST["newTitle"]) && $isAdmin) {
-            $result = $cut->updateCutName($_COOKIE["sessionHash"], $_POST["cutId"], $_POST["newTitle"]);
+        if (isset($_POST["cutId"]) && isset($_POST["newTitle"]) &&  $isAdmin) {
+            $isPrivate = 1;
+
+            if (!isset($_POST["isPrivate"])) {
+                $isPrivate = 0;
+            }
+        
+            $result = $cut->updateCutName($_COOKIE["sessionHash"], $_POST["cutId"], $_POST["newTitle"], $isPrivate);
             if (!$result["success"]) {
                 $cutMessage = $result["error"];
                 $alertType = "alert-danger";
@@ -292,6 +298,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     <span></span>Annotationen zeigen
                 </label>';
                 }
+                $cut = new Cut();
+                //load cut information
+                $cutId = $_GET["cuts"];
+                $cutInfo = $cut->getCutInfo($_GET["cuts"]);
                 //check if user should see admin components
                 if ($isAdmin) {
                     $editTitle = "<i class='fas fa-pencil-alt fa-1x' id='editTitle'></i>";
@@ -299,12 +309,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                     $editDescription = "<i class='fas fa-pencil-alt fa-1x' id='editDescription'></i>";
                     $editOverlays .= "<button type='submit' id='addOverlay' onclick='drawOverlay()' style='margin-left:auto; float: right;' class='btn btn-primary' >+</button>";
                     $editFilter = '<button type="submit" id="editFilter" style="margin-left:20px;" class="btn btn-primary" >Filter bearbeiten</button>';
+                    $private = $cutInfo["info"]["isPrivate"] == 0 ? '': '<div class="flex" style="display: flex;padding: 0 30px; align-items: center;"><h4 style="color: white;">Dieser Schnitt ist nicht für Studenten sichtbar!</h4></div>';
                 }
 
-                $cut = new Cut();
-                //load cut information
-                $cutId = $_GET["cuts"];
-                $cutInfo = $cut->getCutInfo($_GET["cuts"]);
+          
 
                 //build cut page
 
@@ -328,7 +336,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 								</div>');
                 }
 
-                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle . $editFilter . $deleteCut . "</div>");
+                echo ("<div class='row bg-second'><h1 id='title' style='color: white;'>" . $cutInfo["info"]["name"] . "</h1>" . $editTitle . $editFilter .$private. $deleteCut . "</div>");
                 echo ('<div class="flexbox" style="flex-wrap: nowrap; background-color: white;">');
                 $overlayDiv = "<div class='overlays' style='display: none;' id='overlay'>";
                 $overlayDivM = "<div class='overlaysM' style='display: none;' id='overlayM'>";
@@ -378,6 +386,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                 echo ("</div><div id='snackbar'>Koordinate wurden in die Zwischenablage kopiert</div>");
                 //Create Modals for editing if user is admin
                 if ($isAdmin) {
+                   $isPrivate = $cutInfo["info"]["isPrivate"] == 0?"":"checked";
+
                     echo (' <div id="modalTitle" class="modal">
 
   <!-- Modal content -->
@@ -388,7 +398,15 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
         <div class="form-group">
             <input name="newTitle" id="newTitle" type="text" class="form-control" placeholder="Name eingeben"/>
         </div>
-	    <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
+        <div class="row" style="padding: 0; display: flex; gap: 20px; align-items: center;">
+        <button type="submit" style="margin-left:10px;" class="btn btn-primary" >Speichern</button>
+
+        <div class="form-check" style="margin: 0;">
+
+        <input type="checkbox" id="isPrivate" class="form-check-input" name="isPrivate" style="display: unset;" '.$isPrivate.'>
+        <label class="form-check-label"  for="isPrivate">Privat</label></div>
+
+    </div>
 
         </form>
     </div>
@@ -440,7 +458,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 <form method="POST" action="index.php?cuts=' . $cutId . '">
                 
 <div class="form-group row text-center">');
-$checkBoxId = 0;
+                    $checkBoxId = 0;
 
                     while ($fruit_name = current($categorys)) {
                         $catName = key($categorys);

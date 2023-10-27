@@ -5,6 +5,7 @@
  * @author     Thorben Auer
  * @link       https://softwelop.com
  */
+require_once("user.php");
 class Cut
 {
     /**
@@ -44,7 +45,9 @@ class Cut
             'info' => null
         );
         include("../etc/db.php");
-
+        $user = new User();
+        $showPrivate = 0;
+      
         $semester = $db->real_escape_string($semester);
         $dozent = $db->real_escape_string($dozent);
 
@@ -56,7 +59,12 @@ class Cut
 
         $icd_10_ = $db->real_escape_string($icd_10_);
         $diagnosegruppe = $db->real_escape_string($diagnosegruppe);
-        $sql = "SELECT DISTINCT c.*, ttc.categoryId FROM cut c, ttCutCategory ttc WHERE ttc.cutId = c.id AND c.toDelete = '0'";
+        $sessionHash = $_COOKIE["sessionHash"];
+        $sql = "SELECT DISTINCT c.*, ttc.categoryId FROM cut c, ttCutCategory ttc WHERE ttc.cutId = c.id AND c.toDelete = '0' AND c.isPrivate = 0";
+        if ($user->isAdmin($sessionHash)) {
+            $sql = "SELECT DISTINCT c.*, ttc.categoryId FROM cut c, ttCutCategory ttc WHERE ttc.cutId = c.id AND c.toDelete = '0'";
+
+        }
         if ($result = $db->query($sql)) {
             $info = array();
             $rows = array();
@@ -138,6 +146,7 @@ class Cut
                         array_push($info, array(
                             "id" => $row["id"],
                             "name" => $row["name"],
+                            "isPrivate" => $row["isPrivate"],
                             "description" => $row["description"],
                             "uploader" => $row["uploader"],
                             "file" => $this->fileURL . $row["file"] . ".dzi",
@@ -371,6 +380,7 @@ class Cut
                     "name" => $row["name"],
                     "description" => $row["description"],
                     "overlays" => $overlays,
+                    "isPrivate" => $row["isPrivate"],
                     "uploader" => $row["uploader"]
                 );
                 $jsonResult["success"] = true;
@@ -640,7 +650,7 @@ class Cut
      * 
      * @return array
      */
-    public function updateCutName($hash, $id, $name)
+    public function updateCutName($hash, $id, $name,$isPrivate)
     {
         $jsonResult = array(
             'success' => false,
@@ -667,7 +677,7 @@ class Cut
         if ($result = $db->query($sql)) {
             $num_rows = $result->num_rows;
             if ($num_rows == 1) {
-                $sql = "UPDATE cut SET name = '" . $name . "' WHERE id = '" . $id . "';";
+                $sql = "UPDATE cut SET name = '" . $name . "', isPrivate = '".$isPrivate."' WHERE id = '" . $id . "';";
                 if ($result = $db->query($sql)) {
                     $jsonResult["success"] = true;
                     $jsonResult["info"] = "Cut updated";
@@ -751,7 +761,7 @@ class Cut
         return $jsonResult;
     }
 
-      /**
+    /**
      * Update cut description
      *
      * @param string    $sessionHash       Hash of user

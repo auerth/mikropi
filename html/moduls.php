@@ -12,7 +12,7 @@ if (file_exists($classFiles)) {
 
 	$loggedIn = false;
 	$isAdmin = false;
-	$serverUrl = "https://mikropi.de/";
+	$serverUrl = "";
 	$name = "";
 	$modul = new Modul();
 	$script = new Script();

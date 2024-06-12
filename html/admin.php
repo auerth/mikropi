@@ -227,53 +227,56 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
     ?>
 
     <!-- Page Content -->
-    <main>
-        <?php
-        if ($msg != null) {
-            echo ('<div class="alert ' . $alertType . '" style="margin-bottom: 0px;">' . $msg . '
+
+    <main >
+        <div class="max-width grid" ;>
+            <?php
+            if ($msg != null) {
+                echo ('<div class="alert ' . $alertType . '" style="margin-bottom: 0px;">' . $msg . '
                       </div>');
-        }
-        ?>
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Benutzer Liste</h5>
-            <div class="card-body">
-                <form>
-                    <h4>Sortieren nach: </h4>
-                    <fieldset>
-                        <input type="radio" id="name" onclick="sort('name')" name="filter" value="Name" <?php echo $nameChecked; ?>>
-                        <label for="name"> Name</label>
-                        <input type="radio" id="vorname" onclick="sort('forename')" name="filter" value="Vorname" <?php echo $forenameChecked; ?>>
-                        <label for="vorname"> Vorname</label>
-                        <input type="radio" id="email" onclick="sort('email')" name="filter" value="Email" <?php echo $emailChecked; ?>>
-                        <label for="email"> Email</label>
-                        <input type="radio" id="admin" onclick="sort('admin')" name="filter" value="Admin" <?php echo $adminChecked; ?>>
-                        <label for="admin"> Admin</label>
-                        <input type="radio" id="active" onclick="sort('activated')" name="filter" value="Aktiviert" <?php echo $activeChecked; ?>>
-                        <label for="active"> Aktiviert</label>
-                        <input type="radio" id="immatrikulationsnummer" onclick="sort('matrikelnummer')" name="filter" value="Immatrikulationsnummer" <?php echo $matrikelChecked; ?>>
-                        <label for="immatrikulationsnummer"> Immatrikulationsnummer</label>
-                    </fieldset>
-                </form>
-                <input type="text" id="searchUser" name="name" class="form-control" placeholder="Suche (Email, Immatrikulationsnummer oder Name)">
-                <div class="list" style="height: 600px; margin-top: 5px;" id="userListe">
-                    <?php
-                    if ($userList["success"]) {
-                        $userList = $userList["info"];
-                        $checkBoxId = 0;
-                        foreach ($userList as $userEntry) {
-                            $activatedChecked = "";
-                            $adminChecked = "";
-                            $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px; color: red;"></i>';
-                            if ($userEntry["verifyed"]) {
-                                $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px; color: green;"></i>';
-                            }
-                            if ($userEntry["activated"]) {
-                                $activatedChecked = "checked";
-                            }
-                            if ($userEntry["admin"]) {
-                                $adminChecked = "checked";
-                            }
-                            echo ('
+            }
+            ?>
+
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Benutzerliste</h5>
+                <div class="card-body userlist">
+                    <form>
+                        <h4>Sortieren nach: </h4>
+                        <fieldset>
+                            <input type="radio" id="name" onclick="sort('name')" name="filter" value="Name" <?php echo $nameChecked; ?>>
+                            <label for="name"> Name</label>
+                            <input type="radio" id="vorname" onclick="sort('forename')" name="filter" value="Vorname" <?php echo $forenameChecked; ?>>
+                            <label for="vorname"> Vorname</label>
+                            <input type="radio" id="email" onclick="sort('email')" name="filter" value="Email" <?php echo $emailChecked; ?>>
+                            <label for="email"> Email</label>
+                            <input type="radio" id="admin" onclick="sort('admin')" name="filter" value="Admin" <?php echo $adminChecked; ?>>
+                            <label for="admin"> Admin</label>
+                            <input type="radio" id="active" onclick="sort('activated')" name="filter" value="Aktiviert" <?php echo $activeChecked; ?>>
+                            <label for="active"> Aktiviert</label>
+                            <input type="radio" id="immatrikulationsnummer" onclick="sort('matrikelnummer')" name="filter" value="Immatrikulationsnummer" <?php echo $matrikelChecked; ?>>
+                            <label for="immatrikulationsnummer"> Immatrikulationsnummer</label>
+                        </fieldset>
+                    </form>
+                    <input type="text" id="searchUser" name="name" class="form-control" placeholder="Suche (Email, Immatrikulationsnummer oder Name)">
+                    <div class="list" style="height: 600px; margin-top: 5px;" id="userListe">
+                        <?php
+                        if ($userList["success"]) {
+                            $userList = $userList["info"];
+                            $checkBoxId = 0;
+                            foreach ($userList as $userEntry) {
+                                $activatedChecked = "";
+                                $adminChecked = "";
+                                $emailVerifyed = '<i class="fas fa-times ignoreCursor" style="margin: 0px; color: red;"></i>';
+                                if ($userEntry["verifyed"]) {
+                                    $emailVerifyed = '<i class="fas fa-check ignoreCursor" style="margin: 0px; color: green;"></i>';
+                                }
+                                if ($userEntry["activated"]) {
+                                    $activatedChecked = "checked";
+                                }
+                                if ($userEntry["admin"]) {
+                                    $adminChecked = "checked";
+                                }
+                                echo ('
                                     <div class="userMedia">
                                     
                                     <details>
@@ -302,10 +305,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                     <div class="adminstration">
                                             <form method="POST" style="float: right;"action="admin.php">
                                                 <input name="userId" value="' . $userEntry["id"] . '" style="display: none;">');
-                            if (isset($_POST["sortBy"])) {
-                                echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
-                            }
-                            echo ('
+                                if (isset($_POST["sortBy"])) {
+                                    echo ('<input name="sortBy" value="' . $_POST["sortBy"] . '" style="display: none;">');
+                                }
+                                echo ('
                                                     <div class="row">
                                                     
                                                     <div class="form-check">
@@ -327,222 +330,227 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                         </div>
                                     </div>
                                     </details>');
-                            $checkBoxId++;
+                                $checkBoxId++;
+                            }
                         }
-                    }
-                    ?>
+                        ?>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Benutzer erstellen</h5>
+                <div class="card-body">
+
+                    <form method="POST" id="register" action="admin.php">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input class="form-control" type="text" id="forename" placeholder="Vorname" name="forename" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <input class="form-control" type="text" id="name" name="name" placeholder="Nachname" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <input class="form-control" type="email" id="email" name="email" placeholder="Email" required>
+                            </div>
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input class="form-control" type="password" id="password" name="password" placeholder="Passwort" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input class="form-control" type="password" id="password_repeat" name="password_repeat" placeholder="Passwort wiederholen" required>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <input type="button" class="btn btn-primary" onclick="postForm()" value="Erstellen" style="  font-weight: 600; margin: 0 0 0 auto;" />
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Schnitte</h5>
+                <div class="card-body">
+
+                    <p>Es sind aktuelle <?php echo ($cut->countCuts()); ?> Schnitte in der Datenbank.</p>
 
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Benutzer erstellen</h5>
-            <div class="card-body">
-
-                <form method="POST" id="register" action="admin.php">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input class="form-control" type="text" id="forename" placeholder="Vorname" name="forename" required>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" type="text" id="name" name="name" placeholder="Nachname" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-                            <input class="form-control" type="email" id="email" name="email" placeholder="Email" required>
-                        </div>
-
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input class="form-control" type="password" id="password" name="password" placeholder="Passwort" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input class="form-control" type="password" id="password_repeat" name="password_repeat" placeholder="Passwort wiederholen" required>
-                        </div>
-
-                    </div>
-
-
-                    <div class="row">
-                        <input type="button" class="btn btn-primary" onclick="postForm()" value="Erstellen" style="  font-weight: 600; margin: 0 0 0 auto;" />
-                    </div>
-
-                </form>
-            </div>
-        </div>
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Schnitte</h5>
-            <div class="card-body">
-
-                <p>Es sind aktuelle <?php echo ($cut->countCuts()); ?> Schnitte in der Datenbank</p>
-
-            </div>
-        </div>
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Studierenden-Login</h5>
-            <div class="card-body">
-                <?php
-                $userId = $user->getStudentUser();
-                if ($userId == -1) {
-                    echo "<p><strong>Studierenden Benutzer noch nicht erstellt.</strong></p>";
-                }
-                ?>
-                <form enctype="multipart/form-data" action="admin.php" method="POST">
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Studierenden-Login</h5>
+                <div class="card-body">
                     <?php
-                    if ($userId > 0) {
-                        echo "<p>Benutzername: student</p>";
+                    $userId = $user->getStudentUser();
+                    if ($userId == -1) {
+                        echo "<p><strong>Studierenden Benutzer noch nicht erstellt.</strong></p>";
                     }
-
                     ?>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Passwort" required="true" />
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" style="margin: 0px;"><?php if ($userId == -1) {
-                                                                                                echo "Erstellen";
-                                                                                            } else {
-                                                                                                echo "Aktualisieren";
-                                                                                            } ?></button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Filter</h5>
-            <div class="card-body">
-
-                <div class="filter">
-                    <?php
-                    while ($fruit_name = current($categorys)) {
-                        $catName = key($categorys);
-                        switch (key($categorys)) {
-                            case "lecturer":
-                                $catName = "Dozent";
-                                break;
-                            case "organgroup":
-                                $catName = "organgruppe";
-                                break;
-                            case "diagnosisgroup":
-                                $catName = "Diagnosegruppe";
-                                break;
+                    <form enctype="multipart/form-data" action="admin.php" method="POST">
+                        <?php
+                        if ($userId > 0) {
+                            echo "<p>Benutzername: student</p>";
                         }
-                        echo ('<div class="dropdown filter-dropdown">
+
+                        ?>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" placeholder="Passwort" required="true" />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" style="margin: 0px;"><?php if ($userId == -1) {
+                                                                                                    echo "Erstellen";
+                                                                                                } else {
+                                                                                                    echo "Aktualisieren";
+                                                                                                } ?></button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Filter</h5>
+                <div class="card-body">
+
+                    <div class="filter">
+                        <?php
+                        while ($fruit_name = current($categorys)) {
+                            $catName = key($categorys);
+                            switch (key($categorys)) {
+                                case "lecturer":
+                                    $catName = "Dozent";
+                                    break;
+                                case "organgroup":
+                                    $catName = "organgruppe";
+                                    break;
+                                case "diagnosisgroup":
+                                    $catName = "Diagnosegruppe";
+                                    break;
+                            }
+                            echo ('<div class="dropdown filter-dropdown">
 																			<p>' . ucfirst($catName) . ':</p><button type="button" id="' . key($categorys) . '" value="-1" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">- - </button>
 																			<ul class="dropdown-menu">
 																		');
-                        foreach ($categorys[key($categorys)] as $item) {
-                            if ($item["name"] != "Alle")
-                                echo ('<li><a id="' . $item["id"] . '" class="dropdown-item"><i style="color: #0062cc; margin-right:5px;" id="' . $item["id"] . '" class="fas fa-trash-alt" ></i>' . $item["name"] . '</a></li>');
-                        }
-                        echo ('<li><a id="-2" class="dropdown-item">[Hinzufügen]</a></li>');
+                            foreach ($categorys[key($categorys)] as $item) {
+                                if ($item["name"] != "Alle")
+                                    echo ('<li><a id="' . $item["id"] . '" class="dropdown-item"><i style="color: var(--primary); margin-right:5px;" id="' . $item["id"] . '" class="fas fa-trash-alt" ></i>' . $item["name"] . '</a></li>');
+                            }
+                            echo ('<li><a id="-2" class="dropdown-item">[Hinzufügen]</a></li>');
 
-                        echo ('</ul>
+                            echo ('</ul>
 																			  </div>
 																			  ');
 
-                        next($categorys);
-                    }
-                    ?>
+                            next($categorys);
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Module</h5>
-            <div class="card-body">
-                <form action="admin.php" method="POST" style="width: 100%">
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Module</h5>
+                <div class="card-body">
+                    <form action="admin.php" method="POST" style="width: 100%">
 
-                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="row" style="margin-bottom: 10px;">
 
-                        <div class="col-8">
-                            <input type="text" id="addModul" name="modulName" class="form-control" style="margin: 0px;" placeholder="Neues Modul" value="" />
+                            <div class="col-8">
+                                <input type="text" id="addModul" name="modulName" class="form-control" style="margin: 0px;" placeholder="Neues Modul" value="" />
+
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-primary" style="margin: 0px;">+</button>
+                            </div>
 
                         </div>
-                        <div class="col-3">
-                            <button type="submit" class="btn btn-primary" style="margin: 0px;">+</button>
+                    </form>
+
+                    <div class="list" style="height: 350px;" id="modulList">
+                        <?php
+                        $moduls = $modul->getModuls();
+                        $moduls = $moduls["info"];
+                        foreach ($moduls as $item) {
+                            echo ('<div class="userMedia"><div class="row"><div class="col-11">');
+                            echo ($item["name"]);
+                            echo ('</div><div class="col-1"><i style="float: right; margin-left: auto; margin-top: 4px;" onclick="deleteModul(' . $item["id"] . ')" class="fas fa-trash-alt"></i></div></div></div>');
+                        }
+
+                        ?>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Schnitt hochladen (Tiff / Tif) <span id="working"> - Tiff Dateien werden konvertiert . . .</span></h5>
+                <div class="card-body">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="file" id="files" name="files[]" multiple="multiple" accept=".tiff,.tif" /><br /><br />
+                        <button class="btn btn-primary" type="submit" id="upload" name="upload" value="Upload">Hochladen</button><span style="color: red;" id="errormsg"></span><br />
+                        <!-- Progress will be shown here -->
+                        <div id="uploadlist" class="progress"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header bg-2nd text-white">Log-Files</h5>
+                <div class="card-body">
+                    <form>
+                        <h4>Log-Files:</h4>
+                        <fieldset>
+                            <input type="radio" id="worklist" onclick="loadLog('worklist.log')" name="filter" value="Worklist" checked>
+                            <label for="worklist"> Worklist-Log</label>
+                            <input type="radio" id="hash" onclick="loadLog('hash.log')" name="filter" value="Hash">
+                            <label for="hash"> Hash-Log</label>
+                            <input type="radio" id="user" onclick="loadLog('user.log')" name="filter" value="User">
+                            <label for="user"> User-Log</label>
+                            <input type="radio" id="cuts" onclick="loadLog('cuts.log')" name="filter" value="Schnitte">
+                            <label for="cuts"> Schnitte-Log</label>
+                        </fieldset>
+                    </form>
+                    <textarea id="log" readonly></textarea>
+                </div>
+            </div>
+
+
+            <div id="modalCategory" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="row">
+                        <h3>Filter Name:</h3>
+                        <span class="close">&times;</span>
+                    </div>
+                    <form method="POST" action="admin.php">
+                        <input id="categoryName" name="category" type="text" style="display: none;" value="" />
+                        <div class="form-group">
+                            <input name="newCategory" id="newCategory" type="text" class="form-control" placeholder="Filter Name" />
                         </div>
+                        <button type="submit" style="margin-left: 10px;" class="btn btn-primary">Hinzuf&uuml;gen</button>
 
-                    </div>
-                </form>
-
-                <div class="list" style="height: 350px;" id="modulList">
-                    <?php
-                    $moduls = $modul->getModuls();
-                    $moduls = $moduls["info"];
-                    foreach ($moduls as $item) {
-                        echo ('<div class="userMedia"><div class="row"><div class="col-11">');
-                        echo ($item["name"]);
-                        echo ('</div><div class="col-1"><i style="float: right; margin-left: auto; margin-top: 4px;" onclick="deleteModul(' . $item["id"] . ')" class="fas fa-trash-alt"></i></div></div></div>');
-                    }
-
-                    ?>
-
+                    </form>
                 </div>
-
             </div>
+            <?php
+
+            echo ($pageBuilder->getFooter());
+
+            ?>
         </div>
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Schnitt hochladen (Tiff / Tif) <span id="working"> - Tiff Dateien werden konvertiert . . .</span></h5>
-            <div class="card-body">
-                <form action="" method="post" enctype="multipart/form-data">
-                    <input type="file" id="files" name="files[]" multiple="multiple" accept=".tiff,.tif" /><br /><br />
-                    <button class="btn btn-primary" type="submit" id="upload" name="upload" value="Upload">Hochladen</button><span style="color: red;" id="errormsg"></span><br />
-                    <!-- Progress will be shown here -->
-                    <div id="uploadlist" class="progress"></div>
-                </form>
-            </div>
-        </div>
-        <div class="card">
-            <h5 class="card-header bg-2nd text-white">Log-Files</h5>
-            <div class="card-body">
-                <form>
-                    <h4>Log-Files:</h4>
-                    <fieldset>
-                        <input type="radio" id="worklist" onclick="loadLog('worklist.txt')" name="filter" value="Worklist" checked>
-                        <label for="worklist"> Worklist-Log</label>
-                        <input type="radio" id="hash" onclick="loadLog('hash.txt')" name="filter" value="Hash">
-                        <label for="hash"> Hash-Log</label>
-                        <input type="radio" id="user" onclick="loadLog('user.txt')" name="filter" value="User">
-                        <label for="user"> User-Log</label>
-                        <input type="radio" id="cuts" onclick="loadLog('cuts.txt')" name="filter" value="Schnitte">
-                        <label for="cuts"> Schnitte-Log</label>
-                    </fieldset>
-                </form>
-                <textarea id="log" readonly></textarea>
-            </div>
-        </div>
-
-
-        <div id="modalCategory" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <div class="row">
-                    <h3>Filter Name:</h3>
-                    <span class="close">&times;</span>
-                </div>
-                <form method="POST" action="admin.php">
-                    <input id="categoryName" name="category" type="text" style="display: none;" value="" />
-                    <div class="form-group">
-                        <input name="newCategory" id="newCategory" type="text" class="form-control" placeholder="Filter Name" />
-                    </div>
-                    <button type="submit" style="margin-left: 10px;" class="btn btn-primary">Hinzuf&uuml;gen</button>
-
-                </form>
-            </div>
-        </div>
-        <?php
-
-        echo ($pageBuilder->getFooter());
-
-        ?>
     </main>
 
 </body>

@@ -7,8 +7,9 @@
     max-width: 500px;
     text-align: center;
     transform: translate(-50%, -50%);
-    background: #0062cc;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    background: var(--primary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
 }
 
 .login-form-2 h3 {
@@ -35,7 +36,7 @@
 
 .login-form-2 .btnSubmit {
     font-weight: 600;
-    color: #0062cc;
+    color: var(--primary);
     background-color: #fff;
 }
 

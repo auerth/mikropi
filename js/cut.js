@@ -451,13 +451,13 @@ $('#hide').click(
             $('#itemOverlay').hide('slow');
             $('#overlay').hide('slow');
 
-            $("#hide").attr("src", "../images/right.png");
+            $("#hide").addClass("rotate_left");
         } else {
             $('#description').show('slow');
             $('#itemDescription').show('slow');
             $('#itemOverlay').show('slow');
-            $("#hide").attr("src", "../images/left.png");
-
+         
+            $("#hide").removeClass("rotate_left");
         }
     });
 
@@ -527,7 +527,7 @@ function deleteCut(id) {
             'cutId': id,
             'deleteCut': ""
         };
-        post("index.php?cuts=" + id, params, "POST");
+        post("cut.php?id=" + id, params, "POST");
     } else {
         // Do nothing!
     }
@@ -535,11 +535,11 @@ function deleteCut(id) {
 }
 
 function annos(id) {
-    post('index.php?cuts=' + id, null, null);
+    post('cut.php?id=' + id, null, null);
 }
 
 function noAnnos(id) {
-    post('index.php?cuts=' + id + '&noOverlay', null, null);
+    post('cut.php?id=' + id + '&noOverlay', null, null);
 }
 $("#openseadragon1")
     .click(

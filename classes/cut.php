@@ -34,7 +34,7 @@ class Cut
      * @param int    $icd_10_        ICD_10 Category Id
      * @param int    $diagnosegruppe Diagnosegruppe Category Id
      * 
-     * @return array
+     * @return string
      */
     public function getCutsFiltered($semester, $dozent, $organ, $organgruppe, $schnittquelle, $icd_0_, $icd_10_, $diagnosegruppe)
     {
@@ -46,7 +46,6 @@ class Cut
         );
         include("../etc/db.php");
         $user = new User();
-        $showPrivate = 0;
       
         $semester = $db->real_escape_string($semester);
         $dozent = $db->real_escape_string($dozent);

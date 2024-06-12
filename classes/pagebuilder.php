@@ -32,7 +32,7 @@ class PageBuilder
         <title>' . $title . '</title>
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap/fontawesome/all.css">
+        <link rel="stylesheet" href="css/bootstrap/fontawesome/css/all.css">
         <link rel="stylesheet" href="../css/default.css">
         <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
@@ -55,7 +55,7 @@ class PageBuilder
      */
     public function  getFooter()
     {
-        return"";
+        return "";
         $footerStart = "<footer>";
 
         $footer = '
@@ -117,33 +117,27 @@ class PageBuilder
      */
     public function  getNavBar($loggedIn, $isAdmin)
     {
-      
-        $fileName =  basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
-       
-        $nav = ' <nav class="navbar navbar-expand-lg navbar-dark navbar-background static-top"><a class="navbar-brand" href="index.php?dash"><img src="../images/logo_white.png" height="40" width="120" class="logo" alt="Logo"></a><button class="navbar-toggler" type="button" tabIndex="-1" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarResponsive"><ul class="navbar-nav ml-auto" style="width: 100% !important;">';
 
-        if ($loggedIn){
+        $fileName =  basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+
+        $nav = ' <nav class="navbar navbar-expand-lg navbar-dark navbar-background static-top"><a class="navbar-brand" href="index.php"><img src="../images/logo_white.png" height="40" width="120" class="logo" alt="Logo"></a><button class="navbar-toggler" type="button" tabIndex="-1" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarResponsive"><ul class="navbar-nav ml-auto" style="width: 100% !important;">';
+
+        if ($loggedIn) {
             $activSchnitt = "";
-            $activeDashboard = "";
             $activeModuls = "";
-            $activeDashboard = "";
             if ($fileName == "index.php") {
-                if (isset($_GET["cuts"])) {
-                    $activSchnitt = "active";
-                }
-                if (isset($_GET["dash"])) {
-                    $activeDashboard = "active";
-                }
+                $activSchnitt = "active";
+            }
+            if ($fileName == "cut.php") {
+                $activSchnitt = "active";
             }
             if ($fileName == "moduls.php") {
                 $activeModuls = "active";
             }
             $nav = $nav . ('
-					            <li class="nav-item ' . $activeDashboard . '">
-								    <a class="nav-link" href="index.php?dash">Dashboard</a>
-							    </li>
+					           
 					            <li class="nav-item ' . $activSchnitt . '">
-								    <a class="nav-link" href="index.php?cuts">Schnitte</a>
+								    <a class="nav-link" href="index.php">Schnitte</a>
 							    </li>
                                 <li class="nav-item ' . $activeModuls . '">
                                     <a class="nav-link" href="moduls.php">Module</a>
@@ -154,7 +148,7 @@ class PageBuilder
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">';
         if ($loggedIn) {
-        
+
 
             $activeSettings = "";
             $activeAdmin = "";
@@ -173,7 +167,6 @@ class PageBuilder
             if ($isAdmin) {
                 $accountItems = $accountItems . '<a class="dropdown-item ' . $activeAdmin . '" href="admin.php"><i class="fas fa-unlock-alt"></i> Admin</a><a class="dropdown-item ' . $activeTutorials . '" href="tutorial.php"><i class="fas fa-book"></i> Tutorials</a>';
             }
-            $accountItems .= '<a class="dropdown-item ' . $activeReport . '" href="report.php"><i class="fas fa-bug"></i> Bug Report</a>';
 
             $nav = $nav . (' <li class="nav-item ' . $activeReport . $activeSettings . $activeAdmin . $activeTutorials . ' dropdown" >
 								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >

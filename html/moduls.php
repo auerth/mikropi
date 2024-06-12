@@ -83,7 +83,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 	<main>
 		<?php
 		if (!isset($_GET["id"])) {
-			echo ('	<div class="moduls">');
+			echo ('	<div class="max-width"><div class="moduls">');
 			$moduls = $modul->getModuls();
 			$moduls = $moduls["info"];
 			foreach ($moduls as $item) {
@@ -138,6 +138,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 				echo ("</div>");
 			}
 		} else {
+			echo('	<div class="max-width">');
 			$modulId = $_GET["id"];
 			$result = $script->getModulScript($modulId);
 			$scriptHtml = "";
@@ -234,6 +235,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 				}
 				echo ("</div>");
 			}
+			echo("</div>");
 		}
 		?>
 		</div>

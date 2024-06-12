@@ -50,7 +50,7 @@ $(".box").click(function(event) {
 
 $(".card").click(function(event) {
 
-    window.open("index.php?cuts=" + event.target.id);
+    window.open("cut.php?id=" + event.target.id);
 
 });
 
@@ -59,7 +59,7 @@ function markCut(id) {
     if (!cutList.includes("" + id)) {
         cutList.push("" + id);
         $("#" + id + ".box")
-            .css({ 'background-color': '#5e2028', 'color': 'white' })
+            .css({ 'background-color': 'var(--accent)', 'color': 'white' })
 
 
     } else {

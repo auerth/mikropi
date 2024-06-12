@@ -9,9 +9,9 @@
     <table style="width: 515px; font-size: 10pt; font-family: Arial, sans-serif;"  cellspacing="0" cellpadding="0">
       <tbody>
       <tr>
-        <td style="font-size: 14pt;  color:#000e58; font-family: Arial, sans-serif; width: 514px; padding-bottom: 10px; vertical-align:top;" colspan="2" valign="top">  <strong><span style="font-size: 14pt; font-family: Arial, sans-serif; color:#0062cc;">Dein Mikropi-Team</span></strong><br>  <span style="font-size: 10pt; font-family: Arial, sans-serif; color:#878787;">Support</span></td>
+        <td style="font-size: 14pt;  color:#000e58; font-family: Arial, sans-serif; width: 514px; padding-bottom: 10px; vertical-align:top;" colspan="2" valign="top">  <strong><span style="font-size: 14pt; font-family: Arial, sans-serif; color:var(--primary);">Dein Mikropi-Team</span></strong><br>  <span style="font-size: 10pt; font-family: Arial, sans-serif; color:#878787;">Support</span></td>
       </tr>
-      <tr><td style="font-size: 10pt; border-top: 1px solid; border-top-color: #0062cc; color:#2c2c2c; font-family: Arial, sans-serif;  padding-top: 10px; vertical-align:top;" colspan="2" valign="top">
+      <tr><td style="font-size: 10pt; border-top: 1px solid; border-top-color: var(--primary); color:#2c2c2c; font-family: Arial, sans-serif;  padding-top: 10px; vertical-align:top;" colspan="2" valign="top">
          <span style="font-size: 10pt; font-family: Arial, sans-serif; color:#2c2c2c"><strong>Mikropi</strong><br></span> 
          
          
@@ -20,7 +20,7 @@
          <span style="font-size: 10pt; font-family: Arial, sans-serif; color:#2c2c2c;"><a href="mailto:support@mikropi.de">support@mikropi.de</a><br></span>								</td>
       </tr>  
       <tr>
-        <td style="font-size: 10pt; padding-bottom: 10px; padding-top: 10px; vertical-align:top;"  valign="top"><strong>	<a href="http://www.mikropi.de" target="_blank" rel="noopener" style="text-decoration:none;"><span style="color:#000e58; font-family: Arial, sans-serif;"><span style="font-size: 10pt; font-family: Arial, sans-serif; color:#0062cc;">www.mikropi.de</span></span></a></strong></td>
+        <td style="font-size: 10pt; padding-bottom: 10px; padding-top: 10px; vertical-align:top;"  valign="top"><strong>	<a href="http://www.mikropi.de" target="_blank" rel="noopener" style="text-decoration:none;"><span style="color:#000e58; font-family: Arial, sans-serif;"><span style="font-size: 10pt; font-family: Arial, sans-serif; color:var(--primary);">www.mikropi.de</span></span></a></strong></td>
         <td style="font-size: 10pt; font-family: Arial, sans-serif; padding-bottom: 10px; padding-top: 10px; vertical-align:top; text-align:right;"  valign="top" align="right">
                                                   </td>	 	 	
       </tr>

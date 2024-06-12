@@ -784,14 +784,14 @@ input {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    background: #0062cc;
+    background: var(--primary);
 }
 
 .card-5 {
-    background: #0062cc;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    background: var(--primary);
+    -webkit-border-radius: var(--border-radius);
+    -moz-border-radius: var(--border-radius);
+    border-radius: var(--border-radius);
     -webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
@@ -799,13 +799,13 @@ input {
 
 .card-5 .card-heading {
     padding: 20px 0;
-    background: #0062cc;
-    -webkit-border-top-left-radius: 10px;
+    background: var(--primary);
+    -webkit-border-top-left-radius: var(--border-radius);
     -moz-border-radius-topleft: 10px;
-    border-top-left-radius: 10px;
-    -webkit-border-top-right-radius: 10px;
+    border-top-left-radius: var(--border-radius);
+    -webkit-border-top-right-radius: var(--border-radius);
     -moz-border-radius-topright: 10px;
-    border-top-right-radius: 10px;
+    border-top-right-radius: var(--border-radius);
 }
 
 .card-5 .card-body {

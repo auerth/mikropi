@@ -103,8 +103,8 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 		<div class="container login-container ">
 			<div class="row">
 				<div class="col-md-6 login-form-2">
+					<img src="../images/logo_white.png" width="300"/>
 					<h3>Login</h3>
-
 					<?php
 					if ($error != null) {
 						echo ('<div class="alert alert-danger">' . $error . '</div>');

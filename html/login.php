@@ -26,7 +26,7 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 				setcookie("sessionHash", $result["info"]["sessionHash"], time() + $expireTime);
 				setcookie("matrikelnummer", $result["info"]["matrikelnummer"], time() + $expireTime);
 				setcookie("creationDate", $result["info"]["creationDate"], time() + $expireTime);
-				header('Location: index.php?dash');
+				header('Location: index.php');
 			} else {
 				$error = $result["error"];
 			}
@@ -60,7 +60,7 @@ if (file_exists($file_pagebuilder) && file_exists($file_user)) {
 			if ($redirect != null) {
 				header('Location: ' . $redirect);
 			} else {
-				header('Location: index.php?dash');
+				header('Location: index.php');
 			}
 		} else {
 			$error = $result["error"];

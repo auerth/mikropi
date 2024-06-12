@@ -29,6 +29,9 @@ if (file_exists($file_cut) && file_exists($file_category) && file_exists($file_o
     $cutCategorys = null;
     $categorysByCut = null;
 
+    if ((isset($_GET["cuts"]) && $_GET["cuts"] != null)) {
+        header("Location: cut.php?id=".$_GET["cuts"]);
+    }
 
 
     if ((!isset($_COOKIE["sessionHash"]) || $_COOKIE["sessionHash"] == -1) &&  isset($_COOKIE["loggedin_salt"])) {

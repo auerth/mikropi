@@ -33,7 +33,7 @@ if (isset($_COOKIE["sessionHash"]) && $_COOKIE["sessionHash"] != -1) {
         $isAdmin = $_COOKIE["isAdmin"];
     }
     if (!$isAdmin) {
-        header("Location: index.php?dash");
+        header("Location: index.phph");
     }
     $userId = $_COOKIE["sessionHash"];
     $sessionHash = $userId;

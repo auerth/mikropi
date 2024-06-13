@@ -441,7 +441,7 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
                                     break;
                             }
                             echo ('<div class="dropdown filter-dropdown">
-																			<p>' . ucfirst($catName) . ':</p><button type="button" id="' . key($categorys) . '" value="-1" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">- - </button>
+																			<p>' . ucfirst($catName) . ':</p><button type="button" id="' . key($categorys) . '" value="-1" class="btn btn-primary dropdown-toggle"  data-bs-toggle="dropdown">- - </button>
 																			<ul class="dropdown-menu">
 																		');
                             foreach ($categorys[key($categorys)] as $item) {

@@ -264,15 +264,15 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
             //openseadragon element (cut)
             echo ('<div id="toolbarDiv" class="toolbar" style="width: 100%; height: 2%;">
                 <div class="row">
-		                <a id="zoom-in" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/plus.png"/></a>
-		                <a id="zoom-out" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/minus.png"/></a>
-		                <a id="home" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/home.png"/></a>
-                        <a id="fullpage" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/fullpage.png"/></a>
-                        <a id="location" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/location.png"/></a>
-                        <a id="zoom25" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/10x.png"/></a>
-                        <a id="zoom50" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/40x.png"/></a>
-                        <a id="zoom75" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/80x.png"/></a>
-                        <a id="zoom100" class="icon" href="#"><img class="iconimg" src="../js/openseadragon/images/100x.png"/></a></div>
+		                <a id="zoom-in" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/plus.png"/></a>
+		                <a id="zoom-out" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/minus.png"/></a>
+		                <a id="home" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/home.png"/></a>
+                        <a id="fullpage" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/fullpage.png"/></a>
+                        <a id="location" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/location.png"/></a>
+                        <a id="zoom25" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/10x.png"/></a>
+                        <a id="zoom50" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/40x.png"/></a>
+                        <a id="zoom75" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/80x.png"/></a>
+                        <a id="zoom100" class="icon" href="#"><img class="iconimg" src="../libs/openseadragon/images/100x.png"/></a></div>
                     </div>
                   
                         <div class="openseadragon" id="openseadragon1"><div class="viewerdetails">
@@ -410,7 +410,7 @@ Test
                             break;
                     }
                     echo ('<div class="dropdown filter-dropdown">
-																			    <p style="color: black; font-size: 13px;">' . ucfirst($catName) . ':</p>   <button type="button" id="' . key($categorys) . '" value="-1" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">' . "--" . '</button>
+																			    <p style="color: black; font-size: 13px;">' . ucfirst($catName) . ':</p>   <button type="button" id="' . key($categorys) . '" value="-1" class="btn btn-primary dropdown-toggle"  data-bs-toggle="dropdown">' . "--" . '</button>
 																			<ul class="dropdown-menu scrollable-menu">
                                                                         ');
                     foreach ($categorys[key($categorys)] as $item) {

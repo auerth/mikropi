@@ -457,7 +457,7 @@ class Cut
                     }
 
                     $html = '
-							<script src="js/openseadragon/openseadragon.min.js"></script>
+							<script src="libs/openseadragon/openseadragon.min.js"></script>
 							<script type="text/javascript">
 							var viewer = OpenSeadragon({
 								id: "openseadragon1",

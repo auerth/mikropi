@@ -31,8 +31,8 @@ class PageBuilder
         <meta name="version" content="' . self::version . '">    
         <title>' . $title . '</title>
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap/fontawesome/css/all.css">
+        <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="libs/fontawesome/css/all.css">
         <link rel="stylesheet" href="../css/default.css">
         <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
@@ -93,9 +93,10 @@ class PageBuilder
     {
 
         $tags = '
-        <script src="js/bootstrap/jquery.js"></script>
-        <script src="js/bootstrap/propper.js"></script>
-        <script src="js/bootstrap/bootstrap.min.js"></script>
+        <script src="libs/jquery/jquery.min.js"></script>
+        <script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+
        ';
 
         foreach ($jsFiles as &$link) {
@@ -145,7 +146,7 @@ class PageBuilder
         }
         $nav = $nav . '</ul>
                              </div>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse right">
                 <ul class="navbar-nav ml-auto">';
         if ($loggedIn) {
 
@@ -169,7 +170,7 @@ class PageBuilder
             }
 
             $nav = $nav . (' <li class="nav-item ' . $activeReport . $activeSettings . $activeAdmin . $activeTutorials . ' dropdown" >
-								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 									<i class="fas fa-user-alt"></i> Account
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

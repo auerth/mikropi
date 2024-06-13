@@ -1,5 +1,10 @@
 @import url("mobile.css") screen;
-
+@font-face {
+    font-family: 'OpenSans';
+    src: 
+         url('/fonts/opensans.ttf')  format('truetype'), /* Safari, Android, iOS */
+        
+}
 .navbar-background {
     background-color: var(--primary);
 }
@@ -14,10 +19,14 @@
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    color: white;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 * {
+    font-family: "OpenSans" ;
     box-sizing: border-box;
 }
 
@@ -58,8 +67,17 @@
 
 .navbar-collapse {
     background-color: var(--primary);
-    width: 100% !important;
+    flex-basis: 100%;
+    flex-grow: 1;
+    width: 100%;
 }
+
+.navbar-collapse.right{
+    background-color: var(--primary);
+    flex-grow: 0;
+    width: max-content;
+}
+
 
 .right {
     margin-left: auto !important;
@@ -397,7 +415,16 @@ h5 {
     border-radius: var(--border-radius);
 }
 
-.login {}
+.login {
+    background-image: url("../images/background_login.png");
+    background-size: cover;
+    position:fixed;
+    top: 0;
+    right:0;
+    left: 0;
+    bottom: 0;
+    opacity: 0.7;
+}
 
 .centerDiv {
     position: relative;
@@ -556,6 +583,11 @@ h5 {
     margin-left: 0px;
     margin-right: 0px;
     align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.row>*{
+    width: fit-content;
 }
 
 .row i {}
@@ -643,6 +675,7 @@ h4 {
 .filter-dropdown ul li {
     padding: 3px;
     color: black;
+    cursor: pointer;
 }
 
 .text-primary {
@@ -991,6 +1024,7 @@ div a:hover {
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
     border-radius: var(--border-radius);
     background-color: var(--background-card);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -1144,7 +1178,17 @@ input[type="checkbox"]+label span:hover {
 
 .media img {
     width: 200px;
+    min-width: 300px;
     max-height: 300px;
+}
+.btn-primary{
+    width: fit-content;
+}
+.btn-check:focus+.btn-primary, .btn-primary:focus {
+    color: #fff;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: none;
 }
 
 .openseadragon {
@@ -1388,4 +1432,8 @@ embed {
 .form-row .form-group input {
     min-width: 400px;
     width: 100%;
+}
+
+.form-group{
+    margin: 10px 0;
 }

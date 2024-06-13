@@ -98,8 +98,9 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 	<!-- Navigation -->
 
-	<main class="login">
+	<main >
 		<!-- Page Content -->
+		 <div class="login"></div>
 		<div class="container login-container ">
 			<div class="row">
 				<div class="col-md-6 login-form-2">

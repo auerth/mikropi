@@ -98,13 +98,13 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 
 	<!-- Navigation -->
 
-	<main >
+	<main>
 		<!-- Page Content -->
-		 <div class="login"></div>
+		<div class="login"></div>
 		<div class="container login-container ">
 			<div class="row">
 				<div class="col-md-6 login-form-2">
-					<img src="../images/logo_white.png" width="300"/>
+					<img src="../images/logo_white.png" width="300" />
 					<h3>Login</h3>
 					<?php
 					if ($error != null) {
@@ -134,11 +134,10 @@ echo ($pageBuilder->getHead("Mikropi - Das Online Mikroskop", "Mikropi - Das Onl
 							<a href="forgotPassword.php" class="ForgetPwd" value="Login">Password
 								vergessen?</a>
 						</div>
-						<!-- <div class="form-group">
-							<a href="register.php" class="ForgetPwd" value="Login">Noch keinen Account? Jetzt registrieren</a>
-						</div>   -->
+
 
 					</form>
+					<a href="https://www.uniklinik-freiburg.de/footernavigation/impressum.html" class="impressum" value="Login">Impressum</a>
 
 				</div>
 			</div>

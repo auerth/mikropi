@@ -1030,6 +1030,10 @@ div a:hover {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
+.media-body{
+    padding: 0 1rem;
+}
+
 .right {
     text-align: right !important;
 }
